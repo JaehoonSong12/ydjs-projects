@@ -14,8 +14,9 @@ The main scene of the project is the following.
 # Requirements 
 ## Build Observations
 
-- Upon running the build, the player can control a character within the game environment.
-- Pickup items can be collected by the player.
+- Upon running the build, the player can control a character within the game environment (default).
+- Pickup items can be collected by the player (default).
+- Obstacle objects are added to distract the player, it will block movements of the player.
 - The game ends when all pickup items are collected, displaying a game over message.
 - The player can restart the game by pressing 'R' or quit by pressing 'ESC'.
 ## Code Changes
