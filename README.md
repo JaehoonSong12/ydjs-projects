@@ -25,12 +25,13 @@ The followings are the observations expected by default (or given project) and b
 - The game ends when all pickup items are collected, displaying a game over message.
 - The player can restart the game by pressing 'R' or quit by pressing 'ESC'.
 ## Code Changes
-The followings are the code changes highlighted for implementation of the modifications. In 
-`./Assets/Objects/Controllers`
-- **Restart Functionality:** Check the `Update()` method in the `Player.cs` script for the implementation of restarting the game.
-- **Game Over Conditions:** Look for the `isPaused` variable and collision with pickup items in the `Player.cs` script to understand game over conditions.
-- **Player Score Tracking:** Check the `OnTriggerEnter()` method in the `Player.cs` script for updating the player's score.
-- **Player Movement Controls:** Refer to the movement handling methods (`OnMove()` and `FixedUpdate()`) in the `Player.cs` script for player movement implementation.
+The followings are the code changes highlighted for implementation of the modifications. 
+- **Restart Functionality:** Check the `Update()` method in `./Assets/Objects/Controllers/Player.cs` for the implementation of restarting the game.
+- **Game Over Conditions:** Look for the `isPaused` variable and collision with pickup items in `./Assets/Objects/Controllers/Player.cs` to understand game over conditions.
+- **Obstacles Object Definition:** Check the `./Assets/Objects/Obstacle.prefab` to see the object settings such as `isTrigger` being `false`.
+- **Obstacles Player Blocking:** Check the `OnCollisionEnter()` method in `./Assets/Objects/Controllers/Player.cs` for defining blocking actions by creating non-trigger objects logic.
+- **Game Over Message:** Look for the `if (count == 7)` statement in `./Assets/Objects/Controllers/Player.cs` to see how the text object is controlled while playing the game.
+- **Player Movement Restriction:** Refer to the if-statement from the movement handling method (`FixedUpdate()`) in `./Assets/Objects/Controllers/Player.cs` for player movement not controlled after game over.
 ## Extra Implementations
 The project includes additional implementations such as:
 - Guide UI of the entire game flow (Restart and Exit functionality) for better user experience.
