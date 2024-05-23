@@ -1,11 +1,8 @@
-
 # Introduction
-
 ## Author
 - **Full Name (OIT/Canvas Account Name):** Jaehoon Song
 - **Email:** jsong421@gatech.edu
 - **Institution:** Georgia Tech
-
 ## Main Scene
 The main scene of the project is the following.
 ```
@@ -14,28 +11,59 @@ The main scene of the project is the following.
 
 
 
-
-
-
-
 # Requirements 
-
-
 ## Build Observations
 - Upon running the build, the player can control a character within the game environment.
 - Pickup items can be collected by the player.
 - The game ends when all pickup items are collected, displaying a game over message.
 - The player can restart the game by pressing 'R' or quit by pressing 'ESC'.
-
 ## Code Changes
 - **Restart Functionality:** Check the `Update()` method in the `Player.cs` script for the implementation of restarting the game.
 - **Game Over Conditions:** Look for the `isPaused` variable and collision with pickup items in the `Player.cs` script to understand game over conditions.
 - **Player Score Tracking:** Check the `OnTriggerEnter()` method in the `Player.cs` script for updating the player's score.
 - **Player Movement Controls:** Refer to the movement handling methods (`OnMove()` and `FixedUpdate()`) in the `Player.cs` script for player movement implementation.
-
-
+## Extra Implementations
+- The project includes additional features such as:
+  - Improved player movement using Unity's physics engine.
+  - Dynamic player score tracking.
+  - Restart functionality for better user experience.
 ## Known Issues (Bugs)
-- 
+- There are no known bugs or incomplete features.
+
+
+
+
+
+
+
+
+# Instructions
+Here is the usage explain of the implementation in detail including features and expected behavior.
+- To run the game, open the Unity project and play the scene.
+- Use the arrow keys or arrow keys to move the player (ball).
+- Collect all pickup items (rotating cubes) to complete the game.
+- Press 'R' to restart the game after it ends.
+- Press 'ESC' to quit the game.
+
+## External Assets
+The following is a list up of external assets and the purpose of their use in Unity.
+- **TextMeshPro** package: to display text elements on the canvas object.
+
+## Dependencies
+- Ensure that the TextMeshPro package is installed for proper functionality.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -46,32 +74,8 @@ The main scene of the project is the following.
 
 
 
-## Assignment Requirements
-- All assignment requirements have been completed as specified.
-- There are no known bugs or incomplete features.
 
-## Extra Implementations
-- The project includes additional features such as:
-  - Improved player movement using Unity's physics engine.
-  - Dynamic player score tracking.
-  - Restart functionality for better user experience.
 
-## Usage
-- To run the game, open the Unity project and play the scene.
-- Use the arrow keys or WASD keys to move the player character.
-- Collect all pickup items to complete the game.
-- Press 'R' to restart the game after it ends.
-- Press 'ESC' to quit the game.
-
-## External Assets
-- The project utilizes the TextMeshPro package for displaying text elements in Unity.
-
-## Dependencies
-- Ensure that the TextMeshPro package is installed for proper functionality.
-- Include the `/Packages/` folder when building or sharing the project.
-
-## License
-This project is licensed under the [License Name] - see the [LICENSE.md](LICENSE.md) file for details.
 
 
 
