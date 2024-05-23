@@ -11,6 +11,10 @@ The main scene of the project is the following.
 
 
 # Requirements 
+Here are the changes overview.
+- Added functionality for restarting the game.
+- Implemented game over conditions.
+- Implemented player movement restrictions after game over.
 ## Build Observations
 The followings are the observations expected by default (or given project) and by my modifications.
 - Upon running the build, the player can control a character within the game environment (**default**).
