@@ -11,7 +11,7 @@ The main scene of the project is the following.
 
 
 # Requirements 
-Here are the changes overview.
+Here are the key changes overview.
 - Added functionality for restarting the game.
 - Implemented game over conditions.
 - Implemented player movement restrictions after game over.
