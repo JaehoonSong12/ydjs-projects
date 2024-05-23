@@ -18,8 +18,6 @@ The main scene of the project is the following.
 
 
 
-
-
 # Requirements 
 
 
@@ -34,6 +32,11 @@ The main scene of the project is the following.
 - **Game Over Conditions:** Look for the `isPaused` variable and collision with pickup items in the `Player.cs` script to understand game over conditions.
 - **Player Score Tracking:** Check the `OnTriggerEnter()` method in the `Player.cs` script for updating the player's score.
 - **Player Movement Controls:** Refer to the movement handling methods (`OnMove()` and `FixedUpdate()`) in the `Player.cs` script for player movement implementation.
+
+
+## Known Issues (Bugs)
+- 
+
 
 
 
