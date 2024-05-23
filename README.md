@@ -52,3 +52,7 @@ The following is a list up of external assets and the purpose of their use in Un
 - **TextMeshPro** package: to display text elements on the canvas object.
 ## Dependencies
 - Ensure that the TextMeshPro package is installed for proper functionality.
+
+
+# License
+This project is licensed under the [License Name] - see the [LICENSE.md](LICENSE.md) file for details.
