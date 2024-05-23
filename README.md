@@ -1,5 +1,5 @@
 
-# Burdell_G_m0 README
+# Introduction
 
 ## Author Information
 - **Full Name:** Jaehoon Song
@@ -58,7 +58,7 @@ This project is licensed under the [License Name] - see the [LICENSE.md](LICENSE
 
 
 
-# Project Name README
+# Assignment Requirements 
 
 ## Overview
 This README.md file outlines the changes made to the game logic script of the Unity project.
