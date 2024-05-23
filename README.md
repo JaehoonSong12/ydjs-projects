@@ -7,7 +7,7 @@
 - **OIT/Canvas Account Name:** Jaehoon Song
 
 ## Main Scene
-The main scene of the project is '''/Assets/Scenes/SampleScene.unity'''.
+The main scene of the project is ```/Assets/Scenes/SampleScene.unity```.
 
 ## Observations in Build and Code
 - **Build Observations:**
