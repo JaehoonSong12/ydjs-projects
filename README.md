@@ -1,10 +1,10 @@
 
 # Introduction
 
-## Author Information
-- **Full Name:** Jaehoon Song
+## Author
+- **Full Name (OIT/Canvas Account Name):** Jaehoon Song
 - **Email:** jsong421@gatech.edu
-- **OIT/Canvas Account Name:** Jaehoon Song
+- **Institution:** Georgia Tech
 
 ## Main Scene
 The main scene of the project is the following.
