@@ -29,10 +29,8 @@ The followings are the code changes highlighted for implementation of the modifi
 - **Player Score Tracking:** Check the `OnTriggerEnter()` method in the `Player.cs` script for updating the player's score.
 - **Player Movement Controls:** Refer to the movement handling methods (`OnMove()` and `FixedUpdate()`) in the `Player.cs` script for player movement implementation.
 ## Extra Implementations
-The project includes additional features such as:
-- Improved player movement using Unity's physics engine.
-- Dynamic player score tracking.
-- Restart functionality for better user experience.
+The project includes additional implementations such as:
+- Guide UI of the entire game flow (Restart and Exit functionality) for better user experience.
 ## Known Issues (Bugs)
 - There are no known bugs or incomplete features.
 
