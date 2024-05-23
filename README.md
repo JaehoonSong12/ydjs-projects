@@ -2,7 +2,6 @@
 ## Author
 - **Full Name (OIT/Canvas Account Name):** Jaehoon Song
 - **Email:** jsong421@gatech.edu
-- **Institution:** Georgia Tech
 ## Main Scene
 The main scene of the project is the following.
 ```
@@ -55,4 +54,4 @@ The following is a list up of external assets and the purpose of their use in Un
 
 
 # License
-This project is licensed under the [License Name] - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under CS4455, Georgia Institute of Technology - see the [LICENSE.md](LICENSE.md) file for details.
