@@ -12,8 +12,10 @@ The main scene of the project is the following.
 
 # Requirements 
 Here are the key changes overview.
+- Added functionality for exiting the game.
 - Added functionality for restarting the game.
 - Implemented game over conditions.
+- Implemented text object control for better user experience.
 - Implemented player movement restrictions after game over.
 ## Build Observations
 The followings are the observations expected by default (or given project) and by my modifications.
@@ -23,7 +25,8 @@ The followings are the observations expected by default (or given project) and b
 - The game ends when all pickup items are collected, displaying a game over message.
 - The player can restart the game by pressing 'R' or quit by pressing 'ESC'.
 ## Code Changes
-The followings are the code changes highlighted for implementation of the modifications.
+The followings are the code changes highlighted for implementation of the modifications. In 
+`./Assets/Objects/Controllers`
 - **Restart Functionality:** Check the `Update()` method in the `Player.cs` script for the implementation of restarting the game.
 - **Game Over Conditions:** Look for the `isPaused` variable and collision with pickup items in the `Player.cs` script to understand game over conditions.
 - **Player Score Tracking:** Check the `OnTriggerEnter()` method in the `Player.cs` script for updating the player's score.
