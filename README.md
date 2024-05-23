@@ -53,12 +53,12 @@ This project is licensed under the [License Name] - see the [LICENSE.md](LICENSE
 # Burdell_G_m0 README
 
 ## Author Information
-- **Full Name:** [Your Full Name]
-- **Email:** [Your Email Address]
+- **Full Name:** Jaehoon Song
+- **Email:** jsong421@gatech.edu
 - **OIT/Canvas Account Name:** [Your OIT/Canvas Account Name]
 
 ## Main Scene
-The main scene of the project is [MainSceneName].
+The main scene of the project is **SampleScene.unity**.
 
 ## Observations in Build and Code
 - **Build Observations:**
