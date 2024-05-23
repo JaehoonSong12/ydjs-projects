@@ -15,9 +15,6 @@ The main scene of the project is the following.
 ## Build Observations
 
 - Upon running the build, the player can control a character within the game environment.
-  ```
-  ./Build/Windows/win.app/song_jh_m0.exe
-  ```
 - Pickup items can be collected by the player.
 - The game ends when all pickup items are collected, displaying a game over message.
 - The player can restart the game by pressing 'R' or quit by pressing 'ESC'.
@@ -39,6 +36,9 @@ The main scene of the project is the following.
 # Instructions
 Here is the usage explain of the implementation in detail including features and expected behavior.
 - To run the game, open the Unity project and play the scene.
+  ```
+  ./Build/Windows/win.app/song_jh_m0.exe
+  ```
 - Use the arrow keys or arrow keys to move the player (ball).
 - Collect all pickup items (rotating cubes) to complete the game.
 - Press 'R' to restart the game after it ends.
