@@ -47,6 +47,7 @@ Here is the usage explain of the implementation in detail including features and
   ```
 - Use the arrow keys to move the player (ball).
 - Collect all pickup items (rotating cubes) to complete the game.
+- Avoid the obstacles (red large cubes) to not get distracted.
 - Press 'ESC' to quit the game whenever.
 - Press 'R' to restart the game after it ends.
 ## Dependencies and External Assets
