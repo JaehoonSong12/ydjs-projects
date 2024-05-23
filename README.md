@@ -12,6 +12,16 @@ The main scene of the project is the following.
 ./Assets/Scenes/SampleScene.unity
 ```
 
+
+
+
+
+# Assignment Requirements 
+
+
+
+
+
 ## Observations in Build and Code
 - **Build Observations:**
   - Upon running the build, the player can control a character within the game environment.
