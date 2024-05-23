@@ -41,12 +41,12 @@ Here is the usage explain of the implementation in detail including features and
   ./Build/Windows/win.app/song_jh_m0.exe
   ```
   ```
-  /Build/OSX/osx.app/Contents/MacOS/song_jh_m0
+  ./Build/OSX/osx.app/Contents/MacOS/song_jh_m0
   ```
-- Use the arrow keys or arrow keys to move the player (ball).
+- Use the arrow keys to move the player (ball).
 - Collect all pickup items (rotating cubes) to complete the game.
+- Press 'ESC' to quit the game whenever.
 - Press 'R' to restart the game after it ends.
-- Press 'ESC' to quit the game.
 ## External Assets
 The following is a list up of external assets and the purpose of their use in Unity.
 - **TextMeshPro** package: to display text elements on the canvas object.
