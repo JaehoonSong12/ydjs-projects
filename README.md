@@ -16,28 +16,32 @@ The main scene of the project is the following.
 
 
 
+
+
+
+
 # Assignment Requirements 
 
 
+## Build Observations
+- Upon running the build, the player can control a character within the game environment.
+- Pickup items can be collected by the player.
+- The game ends when all pickup items are collected, displaying a game over message.
+- The player can restart the game by pressing 'R' or quit by pressing 'ESC'.
+
+## Code Changes
+- **Restart Functionality:** Check the `Update()` method in the `Player.cs` script for the implementation of restarting the game.
+- **Game Over Conditions:** Look for the `isPaused` variable and collision with pickup items in the `Player.cs` script to understand game over conditions.
+- **Player Score Tracking:** Check the `OnTriggerEnter()` method in the `Player.cs` script for updating the player's score.
+- **Player Movement Controls:** Refer to the movement handling methods (`OnMove()` and `FixedUpdate()`) in the `Player.cs` script for player movement implementation.
 
 
 
-## Observations in Build and Code
-- **Build Observations:**
-  - Upon running the build, the player can control a character within the game environment.
-  - Pickup items can be collected by the player.
-  - The game ends when all pickup items are collected, displaying a game over message.
-  - The player can restart the game by pressing 'R' or quit by pressing 'ESC'.
+# -------------------------------
 
-- **Code Changes:**
-  - **Restart Functionality:**
-    - Check the `Update()` method in the `Player.cs` script for the implementation of restarting the game.
-  - **Game Over Conditions:**
-    - Look for the `isPaused` variable and collision with pickup items in the `Player.cs` script to understand game over conditions.
-  - **Player Score Tracking:**
-    - Check the `OnTriggerEnter()` method in the `Player.cs` script for updating the player's score.
-  - **Player Movement Controls:**
-    - Refer to the movement handling methods (`OnMove()` and `FixedUpdate()`) in the `Player.cs` script for player movement implementation.
+
+
+
 
 ## Assignment Requirements
 - All assignment requirements have been completed as specified.
