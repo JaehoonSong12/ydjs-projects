@@ -47,11 +47,10 @@ Here is the usage explain of the implementation in detail including features and
 - Collect all pickup items (rotating cubes) to complete the game.
 - Press 'ESC' to quit the game whenever.
 - Press 'R' to restart the game after it ends.
-## External Assets
+## Dependencies and External Assets
 The following is a list up of external assets and the purpose of their use in Unity.
 - **TextMeshPro** package: to display text elements on the canvas object.
-## Dependencies
-- Ensure that the TextMeshPro package is installed for proper functionality.
+
 
 
 # License
