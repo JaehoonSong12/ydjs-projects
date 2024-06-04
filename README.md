@@ -47,7 +47,7 @@ The input code is listed below according to the assignment instruction.
   ./Build/Windows/Song_JH_m1.exe
   ```
   ```
-  ./Build/OSX/Song_JH_m1.app/Contents/MacOS/Song_JH_m1
+  ./Build/OSX/Song_JH_m1.app
   ```
 - Press 'T' to switch your control on each character in the scene.
 - Use "WASD" or arrow keys to move the character chosen, dudes or minions. (Use thumbstick for analog movement of Gamepad control.)
