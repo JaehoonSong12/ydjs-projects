@@ -110,25 +110,6 @@ This project is licensed under CS4455, Georgia Institute of Technology - see the
 
 # Interactive Animation in Unity
 
-## Overview
-
-This project aims to familiarize students with implementing and controlling interactive animations in Unity. The project involves controlling two human characters and two Minion characters with various input methods and animation adjustments.
-
-## Controls
-
-The following controls are used to manage the characters in the game:
-
-- **T**: Switch between controlling characters.
-- **WASD or arrow keys**: Movement (thumbstick for analog movement of Gamepad control).
-- **1-9 (10%-90%) and 0 (100%)**: Adjust max speed.
-- **Q and E keys**: Adjust turn rates to 50%.
-- **Ctrl (Fire1)**: Button press animation near the red balloon (logical button).
-
-**Note**: The input code for control is located in the project directory:
-```
-./Assets/Scripts/CharacterControl/CharacterInputController
-```
-
 
 ## Milestones
 
