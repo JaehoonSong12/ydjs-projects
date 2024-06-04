@@ -13,12 +13,11 @@ The main scene of the project is the following.
 # Requirements 
 Here are the modifications check list (requirements) according to the assignment instruction.
 1. `SomeDude_NoRootMotion` – disable turn animation by NOT passing turn input parameter to the Animator in the script (only turning programmatically and the character should still be walking during the turn)
-2. 
-- Added functionality for exiting the game.
-- Added functionality for restarting the game.
-- Implemented game over conditions.
-- Implemented text object control for better user experience.
-- Implemented player movement restrictions after game over.
+2. `SomeDude_RootMotion` – add running animations (forward run AND turning runs) to forward blendtree and move the blend ratios around as appropriate so that the player can easily control the character. The character should continue to run while turning at full speed.
+3. `SomeDude_RootMotion` – add public scalars that allow adjustment of animation speed and root motion scale (translation and rotation). Adjust the scalars slightly faster than default until you are happy with control speed and overall animation quality. The goal is for the character to have the capabilities of a super hero, but still look reasonable natural.
+4. `Minion_RootMotion` – Replace/modify the forward and turn animations to include some comical hopping steps.
+5. `Minion_RootMotion` – Add animation events that generate minion squeaky footstep events to your forward animation.
+6. `SomeDude_RootMotion` – Match Target and Inverse Kinematics addition for button press animation.
 ## Build Observations
 The followings are the observations expected by default (or given project) and by my modifications.
 - Upon running the build, the player can control a character within the game environment (**default**).
