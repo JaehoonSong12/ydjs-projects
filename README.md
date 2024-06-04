@@ -20,7 +20,7 @@ Here are the modifications check list (requirements) according to the assignment
 6. `SomeDude_RootMotion` – Match Target and Inverse Kinematics addition for button press animation.
 ## Build Observations
 The followings are the observations expected by default (or given project) and by my modifications.
-- Upon running the build, the player can control a character within the game environment (**default**).
+- Upon running the build, the player can observe disabled turn animation for the first dude (**Script modified**).
 - Pickup items can be collected by the player (**default**).
 - Obstacle objects are added to distract the player, it will block movements of the player.
 - The game ends when all pickup items are collected, displaying a game over message.
@@ -55,6 +55,9 @@ The input code is listed below according to the assignment instruction.
 - Use 'Q' and 'E' keys to turn left and right with adjusted turn rates to 50%.
 - Walk or run around the scene as you want.
 - Use 'Ctrl' (Fire1) for button press animation near the red balloon (logical button).
+
+**Note**: The input code for control is located in the following directory.
+`./Assets/Scripts/CharacterControl/CharacterInputController`
 ## Dependencies and External Assets
 No dependencies and external assets are specified since the assignment has a tutorial style format.
 
