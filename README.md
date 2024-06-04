@@ -29,10 +29,10 @@ The followings are the observations expected by default (or given project) and b
 The followings are the code changes highlighted for implementation of the modifications. 
 1. **Turn Animation**: Check the code in `BasicControlScript.cs, line 101` to disable turn animation for `SomeDude_NoRootMotion`.
 2. **Running Animations (1)**: Check the initial setup in _Unity_ to add running animation for `SomeDude_RootMotion`.
-3. **Running Animations (2)**: Check the code in `RootMotionControlScript.cs, line 88, 104, 261` to disable turn animation for `SomeDude_NoRootMotion`.
+3. **Running Animations (2)**: Check the code in `RootMotionControlScript.cs, line 88, 104, 261` to set the speed ratio of 60% for `SomeDude_RootMotion`.
 4. **Minion Animation**: 
 5. **Minion Animation**: 
-6. **Match Target and Inverse Kinematics**: Check the code in `RootMotionControlScript.cs, line 101` to disable turn animation for `SomeDude_NoRootMotion`.
+6. **Match Target and Inverse Kinematics**: Check the code in `RootMotionControlScript.cs, line 154,211` to add match target and inverse kinematics for  for `SomeDude_RootMotion`.
 
 **Note**: The scripts (C# source code) for the requirements are located in the following directory. `BasicControlScript.cs` is a script for `SomeDude_NoRootMotion` and `RootMotionControlScript.cs` is a script for `SomeDude_RootMotion`.
 ```
