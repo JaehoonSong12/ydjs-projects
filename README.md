@@ -21,6 +21,9 @@ Here are the modifications check list (requirements) according to the assignment
 ## Build Observations
 The followings are the observations expected by default (or given project) and by my modifications.
 - Upon running the build, the player can observe disabled turn animation for the first dude (**Script modified**).
+- With the second dude, forward run, forward left run, and forward right run animations are added (**Unity modified, Animator**). Also, a speed ratio of 60% was set for the running animation speed (**Script modified**).
+- 
+
 - Pickup items can be collected by the player (**default**).
 - Obstacle objects are added to distract the player, it will block movements of the player.
 - The game ends when all pickup items are collected, displaying a game over message.
