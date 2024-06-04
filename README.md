@@ -44,10 +44,10 @@ There are no known bugs or incomplete features.
 Here is the usage explain of the implementation in detail including features and expected behavior.
 - To run the game, open the Unity project and play the scene.
   ```
-  ./Build/Windows/win.app/song_jh_m0.exe
+  ./Build/Windows/Song_JH_m1.exe
   ```
   ```
-  ./Build/OSX/osx.app/Contents/MacOS/song_jh_m0
+  ./Build/OSX/Song_JH_m1.app/Contents/MacOS/Song_JH_m1
   ```
 - Use the arrow keys to move the player (ball).
 - Collect all pickup items (rotating cubes) to complete the game.
