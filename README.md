@@ -33,8 +33,7 @@ The followings are the code changes highlighted for implementation of the modifi
 - **Game Over Message:** Look for the `if (count == 7)` statement in `./Assets/Objects/Controllers/Player.cs` to see how the text object is controlled while playing the game.
 - **Player Movement Restriction:** Refer to the if-statement from the movement handling method (`FixedUpdate()`) in `./Assets/Objects/Controllers/Player.cs` for player movement not controlled after game over.
 ## Extra Implementations
-The project includes additional implementations such as:
-- Guide UI of the entire game flow (Restart and Exit functionality) for better user experience.
+The project does not include additional implementations since the assignment has a tutorial style format.
 ## Known Issues (Bugs)
 There are no known bugs or incomplete features.
 
