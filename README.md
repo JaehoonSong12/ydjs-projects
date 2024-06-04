@@ -5,7 +5,7 @@
 ## Main Scene
 The main scene of the project is the following.
 ```
-./Assets/Scenes/SampleScene.unity
+./Assets/Scenes/demo.unity
 ```
 
 
