@@ -164,3 +164,46 @@ The followings are the code changes highlighted for implementation of the modifi
 - **Obstacles Player Blocking:** Check the `OnCollisionEnter()` method in `./Assets/Objects/Controllers/Player.cs` at line 85 for defining blocking actions by creating non-trigger objects logic.
 - **Game Over Message:** Look for the `if (count == 7)` statement in `./Assets/Objects/Controllers/Player.cs` at line 110 to see how the text object is controlled while playing the game.
 - **Player Movement Restriction:** Refer to the if-statement from the movement handling method (`FixedUpdate()`) in `./Assets/Objects/Controllers/Player.cs` at line 95 for player movement not controlled after game over.
+
+
+
+
+
+
+
+
+
+
+
+# --------------- example
+
+## Contributing
+
+We welcome contributions! Please see our CONTRIBUTING.md for details on how to get started.
+
+### Reporting Issues
+
+If you encounter any issues, please report them here: https://github.com/your-repo/issues
+
+### Submitting Pull Requests
+
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature-branch).
+3. Commit your changes (git commit -am 'Add new feature').
+4. Push to the branch (git push origin feature-branch).
+5. Create a new Pull Request.
+
+Please ensure your pull request adheres to the following guidelines:
+- Description of the change and its purpose.
+- Proper documentation and tests for the new feature.
+- Adherence to the project's coding style.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgements
+
+- Thanks to Name (https://example.com) for their invaluable help with specific aspect.
+- This project uses icons from Font Awesome (https://fontawesome.com).
+- Inspiration and guidance were taken from the XYZ Project (https://github.com/example/xyz).
