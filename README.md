@@ -27,12 +27,17 @@ The followings are the observations expected by default (or given project) and b
 - With the second minion, the forward, forward left turn, and forward right turn animations were modified to include some comical hopping steps (_Unity modified, Animation Key_). Also, animation events (sound effects) generating minion squeaky footstep sound to the forward animation was added (_Unity modified, Animation Event_).
 ## Code Changes
 The followings are the code changes highlighted for implementation of the modifications. 
-- **Restart Functionality:** Check the `Update()` method in `./Assets/Objects/Controllers/Player.cs` for the implementation of restarting the game.
+1. **Turn Animation**: Check the `line 101` in `BasicControlScript.cs` for the disabled turn animation.
+2. **Running Animations (1)**: 
+3. **Running Animations (2)**: 
+4. **Minion Animation**: 
+5. **Minion Animation**:
+6. **Match Target and Inverse Kinematics**: 
+- 
+- 
+- 
 - **Game Over Conditions:** Look for the `isPaused` variable and collision with pickup items in `./Assets/Objects/Controllers/Player.cs` to understand game over conditions.
 - **Obstacles Object Definition:** Check the `./Assets/Objects/Obstacle.prefab` to see the object settings such as `isTrigger` being `false`.
-- **Obstacles Player Blocking:** Check the `OnCollisionEnter()` method in `./Assets/Objects/Controllers/Player.cs` for defining blocking actions by creating non-trigger objects logic.
-- **Game Over Message:** Look for the `if (count == 7)` statement in `./Assets/Objects/Controllers/Player.cs` to see how the text object is controlled while playing the game.
-- **Player Movement Restriction:** Refer to the if-statement from the movement handling method (`FixedUpdate()`) in `./Assets/Objects/Controllers/Player.cs` for player movement not controlled after game over.
 
 **Note**: The scripts (C# source code) for the requirements are located in the following directory. `BasicControlScript.cs` is a script for `SomeDude_NoRootMotion` and `RootMotionControlScript.cs` is a script for `SomeDude_RootMotion`.
 ```
