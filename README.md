@@ -57,7 +57,7 @@ The input code is listed below according to the assignment instruction.
 - Use 'Ctrl' (Fire1) for button press animation near the red balloon (logical button).
 
 **Note**: The input code for control is located in the following directory.
-`./Assets/Scripts/CharacterControl/CharacterInputController`
+```./Assets/Scripts/CharacterControl/CharacterInputController```
 ## Dependencies and External Assets
 No dependencies and external assets are specified since the assignment has a tutorial style format.
 
