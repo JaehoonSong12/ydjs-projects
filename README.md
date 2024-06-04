@@ -12,7 +12,7 @@ The main scene of the project is the following.
 
 # Requirements 
 Here are the modifications check list (requirements) according to the assignment instruction.
-1. ```SomeDude_NoRootMotion``` – disable turn animation by NOT passing turn input parameter to the Animator in the script (only turning programmatically and the character should still be walking during the turn)
+1. `SomeDude_NoRootMotion` – disable turn animation by NOT passing turn input parameter to the Animator in the script (only turning programmatically and the character should still be walking during the turn)
 2. 
 - Added functionality for exiting the game.
 - Added functionality for restarting the game.
