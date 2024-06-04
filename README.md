@@ -27,17 +27,12 @@ The followings are the observations expected by default (or given project) and b
 - With the second minion, the forward, forward left turn, and forward right turn animations were modified to include some comical hopping steps (_Unity modified, Animation Key_). Also, animation events (sound effects) generating minion squeaky footstep sound to the forward animation was added (_Unity modified, Animation Event_).
 ## Code Changes
 The followings are the code changes highlighted for implementation of the modifications. 
-1. **Turn Animation**: Check the `BasicControlScript.cs, line 101` for the disabled turn animation.
-2. **Running Animations (1)**: 
-3. **Running Animations (2)**: 
+1. **Turn Animation**: Check the code in `BasicControlScript.cs, line 101` to disable turn animation for `SomeDude_NoRootMotion`.
+2. **Running Animations (1)**: Check the initial setup in _Unity_ to add running animation for `SomeDude_RootMotion`.
+3. **Running Animations (2)**: Check the code in `RootMotionControlScript.cs, line 88, 104, 261` to disable turn animation for `SomeDude_NoRootMotion`.
 4. **Minion Animation**: 
-5. **Minion Animation**:
-6. **Match Target and Inverse Kinematics**: 
-- 
-- 
-- 
-- **Game Over Conditions:** Look for the `isPaused` variable and collision with pickup items in `./Assets/Objects/Controllers/Player.cs` to understand game over conditions.
-- **Obstacles Object Definition:** Check the `./Assets/Objects/Obstacle.prefab` to see the object settings such as `isTrigger` being `false`.
+5. **Minion Animation**: 
+6. **Match Target and Inverse Kinematics**: Check the code in `RootMotionControlScript.cs, line 101` to disable turn animation for `SomeDude_NoRootMotion`.
 
 **Note**: The scripts (C# source code) for the requirements are located in the following directory. `BasicControlScript.cs` is a script for `SomeDude_NoRootMotion` and `RootMotionControlScript.cs` is a script for `SomeDude_RootMotion`.
 ```
