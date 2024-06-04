@@ -49,11 +49,12 @@ The input code is listed below according to the assignment instruction.
   ```
   ./Build/OSX/Song_JH_m1.app/Contents/MacOS/Song_JH_m1
   ```
-- Use the arrow keys to move the player (ball).
-- Collect all pickup items (rotating cubes) to complete the game.
-- Avoid the obstacles (red large cubes) to not get distracted.
-- Press 'ESC' to quit the game whenever.
-- Press 'R' to restart the game after it ends.
+- Press 'T' to switch your control on each character in the scene.
+- Use "WASD" or arrow keys to move the character chosen, dudes or minions. (Use thumbstick for analog movement of Gamepad control.)
+- Use number keys, 1-9 (10%-90%) and 0 (100%), to adjust the max speed of your character.
+- Use 'Q' and 'E' keys to turn left and right with adjusted turn rates to 50%.
+- Walk or run around the scene as you want.
+- Use 'Ctrl' (Fire1) for button press animation near the red balloon (logical button).
 ## Dependencies and External Assets
 No dependencies and external assets are specified since the assignment has a tutorial style format.
 
