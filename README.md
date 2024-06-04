@@ -41,7 +41,7 @@ There are no known bugs or incomplete features.
 
 
 # Instructions
-Here is the usage explain of the implementation in detail including features and expected behavior.
+The input code is listed below according to the assignment instruction.
 - To run the game, open the Unity project and play the scene.
   ```
   ./Build/Windows/Song_JH_m1.exe
