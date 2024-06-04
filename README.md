@@ -27,7 +27,7 @@ The followings are the observations expected by default (or given project) and b
 - With the second minion, the forward, forward left turn, and forward right turn animations were modified to include some comical hopping steps (_Unity modified, Animation Key_). Also, animation events (sound effects) generating minion squeaky footstep sound to the forward animation was added (_Unity modified, Animation Event_).
 ## Code Changes
 The followings are the code changes highlighted for implementation of the modifications. 
-1. **Turn Animation**: Check the `line 101` in `BasicControlScript.cs` for the disabled turn animation.
+1. **Turn Animation**: Check the `BasicControlScript.cs, line 101` for the disabled turn animation.
 2. **Running Animations (1)**: 
 3. **Running Animations (2)**: 
 4. **Minion Animation**: 
