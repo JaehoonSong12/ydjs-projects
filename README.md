@@ -22,12 +22,7 @@ Here are the modifications check list (requirements) according to the assignment
 The followings are the observations expected by default (or given project) and by my modifications.
 - Upon running the build, the player can observe disabled turn animation for the first dude (**Script modified**).
 - With the second dude, forward run, forward left run, and forward right run animations are added (_Unity modified, Animator_). Also, a speed ratio of 60% was set for the running animation speed (**Script modified**) and match target with inverse kinematics was added for button press animation (**Script modified**, _Unity for reference_).
-- 
-
-- Pickup items can be collected by the player (**default**).
-- Obstacle objects are added to distract the player, it will block movements of the player.
-- The game ends when all pickup items are collected, displaying a game over message.
-- The player can restart the game by pressing 'R' or quit by pressing 'ESC'.
+- With the second minion, the forward, forward left turn, and forward right turn animations were modified to include some comical hopping steps (_Unity modified, Animation Key_). Also, animation events (sound effects) generating minion squeaky footstep sound to the forward animation was added (_Unity modified, Animation Event_).
 ## Code Changes
 The followings are the code changes highlighted for implementation of the modifications. 
 - **Restart Functionality:** Check the `Update()` method in `./Assets/Objects/Controllers/Player.cs` for the implementation of restarting the game.
@@ -36,6 +31,15 @@ The followings are the code changes highlighted for implementation of the modifi
 - **Obstacles Player Blocking:** Check the `OnCollisionEnter()` method in `./Assets/Objects/Controllers/Player.cs` for defining blocking actions by creating non-trigger objects logic.
 - **Game Over Message:** Look for the `if (count == 7)` statement in `./Assets/Objects/Controllers/Player.cs` to see how the text object is controlled while playing the game.
 - **Player Movement Restriction:** Refer to the if-statement from the movement handling method (`FixedUpdate()`) in `./Assets/Objects/Controllers/Player.cs` for player movement not controlled after game over.
+
+**Note**: The scripts (C# source code) for the requirements are located in the following directory. `BasicControlScript.cs` is a script for `SomeDude_NoRootMotion` and `RootMotionControlScript.cs` is a script for `SomeDude_RootMotion`.
+```
+./Assets/Scripts/CharacterControl/BasicControlScript.cs
+```
+```
+./Assets/Scripts/CharacterControl/RootMotionControlScript.cs
+```
+
 ## Extra Implementations
 The project does not include additional implementations since the assignment has a tutorial style format.
 ## Known Issues (Bugs)
@@ -58,7 +62,6 @@ The input code is listed below according to the assignment instruction.
 - Use 'Q' and 'E' keys to turn left and right with adjusted turn rates to 50%.
 - Walk or run around the scene as you want.
 - Use 'Ctrl' (Fire1) for button press animation near the red balloon (logical button).
-
 **Note**: The input code for control is located in the following directory.
 ```
 ./Assets/Scripts/CharacterControl/CharacterInputController.cs
