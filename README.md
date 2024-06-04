@@ -30,8 +30,8 @@ The followings are the code changes highlighted for implementation of the modifi
 1. **Turn Animation**: Check the code in `BasicControlScript.cs, line 101` to disable turn animation for `SomeDude_NoRootMotion`.
 2. **Running Animations (Running)**: Check the initial setup in _Unity, Animator_ to add running animation for `SomeDude_RootMotion`.
 3. **Running Animations (Speed)**: Check the code in `RootMotionControlScript.cs, line 88, 104, 261` to set the speed ratio of 60% for `SomeDude_RootMotion`.
-4. **Minion Animation**: Check the initial setup in _Unity, Animation Key_ to modify running animation (hopping steps) for `Minion_RootMotion`.
-5. **Minion Animation**: Check the initial setup in _Unity, Animation Event_ to add animation events that generate minion squeaky footstep (sound) events to the forward animation for `Minion_RootMotion`.
+4. **Minion Animation (Running)**: Check the initial setup in _Unity, Animation Key_ to modify running animation (hopping steps) for `Minion_RootMotion`.
+5. **Minion Animation (Sound Effect)**: Check the initial setup in _Unity, Animation Event_ to add animation events that generate minion squeaky footstep (sound) events to the forward animation for `Minion_RootMotion`.
 6. **Match Target and Inverse Kinematics**: Check the code in `RootMotionControlScript.cs, line 154, 211` to add match target and inverse kinematics for  for `SomeDude_RootMotion`.
 
 **Note**: The scripts (C# source code) for the requirements are located in the following directory. `BasicControlScript.cs` is a script for `SomeDude_NoRootMotion` and `RootMotionControlScript.cs` is a script for `SomeDude_RootMotion`.
