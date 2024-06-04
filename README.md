@@ -10,6 +10,8 @@ The main scene of the project is the following.
 
 
 
+
+
 # Requirements 
 Here are the modifications check list (requirements) according to the assignment instruction.
 1. `SomeDude_NoRootMotion` – disable turn animation by NOT passing turn input parameter to the Animator in the script (only turning programmatically and the character should still be walking during the turn)
@@ -39,11 +41,12 @@ The followings are the code changes highlighted for implementation of the modifi
 ```
 ./Assets/Scripts/CharacterControl/RootMotionControlScript.cs
 ```
-
 ## Extra Implementations
 The project does not include additional implementations since the assignment has a tutorial style format.
 ## Known Issues (Bugs)
 There are no known bugs or incomplete features.
+
+
 
 
 
@@ -62,12 +65,15 @@ The input code is listed below according to the assignment instruction.
 - Use 'Q' and 'E' keys to turn left and right with adjusted turn rates to 50%.
 - Walk or run around the scene as you want.
 - Use 'Ctrl' (Fire1) for button press animation near the red balloon (logical button).
+
 **Note**: The input code for control is located in the following directory.
 ```
 ./Assets/Scripts/CharacterControl/CharacterInputController.cs
 ```
 ## Dependencies and External Assets
 No dependencies and external assets are specified since the assignment has a tutorial style format.
+
+
 
 
 
