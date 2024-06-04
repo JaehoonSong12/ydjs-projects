@@ -36,7 +36,7 @@ The followings are the code changes highlighted for implementation of the modifi
 The project includes additional implementations such as:
 - Guide UI of the entire game flow (Restart and Exit functionality) for better user experience.
 ## Known Issues (Bugs)
-- There are no known bugs or incomplete features.
+There are no known bugs or incomplete features.
 
 
 
@@ -55,8 +55,7 @@ Here is the usage explain of the implementation in detail including features and
 - Press 'ESC' to quit the game whenever.
 - Press 'R' to restart the game after it ends.
 ## Dependencies and External Assets
-The following is a list up of external assets and the purpose of their use in Unity.
-- **TextMeshPro** package: to display text elements on the canvas object.
+No dependencies and external assets are specified since the assignment has a tutorial style format.
 
 
 
