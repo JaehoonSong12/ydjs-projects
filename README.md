@@ -17,6 +17,34 @@ The main scene of the project is the following.
 
 
 
+# Instructions
+The input code is listed below according to the assignment instructions.
+- To run the game, open the Unity project and play the scene.
+  ```
+  ./Build/Windows/Song_JH_m2.exe
+  ```
+  ```
+  ./Build/OSX/Song_JH_m2.app
+  ```
+- Press '**T**' to switch your control on each character in the scene.
+- Use "**WASD**" or **arrow keys** to move the character chosen, dudes or minions. (Use thumbstick for analog movement of Gamepad control.)
+- Use **number keys**, 1-9 (10%-90%) and 0 (100%), to adjust the max speed of your character.
+- Use '**Q**' and '**E**' keys to turn left and right with adjusted turn rates to 50%.
+- Walk or run around the scene as you want.
+- Use '**Ctrl**' (Fire1) for button press animation near the red balloon (logical button).
+- Use '**P**' to pause and unpause the game.
+
+**Note**: The input code for control is located in the following directory.
+```
+./Assets/Scripts/CharacterControl/CharacterInputController.cs
+```
+
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br />
+
+
+
 # Requirements 
 Here are the modifications check list (requirements) according to the assignment instructions. The topic is "**Physics Simulation**," aiming creation of several physics objects and exploration of some programmatic control of the physics simulation.
 1. `SomeDude_NoRootMotion` – disable turn animation by NOT passing turn input parameter to the Animator in the script (only turning programmatically and the character should still be walking during the turn)
@@ -65,42 +93,25 @@ No dependencies and external assets are specified since the assignment has a tut
 
 
 
-
-
-
-
-
-# Instructions
-The input code is listed below according to the assignment instructions.
-- To run the game, open the Unity project and play the scene.
-  ```
-  ./Build/Windows/Song_JH_m2.exe
-  ```
-  ```
-  ./Build/OSX/Song_JH_m2.app
-  ```
-- Press '**T**' to switch your control on each character in the scene.
-- Use "**WASD**" or **arrow keys** to move the character chosen, dudes or minions. (Use thumbstick for analog movement of Gamepad control.)
-- Use **number keys**, 1-9 (10%-90%) and 0 (100%), to adjust the max speed of your character.
-- Use '**Q**' and '**E**' keys to turn left and right with adjusted turn rates to 50%.
-- Walk or run around the scene as you want.
-- Use '**Ctrl**' (Fire1) for button press animation near the red balloon (logical button).
-- Use '**P**' to pause and unpause the game.
-
-**Note**: The input code for control is located in the following directory.
-```
-./Assets/Scripts/CharacterControl/CharacterInputController.cs
-```
+# Information
+## License
+This project is licensed under CS4455, Georgia Institute of Technology - see the [LICENSE.md](LICENSE.md) file for details.
+## Contributing
+Explain how others can contribute to your project. Include guidelines for submitting issues and pull requests.
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-branch`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature-branch`)
+5. Create a new Pull Request
+## Acknowledgements
+This project currently does not include an acknowledgements section as there were no contributions or funding sources to acknowledge at this stage.
+## Contact
+Provide contact information if people have questions or need support. For example:
+Created by [Your Name](https://yourwebsite.com) - feel free to contact me at [your-email@example.com].
 
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br />
-
-
-
-# License
-This project is licensed under CS4455, Georgia Institute of Technology - see the [LICENSE.md](LICENSE.md) file for details.
-
 
 
 
