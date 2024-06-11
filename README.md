@@ -61,7 +61,7 @@ The followings are the code changes highlighted for implementation of the modifi
 3. **Physics Layers**: Check the settings in _Unity_ to observe the layer collision settings for red rigidbody spheres. <br/>`Edit > Project Settings > Physics > Layer Collision Matrix`
 4. **Compound Collider**: Check the setup in _Unity_ for the compound collider of the "Free Japanese Mask" model.
 5. **Joint Constraints**: Check the setup in _Unity_ for the yellow jointed chain. <br/>`Component > Fixed and Configurable Joint`
-6. **Kinematic Elevator**: Check the setup in _Unity_ for the blue kinematic elevator. <br/>`rigidbody > isKinematic and animation > Transform > Position`
+6. **Kinematic Elevator**: Check the setup in _Unity_ for the blue kinematic elevator. <br/>`Rigidbody > isKinematic` and `Animation > Transform > Position`
 7. **Center of Mass**: Check the code in `RigidbodyCenterOfMass.cs` to observe the center of mass customization for the green Weeble Wobble/Punching Bozo.
 8. **Default Friction**: Check the setup in _Unity_ for the purple cube with rigidbody box.
 9. **Low Friction**: Check the physics material in `./Assets/physics_materials/Slippy.physicMaterial` for the green cube with low friction.
