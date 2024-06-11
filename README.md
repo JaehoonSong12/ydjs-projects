@@ -19,31 +19,39 @@ The main scene of the project is the following.
 
 # Project Requirements 
 Here are the modifications check list (requirements) according to the assignment instructions. The topic is "**Physics Simulation**," aiming creation of several physics objects and exploration of some programmatic control of the physics simulation.
-1. `SomeDude_NoRootMotion` – disable turn animation by NOT passing turn input parameter to the Animator in the script (only turning programmatically and the character should still be walking during the turn)
-2. `SomeDude_RootMotion` – add running animations (forward run AND turning runs) to forward blendtree and move the blend ratios around as appropriate so that the player can easily control the character. The character should continue to run while turning at full speed.
-3. `SomeDude_RootMotion` – add public scalars that allow adjustment of animation speed and root motion scale (translation and rotation). Adjust the scalars slightly faster than default until you are happy with control speed and overall animation quality. The goal is for the character to have the capabilities of a super hero, but still look reasonable natural.
-4. `Minion_RootMotion` – Replace/modify the forward and turn animations to include some comical hopping steps.
-5. `Minion_RootMotion` – Add animation events that generate minion squeaky footstep events to your forward animation.
-6. `SomeDude_RootMotion` – Match Target and Inverse Kinematics addition for button press animation.
+
+
+1. The player's name appears in the HUD.
+2. A vertical stack of three blue rigidbody spheres with collision sounds is present.
+3. A vertical stack of three red rigidbody spheres that do not collide with one another is present.
+4. The Asset Store model "Free Japanese Mask" includes a custom compound collider that tips over on its nose, similar to the provided video. (A mesh collider should not be used for this task.)
+5. A yellow jointed chain made of at least five rigidbody GameObjects is included.
+6. A blue kinematic rigidbody elevator using Mecanim animation carries a red rigidbody sphere.
+7. A green Weeble Wobble/Punching Bozo tilts but cannot be knocked over.
+8. A purple cube with a rigidbody box that does not slide down the ramp is present.
+9. A green cube with a rigidbody box that slides down the ramp is included.
+10. An orange rigidbody sphere that bounces is present.
+11. A Y_Bot ragdoll collapses over the hurdle GameObject (it is acceptable for the ragdoll to fall off).
+12. A black click beetle or jumping bean that jumps intermittently and autonomously (not controlled by the player) is included. There is a variable/random amount of time between jumps and variable/random force magnitude and direction. Jumps occur only when grounded.
+13. A pause script starts the game paused and unpauses with a "p" keypress.
+
+
+
+
+
 ## Build Observations
 The followings are the observations expected by default (or given project) and by my modifications.
-- Upon running the build, the player can observe disabled turn animation for the first dude (**Script modified**).
-- With the second dude, forward run, forward left run, and forward right run animations are added (_Unity modified, Animator_). Also, a speed ratio of 60% was set for the running animation speed (**Script modified**) and match target with inverse kinematics was added for button press animation (**Script modified**, _Unity for reference_).
-- With the second minion, the forward, forward left turn, and forward right turn animations were modified to include some comical hopping steps (_Unity modified, Animation Key_). Also, animation events (sound effects) generating minion squeaky footstep sound to the forward animation was added (_Unity modified, Animation Event_).
-## Build Observations (m2)
-The followings are the observations expected by default (or given project) and by my modifications.
-- Vertical stack of three blue rigidbody spheres with collision sounds have been added with `BallCollisionReporter.cs` script to trigger collision events (**Script created**, _Unity for script reference and components_).
-- Vertical stack of three red rigidbody spheres that don't collide with one another by `NoCollisionLayer` setup (_Unity modified, Edit > Project Settings > Physics > Layer Collision Matrix_).
-- Asset Store model "Free Japanese Mask" with transparent child objects and their compound collider was added. It tips over on nose similar to provided video link (_Unity modified_).
-- Yellow jointed chain made of five rigidbody Chain links by configurable Joint and a Chain Anchor by fixed joint (_Unity modified, Fixed and Configurable Joint_).
-- Blue kinematic rigidbody elevator using Mechanism animation with red rigidbody sphere going for a ride (update mode was set to "animate physics" for synchronization between animations and the physics system) (_Unity modified, rigidbody > isKinematic and animation > Transform > Position_).
-- Green Weeble Wobble/Punching Bozo that tilts but not being knocked over has been added with the script `RigidbodyCenterOfMass.cs` (**Script applied**).
+- Upon running the build, the player can observe vertical stack of three blue rigidbody spheres with collision sounds (**Script created**, _Unity for reference_).
+- With the vertical stack of three red rigidbody spheres, the player can observe that red spheres don't collide with one another (_Unity modified, Layer Collision Matrix_).
+- Asset Store model "Free Japanese Mask" will be observed (_Unity modified_).
+- Yellow jointed chain made of six rigidbody Chain links will be observed (_Unity modified, Fixed and Configurable Joint_).
+- Blue kinematic rigidbody elevator using Mechanism animation with red rigidbody sphere going for a ride will be observed (_Unity modified, Animation Physics_).
+- Green Weeble Wobble/Punching Bozo that tilts but not being knocked over has been added (**Script applied**).
 - A purple cube with rigidbody box that does not slide down the ramp has been added (_Unity modified_).
-- Green cube with rigidbody box that does slide down the ramp with its physics material property, `./Assets/physics_materials/Slippy.physicMaterial.` (_Unity modified, physics material_).
-- Orange rigidbody sphere that bounces with its physics material property, `./Assets/physics_materials/Bouncy.physicMaterial.` (_Unity modified, physics material_).
-- Y_Bot ragdoll done all the bones assignment that collapses over the hurdle GameObject, imported using `./Assets/ModelsAndAnimations/YBot with Animations/Y_Bot/Y_Bot.fbx.` (_Unity modified, GameObject > 3D Object > Ragdoll_).
-- Black jumping bean that jumps autonomously with randomized jump intervals, directions, magnitudes, and ground detection for realistic jumping has been added by a script, `JumpingBean.cs.` (**Script modified**).
-- Make a pause script that starts the game paused and unpauses with `p` keypress by a script, `PauseGame.cs` utilizing `Time.timeScale.` (**Script modified**).
+- Green cube with rigidbody box that does slide down the ramp has been added (_Unity modified, physics material_).
+- Orange rigidbody sphere that bounces has been added (_Unity modified, physics material_).
+- Y_Bot ragdoll done all the bones assignment has been added (_Unity modified, Ragdoll_).
+- Black jumping bean that jumps autonomously with randomized jump intervals, directions, magnitudes, and ground detection for realistic jumping has been added (**Script modified**).
 ## Code Changes
 The followings are the code changes highlighted for implementation of the modifications.
 1. **HUD modification**: Check the setup in _Unity_.
@@ -51,7 +59,7 @@ The followings are the code changes highlighted for implementation of the modifi
 3. **Physics Layers**: Check the settings in _Unity_ to observe the layer collision settings for red rigidbody spheres. <br/>`Edit > Project Settings > Physics > Layer Collision Matrix`
 4. **Compound Collider**: Check the setup in _Unity_ for the compound collider of the "Free Japanese Mask" model.
 5. **Joint Constraints**: Check the setup in _Unity_ for the yellow jointed chain. <br/>`Component > Fixed and Configurable Joint`
-6. **Kinematic Elevator**: Check the setup in _Unity_ for the blue kinematic elevator. <br/>`Rigidbody > isKinematic` and `Animation > Transform > Position`
+6. **Kinematic Elevator**: Check the setup in _Unity_ for the blue kinematic elevator. (Update mode was set to "animate physics" for synchronization between animations and the physics system)  <br/>`Rigidbody > isKinematic` and `Animation > Transform > Position`
 7. **Center of Mass**: Check the code in `RigidbodyCenterOfMass.cs` to observe the center of mass customization for the green Weeble Wobble/Punching Bozo.
 8. **Default Friction**: Check the setup in _Unity_ for the purple cube with rigidbody box.
 9. **Low Friction**: Check the physics material in `./Assets/physics_materials/Slippy.physicMaterial` for the green cube with low friction.
