@@ -33,6 +33,7 @@ The followings are the code changes highlighted for implementation of the modifi
 4. **Minion Animation (Running)**: Check the initial setup in _Unity, Animation Key_ to modify running animation (hopping steps) for `Minion_RootMotion`.
 5. **Minion Animation (Sound Effect)**: Check the initial setup in _Unity, Animation Event_ to add animation events that generate minion squeaky footstep (sound) events to the forward animation for `Minion_RootMotion`.
 6. **Match Target and Inverse Kinematics**: Check the code in `RootMotionControlScript.cs, line 154, 211` to add match target and inverse kinematics for  for `SomeDude_RootMotion`.
+
 **Note**: The scripts (C# source code) for the requirements are located in the following directory.
 ```
 ./Assets/Scripts/M2/BallCollisionReporter.cs
