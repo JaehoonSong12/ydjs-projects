@@ -48,7 +48,7 @@ The followings are the code changes highlighted for implementation of the modifi
 ```
 ./Assets/Scripts/Utility/RigidbodyCenterOfMass.cs
 ```
-```
+
 
 ## Extra Implementations
 The project does not include additional implementations since the assignment has a tutorial style format.
