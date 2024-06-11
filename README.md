@@ -45,16 +45,6 @@ The followings are the observations expected by default (or given project) and b
 - Black jumping bean that jumps autonomously with randomized jump intervals, directions, magnitudes, and ground detection for realistic jumping has been added by a script, `JumpingBean.cs.` (**Script modified**).
 - Make a pause script that starts the game paused and unpauses with `p` keypress by a script, `PauseGame.cs` utilizing `Time.timeScale.` (**Script modified**).
 ## Code Changes
-The followings are the code changes highlighted for implementation of the modifications. 
-1. **Turn Animation**: Check the code in `BasicControlScript.cs, line 101` to disable turn animation for `SomeDude_NoRootMotion`.
-2. **Running Animations (Running)**: Check the initial setup in _Unity, Animator_ to add running animation for `SomeDude_RootMotion`.
-3. **Running Animations (Speed)**: Check the code in `RootMotionControlScript.cs, line 88, 104, 261` to set the speed ratio of 60% for `SomeDude_RootMotion`.
-4. **Minion Animation (Running)**: Check the initial setup in _Unity, Animation Key_ to modify running animation (hopping steps) for `Minion_RootMotion`.
-5. **Minion Animation (Sound Effect)**: Check the initial setup in _Unity, Animation Event_ to add animation events that generate minion squeaky footstep (sound) events to the forward animation for `Minion_RootMotion`.
-6. **Match Target and Inverse Kinematics**: Check the code in `RootMotionControlScript.cs, line 154, 211` to add match target and inverse kinematics for  for `SomeDude_RootMotion`.
-
-
-## Code Changes (m2)
 The followings are the code changes highlighted for implementation of the modifications.
 1. **HUD modification**: Check the setup in _Unity_.
 2. **Collision Events**: Check the code in `BallCollisionReporter.cs` to observe collision events for blue rigidbody spheres.
@@ -66,7 +56,7 @@ The followings are the code changes highlighted for implementation of the modifi
 8. **Default Friction**: Check the setup in _Unity_ for the purple cube with rigidbody box.
 9. **Low Friction**: Check the physics material in `./Assets/physics_materials/Slippy.physicMaterial` for the green cube with low friction.
 10. **Bouncy Rigidbody**: Check the physics material in `./Assets/physics_materials/Bouncy.physicMaterial` for the orange bouncy rigidbody sphere.
-11. **Ragdoll**: Check the setup in _Unity, GameObject > 3D Object > Ragdoll_ for the Y_Bot ragdoll.
+11. **Ragdoll**: Check the setup in _Unity_ for the Y_Bot ragdoll. <br/>`GameObject > 3D Object > Ragdoll`
 12. **Scripting Forces**: Check the code in `JumpingBean.cs` to observe the autonomous jumping behavior of the black jumping bean.
 13. **Pause Script**: Check the code in `PauseGame.cs` to observe the pause functionality with the `p` keypress.
 
