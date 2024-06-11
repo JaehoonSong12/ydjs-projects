@@ -54,10 +54,10 @@ There are no known bugs or incomplete features.
 The input code is listed below according to the assignment instructions.
 - To run the game, open the Unity project and play the scene.
   ```
-  ./Build/Windows/Song_JH_m1.exe
+  ./Build/Windows/Song_JH_m2.exe
   ```
   ```
-  ./Build/OSX/Song_JH_m1.app
+  ./Build/OSX/Song_JH_m2.app
   ```
 - Press '**T**' to switch your control on each character in the scene.
 - Use "**WASD**" or **arrow keys** to move the character chosen, dudes or minions. (Use thumbstick for analog movement of Gamepad control.)
