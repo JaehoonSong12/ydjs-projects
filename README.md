@@ -149,6 +149,8 @@ The input code is listed below according to the assignment instructions.
 
 
 # Project Information
+## License
+This project is licensed under CS4455, Georgia Institute of Technology - see the [LICENSE.md](LICENSE.md) file for details.
 ## Contribution
 Contributions are allowed - see the [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to get started.
 <!--
@@ -182,8 +184,6 @@ Please ensure your pull request adheres to the following guidelines:
 - Proper documentation and tests for the new feature.
 - Adherence to the project's coding style.
 -->
-## License
-This project is licensed under CS4455, Georgia Institute of Technology - see the [LICENSE.md](LICENSE.md) file for details.
 ## Acknowledgements
 This project currently does not include an acknowledgements section as there were no contributions or funding sources to acknowledge at this stage.
 <!-- 
