@@ -104,15 +104,15 @@ Explain how others can contribute to your project. Include guidelines for submit
 ```
 git checkout -b feature-branch
 ```
-4. Commit your changes 
+3. Commit your changes 
 ```
 git commit -am 'Add new feature'
 ```
-6. Push to the branch 
+4. Push to the branch 
 ```
 git push origin feature-branch
 ```
-8. Create a new Pull Request
+5. Create a new Pull Request
 ## Acknowledgements
 This project currently does not include an acknowledgements section as there were no contributions or funding sources to acknowledge at this stage.
 
