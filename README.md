@@ -13,7 +13,7 @@ The main scene of the project is the following.
 
 
 # Requirements 
-Here are the modifications check list (requirements) according to the assignment instructions. The topic is "Physics Simulation," aiming creation of several physics objects and exploration of some programmatic control of the physics simulation.
+Here are the modifications check list (requirements) according to the assignment instructions. The topic is "**Physics Simulation**," aiming creation of several physics objects and exploration of some programmatic control of the physics simulation.
 
 1. `SomeDude_NoRootMotion` – disable turn animation by NOT passing turn input parameter to the Animator in the script (only turning programmatically and the character should still be walking during the turn)
 2. `SomeDude_RootMotion` – add running animations (forward run AND turning runs) to forward blendtree and move the blend ratios around as appropriate so that the player can easily control the character. The character should continue to run while turning at full speed.
