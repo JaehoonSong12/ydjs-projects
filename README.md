@@ -54,7 +54,7 @@ The followings are the code changes highlighted for implementation of the modifi
 ```
 ## Extra Implementations
 The project does not include additional implementations since the assignment has a tutorial style format.
-## Known Issues (Bugs)
+## Known Issues or Bugs
 There are no known bugs or incomplete features.
 ## Dependencies and External Assets
 All the dependencies and external assets are resolved within the solution following the assignment tutorial format. 
