@@ -57,7 +57,8 @@ The project does not include additional implementations since the assignment has
 ## Known Issues (Bugs)
 There are no known bugs or incomplete features.
 ## Dependencies and External Assets
-No dependencies and external assets are specified since the assignment has a tutorial style format.
+All the dependencies and external assets are resolved within the solution following the assignment tutorial format. 
+- external asset, "Japanese Mask," has been added to the project solution.
 
 
 
