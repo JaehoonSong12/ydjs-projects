@@ -56,6 +56,8 @@ The followings are the code changes highlighted for implementation of the modifi
 The project does not include additional implementations since the assignment has a tutorial style format.
 ## Known Issues (Bugs)
 There are no known bugs or incomplete features.
+## Dependencies and External Assets
+No dependencies and external assets are specified since the assignment has a tutorial style format.
 
 
 
@@ -89,8 +91,6 @@ The input code is listed below according to the assignment instructions.
 ```
 ./Assets/Scripts/CharacterControl/CharacterInputController.cs
 ```
-## Dependencies and External Assets
-No dependencies and external assets are specified since the assignment has a tutorial style format.
 
 
 
