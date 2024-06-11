@@ -51,7 +51,7 @@ There are no known bugs or incomplete features.
 
 
 # Instructions
-The input code is listed below according to the assignment instruction.
+The input code is listed below according to the assignment instructions.
 - To run the game, open the Unity project and play the scene.
   ```
   ./Build/Windows/Song_JH_m1.exe
@@ -65,7 +65,7 @@ The input code is listed below according to the assignment instruction.
 - Use '**Q**' and '**E**' keys to turn left and right with adjusted turn rates to 50%.
 - Walk or run around the scene as you want.
 - Use '**Ctrl**' (Fire1) for button press animation near the red balloon (logical button).
-- Use '**P**' (Fire1) to pause and unpause the game.
+- Use '**P**' to pause and unpause the game.
 
 **Note**: The input code for control is located in the following directory.
 ```
