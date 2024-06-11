@@ -1,3 +1,6 @@
+<!-- Improved compatibility of back to top link -->
+<a name="readme-top"></a>
+
 # Introduction
 ## Author
 - **Full Name (OIT/Canvas Account Name):** Jaehoon Song
@@ -10,7 +13,7 @@ The main scene of the project is the following.
 
 
 
-<br /><br /><br />
+<p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br />
 
 
 
@@ -56,7 +59,7 @@ There are no known bugs or incomplete features.
 
 
 
-<br /><br /><br />
+<p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br />
 
 
 
@@ -86,7 +89,7 @@ No dependencies and external assets are specified since the assignment has a tut
 
 
 
-<br /><br /><br />
+<p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br />
 
 
 
@@ -117,7 +120,7 @@ This project is licensed under CS4455, Georgia Institute of Technology - see the
 
 
 
-<br /><br /><br /><br /><br /><br /><br /><br /><br />
+<p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br /><p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br /><p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br />
 
 
 
