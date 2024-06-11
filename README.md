@@ -100,9 +100,12 @@ This project is licensed under CS4455, Georgia Institute of Technology - see the
 ## Contributing
 Explain how others can contribute to your project. Include guidelines for submitting issues and pull requests.
 1. Fork the repository
-2. Create a new branch ```git checkout -b feature-branch```
-3. Commit your changes ```git commit -am 'Add new feature'```
-4. Push to the branch ```git push origin feature-branch```
+2. Create a new branch 
+```git checkout -b feature-branch```
+3. Commit your changes 
+```git commit -am 'Add new feature'```
+4. Push to the branch 
+```git push origin feature-branch```
 5. Create a new Pull Request
 ## Acknowledgements
 This project currently does not include an acknowledgements section as there were no contributions or funding sources to acknowledge at this stage.
