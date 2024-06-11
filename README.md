@@ -5,7 +5,7 @@
 ## Main Scene
 The main scene of the project is the following.
 ```
-./Assets/Scenes/demo.unity
+./Assets/Scenes/demo_m2.unity
 ```
 
 
@@ -65,6 +65,7 @@ The input code is listed below according to the assignment instruction.
 - Use '**Q**' and '**E**' keys to turn left and right with adjusted turn rates to 50%.
 - Walk or run around the scene as you want.
 - Use '**Ctrl**' (Fire1) for button press animation near the red balloon (logical button).
+- Use '**P**' (Fire1) to pause and unpause the game.
 
 **Note**: The input code for control is located in the following directory.
 ```
