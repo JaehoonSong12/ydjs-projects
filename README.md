@@ -56,18 +56,19 @@ The followings are the code changes highlighted for implementation of the modifi
 
 ## Code Changes (m2)
 The followings are the code changes highlighted for implementation of the modifications.
-1. **Collision Events**: Check the code in `BallCollisionReporter.cs` to observe collision events for blue rigidbody spheres.
-2. **Physics Layers**: Check the settings in _Unity, Edit > Project Settings > Physics > Layer Collision Matrix_ to observe the layer collision settings for red rigidbody spheres.
-3. **Compound Collider**: Check the setup in _Unity_ for the compound collider of the "Free Japanese Mask" model.
-4. **Joint Constraints**: Check the setup in _Unity, Fixed and Configurable Joint_ for the yellow jointed chain.
-5. **Kinematic Elevator**: Check the setup in _Unity, rigidbody > isKinematic and animation > Transform > Position_ for the blue kinematic elevator.
-6. **Center of Mass**: Check the code in `RigidbodyCenterOfMass.cs` to observe the center of mass customization for the green Weeble Wobble/Punching Bozo.
-7. **Default Friction**: Check the setup in _Unity_ for the purple cube with rigidbody box.
-8. **Low Friction**: Check the physics material in `./Assets/physics_materials/Slippy.physicMaterial` for the green cube with low friction.
-9. **Bouncy Rigidbody**: Check the physics material in `./Assets/physics_materials/Bouncy.physicMaterial` for the orange bouncy rigidbody sphere.
-10. **Ragdoll**: Check the setup in _Unity, GameObject > 3D Object > Ragdoll_ for the Y_Bot ragdoll.
-11. **Scripting Forces**: Check the code in `JumpingBean.cs` to observe the autonomous jumping behavior of the black jumping bean.
-12. **Pause Script**: Check the code in `PauseGame.cs` to observe the pause functionality with the `p` keypress.
+1. **HUD modification**: Check the setup in _Unity_
+2. **Collision Events**: Check the code in `BallCollisionReporter.cs` to observe collision events for blue rigidbody spheres.
+3. **Physics Layers**: Check the settings in _Unity, Edit > Project Settings > Physics > Layer Collision Matrix_ to observe the layer collision settings for red rigidbody spheres.
+4. **Compound Collider**: Check the setup in _Unity_ for the compound collider of the "Free Japanese Mask" model.
+5. **Joint Constraints (Fixed and Configurable Joint)**: Check the setup in _Unity_ for the yellow jointed chain.
+6. **Kinematic Elevator (rigidbody > isKinematic and animation > Transform > Position)**: Check the setup in _Unity_ for the blue kinematic elevator.
+7. **Center of Mass**: Check the code in `RigidbodyCenterOfMass.cs` to observe the center of mass customization for the green Weeble Wobble/Punching Bozo.
+8. **Default Friction**: Check the setup in _Unity_ for the purple cube with rigidbody box.
+9. **Low Friction**: Check the physics material in `./Assets/physics_materials/Slippy.physicMaterial` for the green cube with low friction.
+10. **Bouncy Rigidbody**: Check the physics material in `./Assets/physics_materials/Bouncy.physicMaterial` for the orange bouncy rigidbody sphere.
+11. **Ragdoll**: Check the setup in _Unity, GameObject > 3D Object > Ragdoll_ for the Y_Bot ragdoll.
+12. **Scripting Forces**: Check the code in `JumpingBean.cs` to observe the autonomous jumping behavior of the black jumping bean.
+13. **Pause Script**: Check the code in `PauseGame.cs` to observe the pause functionality with the `p` keypress.
 
 **Note**: The scripts (C# source code) for the requirements are located in the following directory.
 ```
