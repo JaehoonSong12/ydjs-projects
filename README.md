@@ -56,9 +56,9 @@ The followings are the code changes highlighted for implementation of the modifi
 
 ## Code Changes (m2)
 The followings are the code changes highlighted for implementation of the modifications.
-1. **HUD modification**: Check the setup in _Unity_
+1. **HUD modification**: Check the setup in _Unity_.
 2. **Collision Events**: Check the code in `BallCollisionReporter.cs` to observe collision events for blue rigidbody spheres.
-3. **Physics Layers**: Check the settings in _Unity_ to observe the layer collision settings for red rigidbody spheres. [Reference: `Edit > Project Settings > Physics > Layer Collision Matrix`]
+3. **Physics Layers**: Check the settings in _Unity_ to observe the layer collision settings for red rigidbody spheres. <br/>`Edit > Project Settings > Physics > Layer Collision Matrix`
 4. **Compound Collider**: Check the setup in _Unity_ for the compound collider of the "Free Japanese Mask" model.
 5. **Joint Constraints (Fixed and Configurable Joint)**: Check the setup in _Unity_ for the yellow jointed chain.
 6. **Kinematic Elevator (rigidbody > isKinematic and animation > Transform > Position)**: Check the setup in _Unity_ for the blue kinematic elevator.
