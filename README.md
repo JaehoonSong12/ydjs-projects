@@ -34,13 +34,22 @@ The followings are the code changes highlighted for implementation of the modifi
 5. **Minion Animation (Sound Effect)**: Check the initial setup in _Unity, Animation Event_ to add animation events that generate minion squeaky footstep (sound) events to the forward animation for `Minion_RootMotion`.
 6. **Match Target and Inverse Kinematics**: Check the code in `RootMotionControlScript.cs, line 154, 211` to add match target and inverse kinematics for  for `SomeDude_RootMotion`.
 
-**Note**: The scripts (C# source code) for the requirements are located in the following directory. `BasicControlScript.cs` is a script for `SomeDude_NoRootMotion` and `RootMotionControlScript.cs` is a script for `SomeDude_RootMotion`.
+
+**Note**: The scripts (C# source code) for the requirements are located in the following directory.
 ```
-./Assets/Scripts/CharacterControl/BasicControlScript.cs
+./Assets/Scripts/M2/BallCollisionReporter.cs
 ```
 ```
-./Assets/Scripts/CharacterControl/RootMotionControlScript.cs
+./Assets/Scripts/M2/JumpingBean.cs
 ```
+```
+./Assets/Scripts/M2/PauseGame.cs
+```
+```
+./Assets/Scripts/Utility/RigidbodyCenterOfMass.cs
+```
+```
+
 ## Extra Implementations
 The project does not include additional implementations since the assignment has a tutorial style format.
 ## Known Issues (Bugs)
