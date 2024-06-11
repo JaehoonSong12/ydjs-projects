@@ -10,6 +10,8 @@ The main scene of the project is the following.
 
 
 
+<br /><br />
+
 
 
 # Requirements 
@@ -47,14 +49,14 @@ The followings are the code changes highlighted for implementation of the modifi
 ```
 ./Assets/Scripts/Utility/RigidbodyCenterOfMass.cs
 ```
-
-
 ## Extra Implementations
 The project does not include additional implementations since the assignment has a tutorial style format.
 ## Known Issues (Bugs)
 There are no known bugs or incomplete features.
 
 
+
+<br /><br />
 
 
 
@@ -83,6 +85,8 @@ The input code is listed below according to the assignment instructions.
 No dependencies and external assets are specified since the assignment has a tutorial style format.
 
 
+
+<br /><br />
 
 
 
@@ -113,7 +117,7 @@ This project is licensed under CS4455, Georgia Institute of Technology - see the
 
 
 
-
+<br /><br /><br /><br /><br /><br />
 
 
 
