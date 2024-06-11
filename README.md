@@ -30,6 +30,20 @@ The followings are the observations expected by default (or given project) and b
 - Upon running the build, the player can observe disabled turn animation for the first dude (**Script modified**).
 - With the second dude, forward run, forward left run, and forward right run animations are added (_Unity modified, Animator_). Also, a speed ratio of 60% was set for the running animation speed (**Script modified**) and match target with inverse kinematics was added for button press animation (**Script modified**, _Unity for reference_).
 - With the second minion, the forward, forward left turn, and forward right turn animations were modified to include some comical hopping steps (_Unity modified, Animation Key_). Also, animation events (sound effects) generating minion squeaky footstep sound to the forward animation was added (_Unity modified, Animation Event_).
+## Build Observations (m2)
+The followings are the observations expected by default (or given project) and by my modifications.
+- Vertical stack of three blue rigidbody spheres with collision sounds have been added with `BallCollisionReporter.cs` script to trigger collision events (**Script created**, _Unity for script reference and components_).
+- Vertical stack of three red rigidbody spheres that don't collide with one another by `NoCollisionLayer` setup (_Unity modified, Edit > Project Settings > Physics > Layer Collision Matrix_).
+- Asset Store model "Free Japanese Mask" with transparent child objects and their compound collider was added. It tips over on nose similar to provided video link (_Unity modified_).
+- Yellow jointed chain made of five rigidbody Chain links by configurable Joint and a Chain Anchor by fixed joint (_Unity modified, Fixed and Configurable Joint_).
+- Blue kinematic rigidbody elevator using Mechanism animation with red rigidbody sphere going for a ride (update mode was set to "animate physics" for synchronization between animations and the physics system) (_Unity modified, rigidbody > isKinematic and animation > Transform > Position_).
+- Green Weeble Wobble/Punching Bozo that tilts but not being knocked over has been added with the script `RigidbodyCenterOfMass.cs` (**Script applied**).
+- A purple cube with rigidbody box that does not slide down the ramp has been added (_Unity modified_).
+- Green cube with rigidbody box that does slide down the ramp with its physics material property, `./Assets/physics_materials/Slippy.physicMaterial.` (_Unity modified, physics material_).
+- Orange rigidbody sphere that bounces with its physics material property, `./Assets/physics_materials/Bouncy.physicMaterial.` (_Unity modified, physics material_).
+- Y_Bot ragdoll done all the bones assignment that collapses over the hurdle GameObject, imported using `./Assets/ModelsAndAnimations/YBot with Animations/Y_Bot/Y_Bot.fbx.` (_Unity modified, GameObject > 3D Object > Ragdoll_).
+- Black jumping bean that jumps autonomously with randomized jump intervals, directions, magnitudes, and ground detection for realistic jumping has been added by a script, `JumpingBean.cs.` (**Script modified**).
+- Make a pause script that starts the game paused and unpauses with `p` keypress by a script, `PauseGame.cs` utilizing `Time.timeScale.` (**Script modified**).
 ## Code Changes
 The followings are the code changes highlighted for implementation of the modifications. 
 1. **Turn Animation**: Check the code in `BasicControlScript.cs, line 101` to disable turn animation for `SomeDude_NoRootMotion`.
@@ -38,6 +52,22 @@ The followings are the code changes highlighted for implementation of the modifi
 4. **Minion Animation (Running)**: Check the initial setup in _Unity, Animation Key_ to modify running animation (hopping steps) for `Minion_RootMotion`.
 5. **Minion Animation (Sound Effect)**: Check the initial setup in _Unity, Animation Event_ to add animation events that generate minion squeaky footstep (sound) events to the forward animation for `Minion_RootMotion`.
 6. **Match Target and Inverse Kinematics**: Check the code in `RootMotionControlScript.cs, line 154, 211` to add match target and inverse kinematics for  for `SomeDude_RootMotion`.
+
+
+## Code Changes (m2)
+The followings are the code changes highlighted for implementation of the modifications.
+1. **Collision Events**: Check the code in `BallCollisionReporter.cs` to observe collision events for blue rigidbody spheres.
+2. **Physics Layers**: Check the settings in _Unity, Edit > Project Settings > Physics > Layer Collision Matrix_ to observe the layer collision settings for red rigidbody spheres.
+3. **Compound Collider**: Check the setup in _Unity_ for the compound collider of the "Free Japanese Mask" model.
+4. **Joint Constraints**: Check the setup in _Unity, Fixed and Configurable Joint_ for the yellow jointed chain.
+5. **Kinematic Elevator**: Check the setup in _Unity, rigidbody > isKinematic and animation > Transform > Position_ for the blue kinematic elevator.
+6. **Center of Mass**: Check the code in `RigidbodyCenterOfMass.cs` to observe the center of mass customization for the green Weeble Wobble/Punching Bozo.
+7. **Default Friction**: Check the setup in _Unity_ for the purple cube with rigidbody box.
+8. **Low Friction**: Check the physics material in `./Assets/physics_materials/Slippy.physicMaterial` for the green cube with low friction.
+9. **Bouncy Rigidbody**: Check the physics material in `./Assets/physics_materials/Bouncy.physicMaterial` for the orange bouncy rigidbody sphere.
+10. **Ragdoll**: Check the setup in _Unity, GameObject > 3D Object > Ragdoll_ for the Y_Bot ragdoll.
+11. **Scripting Forces**: Check the code in `JumpingBean.cs` to observe the autonomous jumping behavior of the black jumping bean.
+12. **Pause Script**: Check the code in `PauseGame.cs` to observe the pause functionality with the `p` keypress.
 
 **Note**: The scripts (C# source code) for the requirements are located in the following directory.
 ```
