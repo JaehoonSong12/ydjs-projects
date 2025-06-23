@@ -17,4 +17,6 @@ class MainActivity2 : AppCompatActivity() {
             insets
         }
     }
+
+    dsadsadsadsa
 }
