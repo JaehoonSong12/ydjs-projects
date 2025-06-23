@@ -1,4 +1,4 @@
-python-alpaca_tradebot/
-python-pdf_manager/
-venv/
-ext/
+/python-alpaca_tradebot
+/python-pdf_manager
+/venv
+/ext
