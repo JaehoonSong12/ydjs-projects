@@ -7,6 +7,8 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+
+
 .DS_Store
 /build
 /captures
@@ -16,8 +18,8 @@ local.properties
 
 
 
-# #### Customized Modification
-# /.idea
-# /.gradle
-# /.kotlin
-# /gradle
+######### Customized Modification #########
+/.gradle
+/.idea
+/.kotlin
+###########################################
