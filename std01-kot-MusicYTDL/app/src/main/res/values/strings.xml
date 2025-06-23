@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MusicDL</string>
+    <string name="textView1Text">hi Jayden!</string>
+    <string name="button1Text">I\'m winning</string>
+    <string name="textView2Text">you just come in!</string>
+    <string name="button2Text">Back</string>
+    <string name="imageDescription">Sample avatar image</string>
+</resources>
