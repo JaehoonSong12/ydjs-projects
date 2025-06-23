@@ -6,17 +6,20 @@ A modern Android application built with Jetpack Compose, Hilt for dependency inj
 
 ## Table of Contents
 
-1. [Project Overview](#project-overview)
-2. [Prerequisites](#prerequisites)
-3. [Project Structure](#project-structure)
-4. [Dependencies](#dependencies)
-5. [Configuration](#configuration)
-6. [Architecture](#architecture)
-7. [Screenshots](#screenshots)
-8. [Setup & Run](#setup--run)
-9. [Testing](#testing)
-10. [Emulator Configuration](#emulator-configuration)
-11. [Further Reading](#further-reading)
+- [MyComposeApp](#mycomposeapp)
+  - [Table of Contents](#table-of-contents)
+  - [Project Overview](#project-overview)
+  - [Prerequisites](#prerequisites)
+  - [Project Structure](#project-structure)
+  - [Dependencies](#dependencies)
+  - [Configuration](#configuration)
+  - [Architecture](#architecture)
+  - [Screenshots](#screenshots)
+  - [Setup \& Run](#setup--run)
+  - [Testing](#testing)
+  - [Emulator Configuration](#emulator-configuration)
+  - [Further Reading](#further-reading)
+      - [License](#license)
 
 ---
 
