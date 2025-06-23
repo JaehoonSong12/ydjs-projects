@@ -1,180 +1,199 @@
 <!-- 
  @requires
- 1. VSCode extension: null
+ 1. VSCode extension: Markdown Preview Enhanced
  2. Shortcut: 'Ctrl' + 'Shift' + 'V'
  3. Split: Drag to right (->)
+
+ @requires
+ 1. VSCode extension: Markdown All in One
+ 2. `File` > `Preferences` > `Keyboard Shortcuts`
+ 3. toggle code span > `Ctrl + '`
+ 4. toggle code block > `Ctrl + Shift + '`
+
+ @usage
+ 1. End of Proof (Q.E.D.): <div style="text-align: right;">&#11035;</div>
+ 2. End of Each Section: 
+
+     <br /><br /><br />
+
+     ---
+
+
+
+     <p align="right">(<a href="#readme-top">back to top</a>)</p>
+     
+
+ 3. ![image_title_](images/imagefile.png)
+ 4. [url_title](URL)
  -->
 <!-- Anchor Tag (Object) for "back to top" -->
 <a id="readme-top"></a>
 
+# YDJS Projects Repository
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/JaehoonSong12/ydjs-projects)](https://github.com/JaehoonSong12/ydjs-projects/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/JaehoonSong12/ydjs-projects)](https://github.com/JaehoonSong12/ydjs-projects/network)
 
+A comprehensive collection of student projects and educational resources for computer science education, featuring projects from AP Computer Science Principles, GT CS1301, and GT CS1331 courses.
 
+## Table of Contents
 
+- [About](#about)
+- [Projects](#projects)
+- [Getting Started](#getting-started)
+- [Student Work](#student-work)
+- [Contributing](#contributing)
+- [Contact](#contact)
+- [License](#license)
 
+## About
 
+This repository serves as a central hub for educational projects and student work in computer science. It contains:
 
+- **AP Computer Science Principles** projects (JavaScript)
+- **GT CS1301: Introduction to Computing** projects (Python)
+- **GT CS1331: Object-Oriented Programming** projects (Java)
+- Student showcase applications and demonstrations
 
+## Projects
 
+### Current Course Projects
 
+| Course | Language | Description |
+|--------|----------|-------------|
+| AP CS Principles | JavaScript | Web development and computational thinking projects |
+| GT CS1301 | Python | Introduction to programming concepts and problem solving |
+| GT CS1331 | Java | Object-oriented programming and software design |
 
+### Featured Student Work
 
+Browse through student projects and applications in the respective course directories. Each project includes:
+- Source code and documentation
+- Demo applications
+- Project descriptions and learning objectives
 
+## Getting Started
 
+### Prerequisites
 
-<!-- done? vvvvvvvvvvvvv -->
-# Introduction
-## Author
-- **Full Name (OIT/Canvas Account Name):** Jaehoon Song
-- **Email:** jsong421@gatech.edu
-## Main Scene
-The main scene of the project is the following.
-```
-./Assets/Scenes/demo_m4.unity
-```
-<p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br />
+- Git installed on your system
+- Appropriate development environment for your chosen language:
+  - **JavaScript**: Node.js and a modern web browser
+  - **Python**: Python 3.7+ and pip
+  - **Java**: JDK 11+ and an IDE (IntelliJ IDEA, Eclipse, or VS Code)
 
+### Installation
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- done? vvvvvvvvvvv -->
-# Project Requirements 
-Here are the modifications checklist (requirements) according to the assignment instructions. The topic is "**AI-Controlled Minion Navigation**," aiming to enhance gameplay by implementing an AI-controlled minion using Unity’s *NavMeshAgent* and a basic state machine. The AI minion will navigate a loop of waypoints, utilizing the *NavMeshAgent* for precise steering behaviors. Additionally, you'll implement position prediction to enable the minion to intercept a specific waypoint. The task involves modifying the minion to be AI-controlled, setting up navigation with the *NavMeshAgent*, creating a state machine to manage the minion’s actions, configuring waypoint navigation, and incorporating position prediction for interception. By completing these steps, you will achieve an AI-driven minion capable of advanced pathfinding and decision-making in Unity.
-
-<!-- done? vvvvvvvvvvvvvv -->
-1. **Waypoint Navigation**: to implement AI navigation for a Minion using Unity’s NavMeshAgent
-   - **Stationary Waypoints**: The AI-controlled Minion must visit *5 stationary waypoints*. These waypoints should be visible and spread across the scene. Waypoints should be made from primitive GameObjects (e.g., colored spheres or cubes) with colliders removed/disabled but meshRenderers enabled.
-2. **Moving Waypoint Navigation with Prediction**
-   - **Moving Waypoint**: The Minion must intercept a sixth *moving waypoint*. This waypoint should be animated to move back and forth between two points using Mecanim animation.
-   - **Position Prediction**: Implement position prediction to intercept the moving waypoint. (This prediction should update every frame.) Visualize the Minion’s predicted position with a *destination tracker object*. (Ensure the Minion reaches the actual moving waypoint, not just the predicted position.)
-3. **Procedural State Machine**: to control waypoint navigation
-   - Implement a state machine with at least 2 states to control the Minion’s behavior: (**1**) Visit the 5 stationary waypoints, (**2**) Head towards the moving waypoint. *Repeat the pattern indefinitely*.
-4. **Minion Animation**
-   - The Minion must be properly animated with steps, ensuring it does not sink into the ground.
-
-
-
-
-
-
-
-
-
-
-<!-- done? vvvvvvvvvvvvvvv -->
-## Build Observations
-The followings are the observations expected by default (or given project) and by my modifications.
-- Upon running the build, the player can notice Waypoint navigation system observed with AI Minions following five visible waypoints and one moving waypoint in the scene after NavMesh baking (**Script created**, _Unity modified: NavMeshAgent, Navigation > Bake_).
-- Moving waypoint with prediction is observed where a moving waypoint is animated and a velocity reporter script tracks its physical touch (**Script created**, _Unity modified_).
-- With the minion properly animated, the player will never detect it sinking into the ground (**Script modified**, _Unity modified: NavMeshAgent_).
-
-
-
-<!-- done? vvvvvvvvvvvvvvvv -->
-## Code Changes
-The followings are the code changes highlighted for implementation of the modifications.
-1. **Waypoint Navigation**: Check the code in `MinionAI.cs` and the setup in _Unity_ for the `NavMeshAgent` component and the baked NavMesh. <br/>`Navigation > Bake`
-2. **Moving Waypoint Navigation with Prediction**: Check the code in `VelocityReporter.cs` and the setup in _Unity_ for the animated moving waypoint.
-3. **Procedural State Machine**: Check the modifications in `MinionAI.cs` for the state machine logic handling patrol and tracking states.
-4. **Minion Animation**: Check the modifications in `MinionAI.cs` and the setup in _Unity_ for the `NavMeshAgent` component with the base offset and animator forward parameter updates. <br/>`NavMeshAgent > Base Offset`
-
-**Note**: The scripts (C# source code) for the requirements are located in the following directory.
-```
-./Assets/Scripts/M4/MinionAI.cs
-```
-```
-./Assets/Scripts/M4/VelocityReporter.cs
+1. Clone the repository:
+```bash
+git clone https://github.com/JaehoonSong12/ydjs-projects.git
+cd ydjs-projects
 ```
 
+2. Navigate to your specific project directory:
+```bash
+# For AP CS Principles projects
+cd ap-cs-principles/
 
+# For GT CS1301 projects  
+cd gt-cs1301/
 
-
-<!-- done? vvvvvvvvvvvvvvvvv -->
-## Extra Implementations
-The project does not include additional implementations since the assignment has a tutorial style format.
-## Known Issues or Bugs
-There are no known bugs or incomplete features.
-## Dependencies and External Assets
-All the dependencies and external assets are resolved within the solution following the assignment tutorial format. 
-- external asset, "**NavMesh** for path finding," has been manually added to the project solution, `./Assets/NavMeshComponents`. (Reference: https://github.com/Unity-Technologies/NavMeshComponents.git)
-<p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- done? vvvvvvvvvvvvvvvvvvvv -->
-# Execution Instructions
-The input code is listed below according to the assignment instructions.
-- To run the game, open the Unity project and play the scene.
-  ```
-  ./Build/Windows/Song_JH_m4.exe
-  ```
-  ```
-  ./Build/OSX/Song_JH_m4.app
-  ```
-- Press '**T**' to switch your control on each character in the scene.
-- Use "**WASD**" or **arrow keys** to move the character chosen, dudes or minions. (Use thumbstick for analog movement of Gamepad control.)
-- Use **number keys**, 1-9 (10%-90%) and 0 (100%), to adjust the max speed of your character.
-- Use '**Q**' and '**E**' keys to turn left and right with adjusted turn rates to 50%.
-- Walk or run around the scene as you want.
-- Use '**Ctrl**' (Fire1) for button press animation near the red balloon (logical button).
-- Use '**ESC**' (Escape) to toggle the in-game menu and pause/resume the game.
-
-**Note**: The input code for control is located in the following directory.
+# For GT CS1331 projects
+cd gt-cs1331/
 ```
-./Assets/Scripts/CharacterControl/CharacterInputController.cs
+
+### For Students
+
+#### Using Git Scripts (Recommended)
+
+Students are provided with automated git scripts for version control:
+
+1. **Initialize your project:**
+   ```bash
+   ./git00-init
+   cd <your-project-directory>
+   ```
+
+2. **Before starting work (pull latest changes):**
+   ```bash
+   ../git01-pull.sh
+   ```
+
+3. **After completing work (push changes):**
+   ```bash
+   ../git03-branch+push.sh <branch-name> [commit-message]
+   ```
+
+#### Manual Git Workflow
+
+If you prefer manual git operations:
+
+```bash
+# Clone the repository
+git clone https://github.com/JaehoonSong12/ydjs-projects.git
+cd ydjs-projects
+
+# Create and switch to your feature branch
+git checkout -b your-feature-branch
+
+# Make your changes, then commit and push
+git add .
+git commit -m "Your commit message"
+git push origin your-feature-branch
 ```
-<p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br />
 
+## Student Work
 
+This repository showcases student projects and applications. Students can:
 
+- Submit their projects through pull requests
+- View and learn from other students' work
+- Demonstrate their applications and code
+- Collaborate on shared learning objectives
 
+### How to Submit Your Work
 
+1. Fork this repository
+2. Create a feature branch for your project
+3. Add your project files and documentation
+4. Submit a pull request with a clear description
 
+## Contributing
 
+We welcome contributions from students, educators, and the community.
 
+### For Students
+- Submit your completed projects
+- Improve existing documentation
+- Add helpful comments and explanations
 
+### For Educators
+- Suggest curriculum improvements
+- Add new project templates
+- Share best practices
 
+### Contribution Guidelines
 
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
+## Contact
 
+**Instructor:** Jaehoon Song  
+**Email:** manual20151276@gmail.com  
+**GitHub:** [@JaehoonSong12](https://github.com/JaehoonSong12)
 
+For technical support or to request git scripts, please reach out to the instructor.
 
-
-
-
-<!-- done? vvvvvvvvvvvv -->
-# Project Information
 ## License
-This project is licensed under CS4455, Georgia Institute of Technology - see the [LICENSE.md](LICENSE.md) file for details.
-## Contribution
-Contributions are allowed - see the [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to get started.
-## Acknowledgements
-This project currently does not include an acknowledgements section as there were no contributions or funding sources to acknowledge at this stage.
-<p align="right">(<a href="#readme-top">back to top</a>)</p><br /><br /><br />
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+---
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
