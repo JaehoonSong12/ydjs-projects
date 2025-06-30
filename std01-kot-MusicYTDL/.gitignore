@@ -13,11 +13,3 @@
 .externalNativeBuild
 .cxx
 local.properties
-
-
-
-######### Customized Modification #########
-/.gradle
-/.idea
-/.kotlin
-###########################################

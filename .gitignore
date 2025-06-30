@@ -2,3 +2,15 @@
 /python-pdf_manager
 /venv
 /ext
+
+
+
+
+
+
+######### Customized Modification #########
+# /.gradle
+.gradle/
+.idea/
+.kotlin/
+###########################################
