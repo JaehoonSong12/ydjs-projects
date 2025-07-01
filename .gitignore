@@ -9,7 +9,6 @@
 
 
 ######### Customized Modification #########
-# /.gradle
 .gradle/
 .idea/
 .kotlin/
