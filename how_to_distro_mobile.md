@@ -63,21 +63,41 @@
 
 ---
 
-# iOS Binary Distribution (for Reference)
+# iOS Binary Distribution with Kotlin Multiplatform (KMP)
 
-> **Note:** Your current project is Android/Kotlin. iOS distribution requires a separate Xcode/Swift project or a cross-platform framework (like Flutter or React Native).  
-> If you want to distribute an iOS app, you must:
->
-> 1. **Develop your app in Xcode** (or use a cross-platform tool).
-> 2. **Archive the app:**  
->    In Xcode, go to `Product` → `Archive`.
-> 3. **Export for Ad Hoc or App Store:**  
->    Use the Organizer window to export your `.ipa` file for Ad Hoc (limited devices) or App Store distribution.
-> 4. **Provisioning profiles and certificates:**  
->    You need an Apple Developer account and proper provisioning profiles.
->
-> For more details, see Apple’s official documentation:  
-> https://developer.apple.com/documentation/xcode/distributing-your-app-for-beta-testing-and-releases
+> **Note:** While traditional iOS app distribution requires Xcode on macOS, Kotlin Multiplatform (KMP) allows you to share code between Android and iOS. However, generating a distributable iOS binary (`.ipa`) still has limitations on Windows.
+
+## What You Can Do with KMP on Windows
+
+- **Develop shared logic:**  
+  Use Kotlin Multiplatform to write and test shared code for Android and iOS in Android Studio on Windows.
+- **Build iOS frameworks:**  
+  You can generate iOS frameworks (`.framework` files) from Windows using Gradle tasks, which can later be integrated into an Xcode project.
+
+## What You *Cannot* Do on Windows
+
+- **No direct `.ipa` generation:**  
+  You cannot build or sign a complete iOS app binary (`.ipa`) for distribution from Windows. Apple’s toolchain (Xcode, codesign, etc.) is required for final packaging and signing, and these tools only run on macOS.
+
+## Typical Workflow
+
+1. **Develop shared code in Android Studio with KMP.**
+2. **Generate iOS framework:**  
+   Run Gradle tasks (e.g., `assembleXCFramework`) to produce a framework for iOS.
+3. **Transfer to macOS:**  
+   Move the generated framework to a Mac.
+4. **Integrate with Xcode:**  
+   Use Xcode to create the iOS app, link the framework, and archive/export the `.ipa` for distribution.
+
+## Alternatives
+
+- **Cloud macOS services:**  
+  Use services like MacStadium, MacInCloud, or GitHub Actions with macOS runners to automate iOS builds and distribution remotely.
+- **Cross-platform frameworks:**  
+  Consider Flutter or React Native, which offer some tooling for iOS builds, but final signing and distribution still require macOS.
+
+> **Summary:**  
+> You can develop and test shared code for iOS on Windows with Kotlin Multiplatform, but you still need access to a Mac to generate and distribute an iOS app binary.
 
 ---
 

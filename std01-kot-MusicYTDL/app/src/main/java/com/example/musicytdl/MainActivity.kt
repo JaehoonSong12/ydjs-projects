@@ -30,6 +30,7 @@ class MainActivity : FragmentActivity(), BaseSceneFragment.SceneNavigationListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge() // requires android:fitsSystemWindows="true" on each XML layout
         setContentView(R.layout.activity_main)
 
         val menuContainer = findViewById<View>(R.id.menu_container)
