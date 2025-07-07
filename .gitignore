@@ -11,6 +11,6 @@
 .gradle/
 .idea/
 .kotlin/
-.build/
-.release/
+build/
+release/
 ###########################################
