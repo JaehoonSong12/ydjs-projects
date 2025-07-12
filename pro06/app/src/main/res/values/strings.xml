@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Math pro 6</string>
+    <string name="btn_next">Next</string>
+    <string name="question_text">Question</string>
+    <string name="level_text">No level picked…</string>
+    <string name="point_text">point: 0/100</string>
+    <string name="enter_answer">Enter answer</string>
+    <string name="go">Go</string>
+    <string name="nice_message">NICEEEE</string>
+
+    <!-- Label templates -->
+    <string name="level">Level</string>
+    <string name="level_with_number">Level %1$d</string>
+
+
+    <string name="submit">Submit</string>
+    <string name="edit_hint">Enter your answer</string>
+    <string name="question_placeholder">: </string>
+    <string name="your_score">Your Score</string>
+
+    <!-- Points -->
+    <string name="point_1"> (point: 1)</string>
+    <string name="point_2"> (point: 2)</string>
+    <string name="point_5"> (point: 5)</string>
+    <string name="point_10"> (point: 10)</string>
+    <string name="point_15"> (point: 15)</string>
+    <string name="point_30"> (point: 30)</string>
+
+    <!-- Score formatting -->
+    <string name="point_format">point: %1$d/100</string>
+</resources>
