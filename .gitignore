@@ -1,17 +1,16 @@
-/python-alpaca_tradebot
-# /python-pdf_manager
-/python-zoom_schedular
-/venv
-/ext
-
-
-
-
-######### Customized Modification #########
+# IDE dependent files
 .gradle/
 .vscode/
 .idea/
 .kotlin/
+
+# Platform dependencies
 build/
 release/
-###########################################
+
+# .bashrc config
+/venv
+/ext
+
+# custom files
+/python-*
