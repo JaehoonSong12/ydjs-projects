@@ -4,11 +4,11 @@
 .idea/
 .kotlin/
 
-# Platform dependencies
+# Platform dependent distributions (binary distros)
 build/
 release/
 
-# .bashrc config
+# .bashrc environement files (by Jaehoon Song)
 /venv
 /ext
 
