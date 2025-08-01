@@ -1,4 +1,4 @@
- /**
+/**
 INSTRUCTIONS: 
     This is a Java Swing application that demonstrates the Factory Design 
     Pattern within an MVC architecture.
