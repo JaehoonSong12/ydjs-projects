@@ -33,4 +33,5 @@ java {
 application {
     // Define the main class for the application.
     mainClass.set("jvswing.App")
+    // mainClass.set("jvswing.Example")
 }

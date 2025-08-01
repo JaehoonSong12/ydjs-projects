@@ -93,7 +93,7 @@ interface View {
 
 
 
-// --- Views ---
+// --- Views --- //
 // List View: displays a simple list of items.
 class ViewList implements View {
     public static final String TITLE = "List View";
