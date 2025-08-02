@@ -17,6 +17,7 @@ import core.ViewRouter;
 import core.BackendView;
 import core.BackendController;
 
+import example.ClassLocationDemo;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -34,11 +35,17 @@ public class App {
         // System.out.println(new App().getGreeting());
 
 
+
+
         // Starategy.main(args);
         
         // Pro1.main(args);
         // Pro2.main(args);
         
+
+
+
+        // ClassLocationDemo.main(args);
         SwingUtilities.invokeLater(App::start);
     }
 
@@ -47,21 +54,15 @@ public class App {
      * Create and display the GUI.
      */
     private static void start() {
-
         ViewRouter router = ViewRouter.getInstance();
-
-
+        
         // route 1: init
-        JPanel view = new BackendView();
-        new BackendController((BackendView) view);
-        router.routeView("core/backend", view);
-
-
-
+        BackendView view = new BackendView();
+        new BackendController(view);
+        router.registerRoute(view.getUrl(), view);
 
         // route 1: execute
-        router.setFrame(BackendView.TITLE, BackendView.SCREEN__WIDTH, BackendView.SCREEN_HEIGHT);
-        router.showView("core/backend");
+        router.showView(view.getUrl());
     }
 
 }

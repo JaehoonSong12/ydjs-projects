@@ -8,7 +8,7 @@ COMPILE & EXECUTE & CLEANUP (Java):
      gradle run
      gradle clean
  */
-package jvswing;
+package example;
 
 import java.util.HashMap;
 import java.util.Map;
