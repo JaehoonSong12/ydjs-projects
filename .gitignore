@@ -3,6 +3,7 @@
 .vscode/
 .idea/
 .kotlin/
+/bin
 
 # Platform dependent distributions (binary distros)
 build/
