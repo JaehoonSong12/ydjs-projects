@@ -7,10 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class BackendController {
-    private BackendView view;
+public class ControllerLinker {
+    private ViewLinker view;
 
-    public BackendController(BackendView view) {
+    public ControllerLinker(ViewLinker view) {
         this.view = view;
         
         
@@ -18,7 +18,7 @@ public class BackendController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String raw = view.getTxfUrl().getText();
-                if (!raw.equals(BackendView.PLACEHOLDER) && !raw.isBlank()) {
+                if (!raw.equals(ViewLinker.PLACEHOLDER) && !raw.isBlank()) {
                     JOptionPane.showMessageDialog(
                         view,
                         "URL set to: " + raw,

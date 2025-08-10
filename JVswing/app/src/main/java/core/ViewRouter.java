@@ -51,13 +51,17 @@ public class ViewRouter {
     public void showView(String url) {
         layout.show(container, url);
         JPanel view = viewRoutes.get(url);
-        System.out.println(view);
-        // this.setFrame(view.TITLE, view.SCREEN__WIDTH, view.SCREEN_HEIGHT);
+        if (view instanceof Displayable) {
+            Displayable displayableView = (Displayable) view;
+            String title = displayableView.getTitle();
+            int width = displayableView.getWidth();
+            int height = displayableView.getHeight();
+            this.setFrame(title, width, height);
+        }
         if (!frame.isVisible()) frame.setVisible(true);
     }
 
     
-
 
 
 
