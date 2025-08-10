@@ -3,11 +3,12 @@
 .vscode/
 .idea/
 .kotlin/
-/bin
 
 # Platform dependent distributions (binary distros)
 build/
 release/
+bin/
+dist/
 
 # .bashrc environement files (by Jaehoon Song)
 /venv
