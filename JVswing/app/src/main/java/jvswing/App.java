@@ -14,8 +14,10 @@ package jvswing;
 import jaydenswing.Pro1;
 import jaydenswing.Pro2;
 import core.ViewRouter;
-import core.BackendView;
-import core.BackendController;
+import core.ViewLinker;
+import core.ControllerLinker;
+import core.ViewLoader;
+import core.ControllerLoader;
 
 import example.ClassLocationDemo;
 
@@ -57,12 +59,17 @@ public class App {
         ViewRouter router = ViewRouter.getInstance();
         
         // route 1: init
-        BackendView view = new BackendView();
-        new BackendController(view);
-        router.registerRoute(view.getUrl(), view);
+        ViewLinker linker = new ViewLinker();
+        new ControllerLinker(linker);
+        router.registerRoute(ViewLinker.getUrl(), linker);
+        
+        ViewLoader loader = new ViewLoader();
+        new ControllerLoader(loader);
+        router.registerRoute(ViewLoader.getUrl(), loader);
 
         // route 1: execute
-        router.showView(view.getUrl());
+        // router.showView(ViewLinker.getUrl());
+        router.showView(ViewLoader.getUrl());
     }
 
 }

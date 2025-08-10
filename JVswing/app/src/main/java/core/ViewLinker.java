@@ -46,20 +46,27 @@ import java.awt.event.FocusEvent;
 /**
  * The view constructs and exposes UI components.
  */
-public class BackendView extends Viewbase {
-    public static final String PLACEHOLDER = "Paste URL here";
-
-    // Contant in Java, static == "since the program starts" && final == "permanent for the program lifetime"
-    public static final String TITLE = "MusicDL Backend Program";
-    public static final int SCREEN__WIDTH = 680;
-    public static final int SCREEN_HEIGHT = 480;
+public class ViewLinker extends JPanel implements Displayable {
     public static String getUrl() {
-        // return new BackendView().getPath();
+        // return new ViewLinker().getPath();
         String path = "/" + new Object() {}.getClass().getEnclosingClass().getName().replace('.', '/') + ".class";
         System.out.println("URL (registered statically): " + path);
         return path;
     }
 
+    // Contant in Java, static == "since the program starts" && final == "permanent for the program lifetime"
+    @Override
+    public String getTitle() { return TITLE; }
+    private static final String TITLE = "MusicDL Backend Program";
+    @Override
+    public int getWidth() { return SCREEN_WIDTH; }
+    private static final int SCREEN_WIDTH = 680;
+    @Override
+    public int getHeight() { return SCREEN_HEIGHT; }
+    private static final int SCREEN_HEIGHT = 480;
+
+
+    public static final String PLACEHOLDER = "Paste URL here";
     private JLabel lblLogo;
     private JLabel lblTitle;
     private JTextField txfUrl;
@@ -69,7 +76,7 @@ public class BackendView extends Viewbase {
     private JLabel lblTerms;
     public JLabel getLblTerms() { return this.lblTerms; }
 
-    public BackendView() {
+    public ViewLinker() {
         // Use a single GridLayout: 3 rows, 1 column
         setLayout(new GridLayout(3, 1, 0, 10));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
