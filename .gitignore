@@ -14,4 +14,4 @@ release/
 /ext
 
 # custom files
-/python-*
+/python*
