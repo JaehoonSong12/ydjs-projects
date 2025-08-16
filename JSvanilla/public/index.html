@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Redirecting…</title>
+  <!-- Quick meta redirect (also include a clickable link as fallback) -->
+  <meta http-equiv="refresh" content="0;url=linker.html">
+</head>
+<body>
+  <p>Redirecting to <a href="linker.html">linker.html</a>…</p>
+  <script>
+    // fallback for very old browsers or if meta-refresh blocked
+    if (!window.location.href.includes('linker.html')) {
+      window.location.replace('linker.html');
+    }
+  </script>
+</body>
+</html>
