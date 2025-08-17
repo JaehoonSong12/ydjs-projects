@@ -71,9 +71,8 @@ public class ViewRouter {
      * Private constructor for Singleton pattern. (cannot be called from outside.)
      */
     private ViewRouter() {
-        this.frame = new JFrame("MVC with Singleton Navigation");
+        this.frame = new JFrame();
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setSize(400, 200);
         this.frame.setLocationRelativeTo(null);
 
         this.layout = new CardLayout();
