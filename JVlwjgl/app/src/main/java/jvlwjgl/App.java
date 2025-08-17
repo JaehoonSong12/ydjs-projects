@@ -12,6 +12,17 @@ public class App {
 
     public static void main(String[] args) {
         // System.out.println(new App().getGreeting());
+
+
+
         Game.main(args);
+
+
+
+
+        // ui.GameApp.main(args);
+
+        
+        // ux.GameApp.main(args);
     }
 }
