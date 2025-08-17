@@ -104,6 +104,8 @@ public class Game {
     //GAMBLING//    
     private boolean dealarPayedThisRound = false;
     private boolean canGamble = true;
+    //Dash//
+    static public float dashLevel = 1.0f;
     //Shop//
     private boolean isDelay = true;
     private boolean shopOpened = false;
@@ -111,7 +113,8 @@ public class Game {
     private boolean key1PreviouslyDown = false;
     private boolean key2PreviouslyDown = false;
     public static boolean showDashCooldownMessage = false;
-
+    private int dashLevelPrice = 0;
+    static public boolean wasBought;
     // UI
     private int lives = 5; 
     private int score = 0;
@@ -273,8 +276,10 @@ public class Game {
         if (GLFW.glfwGetKey(window, keyMap.get("UP")) == GLFW.GLFW_RELEASE) player.jump();
         if (GLFW.glfwGetKey(window, keyMap.get("DOWN")) == GLFW.GLFW_PRESS) {
             player.fall(); 
-            spawnMobsA(5);
-            System.out.println(totalMobsA + " = mob count");
+            //int i = player.dashCooldownTime - ((dashLevel/2) + 1.0f)*0.01f;
+            showMessage(String.format("%f", player.dashCooldownTime - ((dashLevel/2) + 1.0f)*0.01f));
+            //showMessage("i = " + i);
+            //spawnMobsA(5);
         }
 
         // Toggle shop with Enter
@@ -286,7 +291,7 @@ public class Game {
                 showMessage("The things you can buy:");
                 isDelay = true;
                 if (player.witchCharter == 0 && isDelay) {
-                    showMessage("Press 1 for dash level 2 for 20 score");
+                    showMessage("Press 1 for the next dash level for 20 score");
                     showMessage("Press 2 to change your skill to gambling");
                     isDelay = false;
                 } else if (player.witchCharter == 1 && !dealarPayedThisRound && isDelay) {
@@ -303,9 +308,11 @@ public class Game {
         // Handle in-shop purchases (does NOT close shop)
         if (shopOpened) {
             if (key1Pressed && !key1PreviouslyDown) {
-                if (player.witchCharter == 0 && score >= 20) {
-                    score -= 20;
+                if (player.witchCharter == 0 && score >= dashLevelPrice) {
+                    score -= dashLevelPrice;
+                    dashLevel += 1.0f ;
                     showMessage("Dash level purchased!");
+                    wasBought = true;
                 } else if (player.witchCharter == 1 && score >= 20 && !dealarPayedThisRound) {
                     score -= 20;
                     dealarPayedThisRound = true;
@@ -779,7 +786,7 @@ class Player {
     private int counter;
     private boolean enableAdditionalJump;
     private boolean dashLeftOrRight = false;
-    private float dashCooldownTime = 0.51f; // changed  //1.0f //changeable
+    static public float dashCooldownTime = 0.6f; // changed  //1.0f //changeable
     private float dashCooldown = dashCooldownTime; 
     private int numberOfJump;
     
@@ -814,6 +821,11 @@ class Player {
     public void dash(){
         if (dashCooldown <= 0.0f && !Game.freezeTime){
             dashStartX = x; // Record starting position
+            if (dashCooldownTime > 0 && Game.wasBought){
+                dashCooldownTime -= ((Game.dashLevel/2) + 1.0f)*0.01f;
+                Game.wasBought = false;
+            }
+            if (dashCooldownTime <= 0){dashCooldownTime =- 0.01f;}
             if (dashLeftOrRight == true){
                 x += 200;
                 dashCooldown = dashCooldownTime;
@@ -888,7 +900,7 @@ class Player {
     public void update(float dt, List<Platform> plats) {
         if(!Game.freezeTime){
             x += vx * dt;
-            y += vy * dt;
+            y += ((vy * dt) + (Game.dashLevel/2)*0.1f);
             stopdashTellSpam += 1;
             onGround = false;
             testing = false;
@@ -951,12 +963,12 @@ class Player {
             }
             
             if (testing) {
-                System.out.println("Player{x = " + x + 
+                /*System.out.println("Player{x = " + x + 
                 ", y = " + y + ", vx = " + vx + ", vy = " + vy + 
                 ", onGround = " + onGround + ", dashLeftOrRight = " + dashLeftOrRight +
                 ",  counter = " + counter + ", numberOfJump = " + numberOfJump +
                 ", dashCooldown = " + dashCooldown +
-                "}");
+                "}");*/
             }
 
 
