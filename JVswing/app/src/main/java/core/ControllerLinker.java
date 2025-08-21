@@ -14,7 +14,7 @@ public class ControllerLinker {
         this.view = view;
         
         
-        view.getBtnGo().addActionListener(new ActionListener() {
+        this.view.getBtnGo().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String raw = view.getTxfUrl().getText();
