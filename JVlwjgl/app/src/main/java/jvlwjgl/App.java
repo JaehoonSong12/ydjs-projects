@@ -3,7 +3,9 @@
  */
 package jvlwjgl;
 
-import core.Game;
+// import core.Game;
+
+import snake.SnakeGame;
 
 public class App {
     public String getGreeting() {
@@ -15,7 +17,7 @@ public class App {
 
 
 
-        Game.main(args);
+        SnakeGame.main(args);
 
 
 
