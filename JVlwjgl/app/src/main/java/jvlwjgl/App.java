@@ -6,6 +6,7 @@ package jvlwjgl;
 // import core.Game;
 
 import snake.SnakeGame;
+import snake.ClickButtonApp;
 
 public class App {
     public String getGreeting() {
@@ -17,7 +18,7 @@ public class App {
 
 
 
-        SnakeGame.main(args);
+        ClickButtonApp.main(args);
 
 
 
