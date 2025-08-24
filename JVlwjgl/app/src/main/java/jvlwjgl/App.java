@@ -4,6 +4,7 @@
 package jvlwjgl;
 
 // import core.Game;
+// import core.HigherOrLower;
 
 import snake.SnakeGame;
 import snake.ClickButtonApp;
@@ -18,9 +19,10 @@ public class App {
 
 
 
+        // Game.main(args);
         ClickButtonApp.main(args);
 
-
+        // HigherOrLower.main(args);
 
 
         // ui.GameApp.main(args);
