@@ -4,6 +4,7 @@
 package jvlwjgl;
 
 import core.Game;
+import core.HigherOrLower;
 
 public class App {
     public String getGreeting() {
@@ -15,9 +16,9 @@ public class App {
 
 
 
-        Game.main(args);
+        //Game.main(args);
 
-
+        HigherOrLower.main(args);
 
 
         // ui.GameApp.main(args);
