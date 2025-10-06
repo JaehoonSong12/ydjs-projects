@@ -310,7 +310,7 @@ public class Game {
             if (key1Pressed && !key1PreviouslyDown) {
                 if (player.witchCharter == 0 && score >= dashLevelPrice) {
                     score -= dashLevelPrice;
-                    dashLevel += 1.0f ;
+                    dashLevel += 1.0f;
                     showMessage("Dash level purchased!");
                     wasBought = true;
                 } else if (player.witchCharter == 1 && score >= 20 && !dealarPayedThisRound) {
