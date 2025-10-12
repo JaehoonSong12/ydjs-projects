@@ -23,6 +23,13 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 
 
 
@@ -123,6 +130,12 @@ public class ClickButtonApp {
      * 1 = playing
      * 2 = game over
      */
+    
+    // Snake game variables
+    static SnakeModel snakeModel;
+    static final int CELL_SIZE = 20;
+    static final int GRID_W = 32;  // 640 / 20
+    static final int GRID_H = 24;  // 480 / 20
 
 
     public static void main(String[] args) {
@@ -136,17 +149,16 @@ public class ClickButtonApp {
 
 
 
-        // Create a single button centered "abcdefghijklmnopqrstuvwxyz123456789"
-        UIButton button = new UIButton(winW/2 - 100, winH/2 - 24, 200, 48, "abcdefghijklmnopqrstuvwxyz123456789.[]:;=,!?", () -> {
-            // action: print hello world
-            System.out.println("hello world");
-            app.setTitle("You are now in the game!");
-            app.setWinW(2 * winW); // force window resize to update title bar (workaround)
-            app.setWinH(2 * winH);
+        // Create a single button centered
+        UIButton button = new UIButton(winW/2 - 100, winH/2 - 24, 200, 48, "START SNAKE GAME", () -> {
+            // action: start snake game
+            System.out.println("Starting Snake Game!");
+            app.setTitle("Snake Game - Use Arrow Keys!");
+            snakeModel = new SnakeModel(GRID_W, GRID_H);
             state = 1; // change state to "playing"
         });
         
-        UILabel myLabel = new UILabel("Hi there, haha!?.", 3); // default scale 3
+        UILabel myLabel = new UILabel("SNAKE GAME", 4); // title label
 
 
 
@@ -164,39 +176,64 @@ public class ClickButtonApp {
             }
         });
 
-        // Snake game objects (Player and Apple and tail segments)
-        UIRectangle apple           =   new UIRectangle(300, 200, 20, 20, Colors.RED);
-        UIRectangle player          =   new UIRectangle(100, 100, 20, 20, Colors.GREEN);
-        // UIRectangle[] tailSegments  = new UIRectangle[10];
+        // Snake game objects are now handled by SnakeModel
 
-        // Keyboard: ESC to exit
+        // Keyboard: ESC to exit, Arrow keys for snake movement
         glfwSetKeyCallback(window, (win, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(win, true);
+            if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+                if (state == 1) {
+                    state = 0; // return to menu
+                    app.setTitle("Snake Game - Click to Start");
+                } else {
+                    glfwSetWindowShouldClose(win, true);
+                }
+            }
 
-            if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+            // Snake movement only when playing
+            if (state == 1 && snakeModel != null && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
                 switch (key) {
                     case GLFW_KEY_UP:
-                        player.move(0, -20);    // Move up 20 pixels
-                        System.out.println("Player position: (" + player.x + ", " + player.y + ")");
+                    case GLFW_KEY_W:
+                        snakeModel.setDirection(SnakeModel.Direction.UP);
                         break;
                     case GLFW_KEY_DOWN:
-                        player.move(0, 20);     // Move down 20 pixels
-                        System.out.println("Player position: (" + player.x + ", " + player.y + ")");
+                    case GLFW_KEY_S:
+                        snakeModel.setDirection(SnakeModel.Direction.DOWN);
                         break;
                     case GLFW_KEY_LEFT:
-                        player.move(-20, 0);    // Move left 20 pixels
-                        System.out.println("Player position: (" + player.x + ", " + player.y + ")");
+                    case GLFW_KEY_A:
+                        snakeModel.setDirection(SnakeModel.Direction.LEFT);
                         break;
                     case GLFW_KEY_RIGHT:
-                        player.move(20, 0);     // Move right 20 pixels
-                        System.out.println("Player position: (" + player.x + ", " + player.y + ")");
+                    case GLFW_KEY_D:
+                        snakeModel.setDirection(SnakeModel.Direction.RIGHT);
                         break;
                 }
             }
         });
 
-        // Main loop
+        // Main loop with snake game timing
+        double lastTime = glfwGetTime();
+        double delta = 0.0;
+        final double secPerUpdate = 1.0 / 8.0; // 8 updates per second for snake
+
         while (!glfwWindowShouldClose(window)) {
+            double now = glfwGetTime();
+            delta += (now - lastTime);
+            lastTime = now;
+
+            // Handle fixed-step updates for snake game
+            if (state == 1 && snakeModel != null) {
+                while (delta >= secPerUpdate) {
+                    snakeModel.update();
+                    if (snakeModel.isGameOver()) {
+                        state = 2; // game over
+                        app.setTitle("Game Over! Score: " + snakeModel.getScore());
+                    }
+                    delta -= secPerUpdate;
+                }
+            }
+
             if (state == 0) {
                 // update hover state from cursor
                 double[] xd = new double[1], yd = new double[1];
@@ -208,14 +245,56 @@ public class ClickButtonApp {
                 glClearColor(0.08f, 0.08f, 0.08f, 1.0f);
                 glClear(GL_COLOR_BUFFER_BIT);
 
-                // draw button
+                // draw button and title
                 button.render();
-                myLabel.render(10, 10);
+                myLabel.render(winW/2 - myLabel.getPixelWidth()/2, 50);
             }
-            if (state == 1) {
-                // playing state
-                player.render();
-                apple.render();
+            else if (state == 1) {
+                // playing state - render snake game
+                glClearColor(0.06f, 0.06f, 0.06f, 1.0f);
+                glClear(GL_COLOR_BUFFER_BIT);
+                
+                // draw grid background
+                drawGridBackground(winW, winH, CELL_SIZE);
+                
+                // draw snake
+                if (snakeModel != null) {
+                    boolean isHead = true;
+                    for (int[] segment : snakeModel.getSnake()) {
+                        if (isHead) {
+                            drawCell(segment[0], segment[1], CELL_SIZE, 0.2f, 0.9f, 0.2f);
+                            isHead = false;
+                        } else {
+                            drawCell(segment[0], segment[1], CELL_SIZE, 0.2f, 0.6f, 0.2f);
+                        }
+                    }
+                    
+                    // draw food
+                    int[] food = snakeModel.getFood();
+                    if (food != null) {
+                        drawCell(food[0], food[1], CELL_SIZE, 1.0f, 0.35f, 0.35f);
+                    }
+                    
+                    // draw score
+                    UILabel scoreLabel = new UILabel("SCORE: " + snakeModel.getScore(), 2);
+                    scoreLabel.render(10, 10);
+                }
+            }
+            else if (state == 2) {
+                // game over state
+                glClearColor(0.08f, 0.08f, 0.08f, 1.0f);
+                glClear(GL_COLOR_BUFFER_BIT);
+                
+                UILabel gameOverLabel = new UILabel("GAME OVER", 4);
+                UILabel scoreLabel = new UILabel("FINAL SCORE: " + (snakeModel != null ? snakeModel.getScore() : 0), 3);
+                UILabel restartLabel = new UILabel("Click button to play again", 2);
+                
+                gameOverLabel.render(winW/2 - gameOverLabel.getPixelWidth()/2, winH/2 - 50);
+                scoreLabel.render(winW/2 - scoreLabel.getPixelWidth()/2, winH/2);
+                restartLabel.render(winW/2 - restartLabel.getPixelWidth()/2, winH/2 + 50);
+                
+                // show button for restart
+                button.render();
             }
 
             glfwSwapBuffers(window);
@@ -225,6 +304,42 @@ public class ClickButtonApp {
         // cleanup
         app.destroy();
         System.exit(0);
+    }
+
+    // Helper methods for snake game rendering
+    private static void drawCell(int gx, int gy, int cellSize, float r, float g, float b) {
+        int x = gx * cellSize;
+        int y = gy * cellSize;
+        glColor3f(r, g, b);
+        glBegin(GL_QUADS);
+            glVertex2i(x + 1, y + 1);
+            glVertex2i(x + cellSize - 1, y + 1);
+            glVertex2i(x + cellSize - 1, y + cellSize - 1);
+            glVertex2i(x + 1, y + cellSize - 1);
+        glEnd();
+    }
+
+    private static void drawGridBackground(int winW, int winH, int cellSize) {
+        // full dark background
+        glColor3f(0.06f, 0.06f, 0.06f);
+        glBegin(GL_QUADS);
+            glVertex2i(0, 0);
+            glVertex2i(winW, 0);
+            glVertex2i(winW, winH);
+            glVertex2i(0, winH);
+        glEnd();
+        // optional light grid lines
+        glColor3f(0.08f, 0.08f, 0.08f);
+        glBegin(GL_LINES);
+        for (int i = 0; i <= winW / cellSize; i++) {
+            int x = i * cellSize;
+            glVertex2i(x, 0); glVertex2i(x, winH);
+        }
+        for (int j = 0; j <= winH / cellSize; j++) {
+            int y = j * cellSize;
+            glVertex2i(0, y); glVertex2i(winW, y);
+        }
+        glEnd();
     }
 
 }
@@ -463,9 +578,45 @@ class Colors {
 
 
 
-class Model {
-    
+// Snake Game Model (merged from SnakeGame)
+class SnakeModel {
     public enum Direction { UP, DOWN, LEFT, RIGHT }
+
+    private final int gridWidth, gridHeight;
+    private final Deque<int[]> snake; // each int[] is {x,y}
+    private Direction dir = Direction.RIGHT;
+    private int[] food;
+    private boolean grow = false;
+    private boolean gameOver = false;
+    private final Random rnd = new Random();
+
+    public SnakeModel(int gridWidth, int gridHeight) {
+        this.gridWidth = gridWidth;
+        this.gridHeight = gridHeight;
+        snake = new LinkedList<>();
+        int centerX = gridWidth / 2;
+        int centerY = gridHeight / 2;
+        // initial snake length 3
+        snake.add(new int[] { centerX - 1, centerY });
+        snake.add(new int[] { centerX, centerY });
+        snake.add(new int[] { centerX + 1, centerY });
+        placeFood();
+    }
+
+    // Read-only view of snake
+    public List<int[]> getSnake() { return List.copyOf(snake); }
+    public int[] getFood() { return food == null ? null : new int[] { food[0], food[1] }; }
+    public boolean isGameOver() { return gameOver; }
+    public int getScore() { return Math.max(0, snake.size() - 3); }
+
+    public void setDirection(Direction d) {
+        if (snake.size() > 1) {
+            Direction opp = oppositeOf(dir);
+            if (d == opp) return; // prevent reverse
+        }
+        dir = d;
+    }
+
     private Direction oppositeOf(Direction d) {
         switch (d) {
             case UP: return Direction.DOWN;
@@ -473,6 +624,61 @@ class Model {
             case LEFT: return Direction.RIGHT;
             default: return Direction.LEFT;
         }
+    }
+
+    public void update() {
+        if (gameOver) return;
+        int[] head = snake.peekLast();
+        int nx = head[0], ny = head[1];
+        switch (dir) {
+            case UP: ny--; break;
+            case DOWN: ny++; break;
+            case LEFT: nx--; break;
+            case RIGHT: nx++; break;
+        }
+
+        // wall collision: end game
+        if (nx < 0 || nx >= gridWidth || ny < 0 || ny >= gridHeight) {
+            gameOver = true;
+            return;
+        }
+
+        // self-collision
+        for (int[] s : snake) {
+            if (s[0] == nx && s[1] == ny) {
+                gameOver = true;
+                return;
+            }
+        }
+
+        snake.addLast(new int[] { nx, ny });
+
+        if (food != null && nx == food[0] && ny == food[1]) {
+            grow = true;
+            placeFood();
+        }
+
+        if (!grow) {
+            snake.removeFirst();
+        } else {
+            grow = false; // consumed growth this update
+        }
+    }
+
+    private void placeFood() {
+        // naive placement: random location not on snake
+        int attempts = 0;
+        while (attempts++ < 1000) {
+            int fx = rnd.nextInt(gridWidth);
+            int fy = rnd.nextInt(gridHeight);
+            boolean onSnake = false;
+            for (int[] s : snake) {
+                if (s[0] == fx && s[1] == fy) { onSnake = true; break; }
+            }
+            if (!onSnake) { food = new int[] { fx, fy }; return; }
+        }
+        // fallback: no food (shouldn't happen for reasonable grid)
+        food = null;
     }
 }
 
