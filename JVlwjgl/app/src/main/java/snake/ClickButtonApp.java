@@ -34,7 +34,7 @@ import java.util.Random;
 
 
 
-class LWJGLFrame {
+class UIWindow {
     private static long window;
     public static long getWindow() {
         return window;
@@ -64,7 +64,7 @@ class LWJGLFrame {
         glfwSetWindowTitle(window, title);
     }
 
-    public LWJGLFrame(String title, int winW, int winH) {
+    public UIWindow(String title, int winW, int winH) {
         this.winW = winW;
         this.winH = winH;
         this.title = title;
@@ -117,7 +117,14 @@ class LWJGLFrame {
 
 
 
+class UIView {
+    
+}
 
+
+class UIContainer {
+
+}
 
 
 
@@ -146,8 +153,8 @@ public class ClickButtonApp {
 
 
     public static void main(String[] args) {
-        // LWJGLFrame setup
-        LWJGLFrame app = new LWJGLFrame("Single Button - click prints 'hello world'", 640, 480);
+        // UIWindow setup
+        UIWindow app = new UIWindow("Single Button - click prints 'hello world'", 640, 480);
         long window = app.getWindow();
         int winW = app.getWinW();
         int winH = app.getWinH();
@@ -231,6 +238,7 @@ public class ClickButtonApp {
             double now = glfwGetTime();
             delta += (now - lastTime);
             lastTime = now;
+
 
             // Handle fixed-step updates for snake game
             if (state == 1 && snakeModel != null) {
@@ -383,7 +391,7 @@ class SnakeModel {
     private final int gridWidth, gridHeight;
     private final Deque<int[]> snake; // each int[] is {x,y}
     private Direction dir = Direction.RIGHT;
-    private int[] food;
+    int[] food;
     private boolean grow = false;
     private boolean gameOver = false;
     private final Random rnd = new Random();
