@@ -119,6 +119,16 @@ class LWJGLFrame {
 
 
 
+
+
+
+
+
+
+
+
+
+
 /**
  * Single-button LWJGL app. Click the button, prints "hello world" to console.
  */
@@ -133,9 +143,6 @@ public class ClickButtonApp {
     
     // Snake game variables
     static SnakeModel snakeModel;
-    static final int CELL_SIZE = 20;
-    static final int GRID_W = 32;  // 640 / 20
-    static final int GRID_H = 24;  // 480 / 20
 
 
     public static void main(String[] args) {
@@ -145,6 +152,9 @@ public class ClickButtonApp {
         int winW = app.getWinW();
         int winH = app.getWinH();
 
+        int CELL_SIZE = 20;
+        int GRID_W = app.getWinW() / CELL_SIZE;
+        int GRID_H = app.getWinH() / CELL_SIZE;
 
 
 
@@ -259,14 +269,13 @@ public class ClickButtonApp {
                 
                 // draw snake
                 if (snakeModel != null) {
-                    boolean isHead = true;
+                    float r = 0.2f;
+                    float g = 0.6f; // gradually increment up to 0.9f.
+                    float g_increment = 0.3f / snakeModel.getSnakeSize();
+                    float b = 0.2f;
                     for (int[] segment : snakeModel.getSnake()) {
-                        if (isHead) {
-                            drawCell(segment[0], segment[1], CELL_SIZE, 0.2f, 0.9f, 0.2f);
-                            isHead = false;
-                        } else {
-                            drawCell(segment[0], segment[1], CELL_SIZE, 0.2f, 0.6f, 0.2f);
-                        }
+                        drawCell(segment[0], segment[1], CELL_SIZE, r, g, b);
+                        g += g_increment;
                     }
                     
                     // draw food
@@ -358,6 +367,169 @@ public class ClickButtonApp {
 
 
 
+
+
+
+
+
+
+
+
+
+// Snake Game Model (merged from SnakeGame)
+class SnakeModel {
+    public enum Direction { UP, DOWN, LEFT, RIGHT }
+
+    private final int gridWidth, gridHeight;
+    private final Deque<int[]> snake; // each int[] is {x,y}
+    private Direction dir = Direction.RIGHT;
+    private int[] food;
+    private boolean grow = false;
+    private boolean gameOver = false;
+    private final Random rnd = new Random();
+
+    public SnakeModel(int gridWidth, int gridHeight) {
+        this.gridWidth = gridWidth;
+        this.gridHeight = gridHeight;
+        snake = new LinkedList<>();
+        int centerX = gridWidth / 3;
+        int centerY = gridHeight / 2;
+        // initial snake length 3
+        snake.add(new int[] { centerX - 1, centerY });
+        snake.add(new int[] { centerX, centerY });
+        snake.add(new int[] { centerX + 1, centerY });
+        placeFood();
+    }
+
+    // Read-only view of snake
+    public List<int[]> getSnake() { return List.copyOf(snake); }
+    public int getSnakeSize() { return snake.size(); }
+    public int[] getFood() { return food == null ? null : new int[] { food[0], food[1] }; }
+    public boolean isGameOver() { return gameOver; }
+    public int getScore() { return Math.max(0, snake.size() - 3); }
+
+    public void setDirection(Direction d) {
+        if (snake.size() > 1) {
+            Direction opp = oppositeOf(dir);
+            if (d == opp) return; // prevent reverse
+        }
+        dir = d;
+    }
+
+    private Direction oppositeOf(Direction d) {
+        switch (d) {
+            case UP: return Direction.DOWN;
+            case DOWN: return Direction.UP;
+            case LEFT: return Direction.RIGHT;
+            default: return Direction.LEFT;
+        }
+    }
+
+    public void update() {
+        if (gameOver) return;
+        int[] head = snake.peekLast();
+        int nx = head[0], ny = head[1];
+        switch (dir) {
+            case UP: ny--; break;
+            case DOWN: ny++; break;
+            case LEFT: nx--; break;
+            case RIGHT: nx++; break;
+        }
+
+        // wall collision: end game
+        if (nx < 0 || nx >= gridWidth || ny < 0 || ny >= gridHeight) {
+            gameOver = true;
+            return;
+        }
+
+        // self-collision
+        for (int[] s : snake) {
+            if (s[0] == nx && s[1] == ny) {
+                gameOver = true;
+                return;
+            }
+        }
+
+        snake.addLast(new int[] { nx, ny });
+
+        if (food != null && nx == food[0] && ny == food[1]) {
+            grow = true;
+            placeFood();
+        }
+
+        if (!grow) {
+            snake.removeFirst();
+        } else {
+            grow = false; // consumed growth this update
+        }
+    }
+
+    private void placeFood() {
+        // naive placement: random location not on snake
+        int attempts = 0;
+        while (attempts++ < 1000) {
+            int fx = rnd.nextInt(gridWidth);
+            int fy = rnd.nextInt(gridHeight);
+            boolean onSnake = false;
+            for (int[] s : snake) {
+                if (s[0] == fx && s[1] == fy) { onSnake = true; break; }
+            }
+            if (!onSnake) { food = new int[] { fx, fy }; return; }
+        }
+        // fallback: no food (shouldn't happen for reasonable grid)
+        food = null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Color definition constants
+class Colors {
+    // Basic colors (RGB values 0.0f to 1.0f)
+    public static final float[] RED = {1.0f, 0.0f, 0.0f};
+    public static final float[] GREEN = {0.0f, 1.0f, 0.0f};
+    public static final float[] BLUE = {0.0f, 0.0f, 1.0f};
+    public static final float[] WHITE = {1.0f, 1.0f, 1.0f};
+    public static final float[] BLACK = {0.0f, 0.0f, 0.0f};
+    public static final float[] GRAY = {0.5f, 0.5f, 0.5f};
+    public static final float[] YELLOW = {1.0f, 1.0f, 0.0f};
+    public static final float[] CYAN = {0.0f, 1.0f, 1.0f};
+    public static final float[] MAGENTA = {1.0f, 0.0f, 1.0f};
+    
+    // Custom colors
+    public static final float[] DARK_RED = {0.8f, 0.2f, 0.2f};
+    public static final float[] LIGHT_BLUE = {0.7f, 0.9f, 1.0f};
+    public static final float[] ORANGE = {1.0f, 0.5f, 0.0f};
+    public static final float[] PURPLE = {0.5f, 0.0f, 0.5f};
+    
+    // Helper method to set color from array
+    public static void setColor(float[] color) {
+        glColor3f(color[0], color[1], color[2]);
+    }
+}
 
 
 
@@ -551,136 +723,8 @@ class UIButton {
 
 
 
-// Color definition constants
-class Colors {
-    // Basic colors (RGB values 0.0f to 1.0f)
-    public static final float[] RED = {1.0f, 0.0f, 0.0f};
-    public static final float[] GREEN = {0.0f, 1.0f, 0.0f};
-    public static final float[] BLUE = {0.0f, 0.0f, 1.0f};
-    public static final float[] WHITE = {1.0f, 1.0f, 1.0f};
-    public static final float[] BLACK = {0.0f, 0.0f, 0.0f};
-    public static final float[] GRAY = {0.5f, 0.5f, 0.5f};
-    public static final float[] YELLOW = {1.0f, 1.0f, 0.0f};
-    public static final float[] CYAN = {0.0f, 1.0f, 1.0f};
-    public static final float[] MAGENTA = {1.0f, 0.0f, 1.0f};
-    
-    // Custom colors
-    public static final float[] DARK_RED = {0.8f, 0.2f, 0.2f};
-    public static final float[] LIGHT_BLUE = {0.7f, 0.9f, 1.0f};
-    public static final float[] ORANGE = {1.0f, 0.5f, 0.0f};
-    public static final float[] PURPLE = {0.5f, 0.0f, 0.5f};
-    
-    // Helper method to set color from array
-    public static void setColor(float[] color) {
-        glColor3f(color[0], color[1], color[2]);
-    }
-}
 
 
-
-// Snake Game Model (merged from SnakeGame)
-class SnakeModel {
-    public enum Direction { UP, DOWN, LEFT, RIGHT }
-
-    private final int gridWidth, gridHeight;
-    private final Deque<int[]> snake; // each int[] is {x,y}
-    private Direction dir = Direction.RIGHT;
-    private int[] food;
-    private boolean grow = false;
-    private boolean gameOver = false;
-    private final Random rnd = new Random();
-
-    public SnakeModel(int gridWidth, int gridHeight) {
-        this.gridWidth = gridWidth;
-        this.gridHeight = gridHeight;
-        snake = new LinkedList<>();
-        int centerX = gridWidth / 2;
-        int centerY = gridHeight / 2;
-        // initial snake length 3
-        snake.add(new int[] { centerX - 1, centerY });
-        snake.add(new int[] { centerX, centerY });
-        snake.add(new int[] { centerX + 1, centerY });
-        placeFood();
-    }
-
-    // Read-only view of snake
-    public List<int[]> getSnake() { return List.copyOf(snake); }
-    public int[] getFood() { return food == null ? null : new int[] { food[0], food[1] }; }
-    public boolean isGameOver() { return gameOver; }
-    public int getScore() { return Math.max(0, snake.size() - 3); }
-
-    public void setDirection(Direction d) {
-        if (snake.size() > 1) {
-            Direction opp = oppositeOf(dir);
-            if (d == opp) return; // prevent reverse
-        }
-        dir = d;
-    }
-
-    private Direction oppositeOf(Direction d) {
-        switch (d) {
-            case UP: return Direction.DOWN;
-            case DOWN: return Direction.UP;
-            case LEFT: return Direction.RIGHT;
-            default: return Direction.LEFT;
-        }
-    }
-
-    public void update() {
-        if (gameOver) return;
-        int[] head = snake.peekLast();
-        int nx = head[0], ny = head[1];
-        switch (dir) {
-            case UP: ny--; break;
-            case DOWN: ny++; break;
-            case LEFT: nx--; break;
-            case RIGHT: nx++; break;
-        }
-
-        // wall collision: end game
-        if (nx < 0 || nx >= gridWidth || ny < 0 || ny >= gridHeight) {
-            gameOver = true;
-            return;
-        }
-
-        // self-collision
-        for (int[] s : snake) {
-            if (s[0] == nx && s[1] == ny) {
-                gameOver = true;
-                return;
-            }
-        }
-
-        snake.addLast(new int[] { nx, ny });
-
-        if (food != null && nx == food[0] && ny == food[1]) {
-            grow = true;
-            placeFood();
-        }
-
-        if (!grow) {
-            snake.removeFirst();
-        } else {
-            grow = false; // consumed growth this update
-        }
-    }
-
-    private void placeFood() {
-        // naive placement: random location not on snake
-        int attempts = 0;
-        while (attempts++ < 1000) {
-            int fx = rnd.nextInt(gridWidth);
-            int fy = rnd.nextInt(gridHeight);
-            boolean onSnake = false;
-            for (int[] s : snake) {
-                if (s[0] == fx && s[1] == fy) { onSnake = true; break; }
-            }
-            if (!onSnake) { food = new int[] { fx, fy }; return; }
-        }
-        // fallback: no food (shouldn't happen for reasonable grid)
-        food = null;
-    }
-}
 
 
 class UIRectangle {
