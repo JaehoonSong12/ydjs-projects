@@ -3,7 +3,7 @@
 """
 Instructions to run the tests via the CLI:
     1. Open your terminal or command prompt.
-    2. Run the tests by executing: `python async-ap/ap_quiz_package04.py`
+    2. Run the tests by executing: `python jayden-python/ap_quiz_package04.py`
 
 This is a list of quiz questions for practice, including:
 1.  countCode: Count occurrences of "co_e" patterns in a string.
@@ -79,22 +79,14 @@ def countCode(s: str) -> int:
         int: The count of substrings matching the pattern "co_e".
     """
     ### [Your Implementation Here]
-    i = 0
-    count = 0
-    while i < len(s) - 3:
-        if s[i] == "c":
-            if s[i + 1] == "o":
-                if s[i + 3] == "e":
-                    count += 1
-        i += 1
-    return count
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 # -----------------------------------------------------------------
 # Question 2: sum13
@@ -118,22 +110,14 @@ def sum13(nums: list[int]) -> int:
         int: The sum according to the "13" rules described above.
     """
     ### [Your Implementation Here]
-    sum = 0
-    i = 0
-    while i < len(nums):
-        if nums[i] != 13:
-            sum += nums[i]
-            i += 1
-        elif nums[i] == 13:
-            i += 2
-    return sum
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 # -----------------------------------------------------------------
 # Question 3: has22
@@ -155,20 +139,14 @@ def has22(nums: list[int]) -> bool:
         bool: True if there is at least one occurrence of two consecutive 2's, False otherwise.
     """
     ### [Your Implementation Here]
-    i = 0
-    while i < len(nums) - 1:
-        if nums[i] == 2:
-            if nums[i + 1] == 2:
-                return True
-        i += 1
-    return False
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return False
 
 # -----------------------------------------------------------------
 # Question 4: loneSum
@@ -193,22 +171,14 @@ def loneSum(a: int, b: int, c: int) -> int:
         int: The sum of the values that are not duplicated.
     """
     ### [Your Implementation Here]
-    total = 0
-    if a != b and a != c:
-        total += a
-    if b != a and b != c:
-        total += b
-    if c != a and c != b:
-        total += c
-    return total
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 # -----------------------------------------------------------------
 # Question 5: withoutString
@@ -234,27 +204,14 @@ def withoutString(base: str, remove: str) -> str:
         str: The resulting string after all instances of `remove` have been removed.
     """
     ### [Your Implementation Here]
-    new_str = ""
 
-    i = 0
-    while i <= len(base):
-        if (i > len(base) - len(remove)): 
-            new_str += base[i:]
-            break
-        if (base[i:i+len(remove)].lower() == remove.lower()): 
-            i = i + len(remove)
-            continue
-        else: 
-            new_str += base[i]
-        i += 1
-    return new_str
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return ""
 
 # -----------------------------------------------------------------
 # Question 6: fix34
@@ -284,17 +241,13 @@ def fix34(nums: list[int]) -> list[int]:
     """
     ### [Your Implementation Here]
 
-    
-
-
-    
-    return None
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return []
 
 
 # -----------------------------------------------------------------
@@ -321,14 +274,14 @@ def endOther(a: str, b: str) -> bool:
         bool: True if one string appears at the end of the other (case-insensitive), else False.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return False
 
 # -----------------------------------------------------------------
 # Question 8: xyzThere
@@ -353,15 +306,14 @@ def xyzThere(s: str) -> bool:
         bool: True if "xyz" appears not preceded by '.', otherwise False.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
-
+    return False
 
 
 # -----------------------------------------------------------------
@@ -385,14 +337,14 @@ def lucky13(nums: list[int]) -> bool:
         bool: True if there are no 1's and no 3's in the list, otherwise False.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return False
 
 # -----------------------------------------------------------------
 # Question 10: sum28
@@ -416,15 +368,14 @@ def sum28(nums: list[int]) -> bool:
         bool: True if the sum of all 2's is exactly 8, otherwise False.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
-
+    return False
 
 
 

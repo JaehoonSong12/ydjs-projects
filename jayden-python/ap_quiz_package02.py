@@ -4,7 +4,7 @@
 """
 Instructions to run the tests via the CLI:
     1. Open your terminal or command prompt.
-    2. Run the tests by executing: `python ap_quiz_package02.py`
+    2. Run the tests by executing: `python jayden-python/ap_quiz_package02.py`
 
 This is a list of quiz questions for practice, including:
 
@@ -76,15 +76,14 @@ def copyEndy(nums: list[int], count: int) -> list[int]:
         list[int]: A list containing the first `count` endy integers.
     """
     ### [Your Implementation Here]
-    return None
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
-
+    return []
 
 
 # -----------------------------------------------------------------
@@ -111,15 +110,14 @@ def matchUp(a: list[str], b: list[str]) -> int:
         int: The count of non-empty string pairs that start with the same character.
     """
     ### [Your Implementation Here]
-    return 0
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
     
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 
 # -----------------------------------------------------------------
@@ -147,9 +145,6 @@ def scoreUp(key: list[str], answers: list[str]) -> int:
         int: The student's total score based on the comparison.
     """
     ### [Your Implementation Here]
-    return 0
-        
-
 
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
@@ -157,7 +152,7 @@ def scoreUp(key: list[str], answers: list[str]) -> int:
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 
 
@@ -185,15 +180,14 @@ def wordsWithout(words: list[str], target: str) -> list[str]:
         list[str]: A new list containing all words except those that are equal to the target string.
     """
     ### [Your Implementation Here]
-    return None
 
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return []
 
 # -----------------------------------------------------------------
 # Question 5: scoresSpecial
@@ -225,38 +219,15 @@ def scoresSpecial(a: list[int], b: list[int]) -> int:
     Returns:
         int: Sum of the largest multiple-of-10 in `a` and the largest multiple-of-10 in `b`.
     """
-    def max_special(scores: list[int]) -> int:
-        """
-        Helper:
-            Finds the largest "special" score (a multiple of 10) in the given list.
-            Returns 0 if there are no multiples of 10.
-        """
-        i = 0
-        specials = []
-        while i < len(scores):
-            if scores[i] % 10 == 0:
-                specials.append(scores[i])
-            i += 1
-        i = 0
-        if specials == []:
-            return 0
-        maximum = specials[0]
-        while i < len(specials):
-            if specials[i] > maximum:
-                maximum = specials[i]
-            i += 1
-        return maximum
     ### [Your Implementation Here]
-    sum_of_specials = max_special(a) + max_special(b)
-    return sum_of_specials
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-    return None
-
+    return 0
 
 
 
@@ -288,19 +259,14 @@ def sumHeights(heights: list[int], start: int, end: int) -> int:
         int: The total sum of absolute height changes from start to end.
     """
     ### [Your Implementation Here]
-    i = start
-    abs_height_sum = 0
-    while i < end:
-        abs_height_sum += abs(heights[i] - heights[i + 1])
-        i += 1
-    return abs_height_sum
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 
 def sumHeights2(heights: list[int], start: int, end: int) -> int:
@@ -329,22 +295,14 @@ def sumHeights2(heights: list[int], start: int, end: int) -> int:
         int: The total sum of height changes, counting each upward change twice.
     """
     ### [Your Implementation Here]
-    i = start
-    abs_height_sum = 0
-    while i < end:
-        if heights[i + 1] - heights[i] > 0:
-            abs_height_sum += 2 * (heights[i + 1] - heights[i])
-        else:
-            abs_height_sum += abs(heights[i] - heights[i + 1])
-        i += 1
-    return abs_height_sum
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 
 
@@ -375,19 +333,15 @@ def bigHeights(heights: list[int], start: int, end: int) -> int:
         int: The count of "big" steps (difference ≥ 5) between start and end.
     """
     ### [Your Implementation Here]
-    i = start
-    count = 0
-    while i < end:
-        if abs(heights[i] - heights[i + 1]) >= 5:
-            count += 1
-        i += 1
-    return count
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return 0
+
 
 def userCompare(aName: str, aId: int, bName: str, bId: int) -> int:
     """
@@ -425,29 +379,14 @@ def userCompare(aName: str, aId: int, bName: str, bId: int) -> int:
         int: -1 if A < B, 1 if A > B, 0 if they are equal.
     """
     ### [Your Implementation Here]
-    if aName == bName:
-        if aId < bId:
-            return -1
-        if bId < aId:
-            return 1
-        if aId == bId:
-            return 0
-    i = 0
-    while i < len(aName):
-        if ord(aName[i]) < ord(bName[i]):
-            return -1
-        if ord(aName[i]) > ord(bName[i]):
-            return 1
-        i += 1
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
-
-
+    return 0
 
 
 
@@ -482,53 +421,15 @@ def mergeTwo(a: list[str], b: list[str], n: int) -> list[str]:
     Returns:
         list[str]: A sorted list of the first `n` unique strings from merging `a` and `b`.
     """
-    def quicksort(arr: list[str]) -> list[str]:
-        if len(arr) <= 1:
-            return arr
-        pivot = arr[len(arr) // 2]
-        left = [x for x in arr if x < pivot]
-        middle = [x for x in arr if x == pivot]
-        right = [x for x in arr if x > pivot]
-        return quicksort(left) + middle + quicksort(right)
     ### [Your Implementation Here]
-    c = a + b
-    c = quicksort(c) # n log n
-    unique_c = [c[0]] # O(1)
-    for i in range(1, len(c) - 1): # O(n)
-        if (len(unique_c) == n): 
-            break
-        if (c[i] != unique_c[-1]): 
-            unique_c.append(c[i])
-    return unique_c
-
-    # i = 0
-    # j = 0
-    # curr_ord = -1
-    # while len(c) < n:
-    #     if ord(a[i]) < ord(b[j]):
-    #         c.append(a[i])
-    #         curr_ord = ord(a[i])
-    #         i += 1
-    #     elif ord(b[j]) < ord(a[i]):
-    #         c.append(b[i])
-    #         curr_ord = ord(b[j])
-    #         j += 1
-    #     elif ord(a[i]) == ord(b[j]):
-    #         if ord(a[i]) != curr_ord: 
-    #             c.append(a[i])
-    #             curr_ord = ord(a[i])
-    #             i += 1
-    #         j += 1
-    # return c
 
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
-
+    return []
 
 
 

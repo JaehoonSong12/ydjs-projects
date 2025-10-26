@@ -3,7 +3,7 @@
 """
 Instructions to run the tests via the CLI:
     1. Open your terminal or command prompt.
-    2. Run the tests by executing: `python async-ap/ap_quiz_package06.py`
+    2. Run the tests by executing: `python jayden-python/ap_quiz_package06.py`
 
 This is a list of quiz questions for practice, including:
 1.  gHappy: Check if all 'g' chars in the string are happy (surrounded by 'g's).
@@ -80,13 +80,14 @@ def gHappy(s: str) -> bool:
         bool: True if every 'g' in the string is happy, False otherwise.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return False
 
 
 
@@ -119,13 +120,14 @@ def canBalance(nums: list[int]) -> bool:
               equals the sum of the elements to the right.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return False
 
 
 # -----------------------------------------------------------------
@@ -149,13 +151,14 @@ def no14(nums: list[int]) -> bool:
         bool: True if the list contains no 1's or no 4's, False otherwise.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return False
 
 
 
@@ -182,13 +185,14 @@ def isEverywhere(nums: list[int], val: int) -> bool:
         bool: True if `val` is everywhere in `nums`, False otherwise.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return False
 
 # -----------------------------------------------------------------
 # Question 5: repeatEnd
@@ -212,14 +216,14 @@ def repeatEnd(s: str, n: int) -> str:
         str: A string consisting of `n` copies of the last `n` characters of `s`.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return ""
 
 # -----------------------------------------------------------------
 # Question 6: mixString
@@ -245,13 +249,14 @@ def mixString(a: str, b: str) -> str:
         str: The merged string with alternating characters.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return ""
 
 
 
@@ -277,13 +282,14 @@ def xyBalance(s: str) -> bool:
         bool: True if the string is xy-balanced, False otherwise.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return False
 
 
 # -----------------------------------------------------------------
@@ -307,13 +313,14 @@ def bobThere(s: str) -> bool:
         bool: True if any substring of the form 'b?b' appears, False otherwise.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return False
 
 
 # -----------------------------------------------------------------
@@ -341,13 +348,14 @@ def roundSum(a: int, b: int, c: int) -> int:
         int: Sum of the three values after rounding each to nearest ten.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return 0
 
 
 # -----------------------------------------------------------------
@@ -371,13 +379,14 @@ def countTriple(s: str) -> int:
         int: The count of positions where a character appears three times in a row.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return 0
 
 
 

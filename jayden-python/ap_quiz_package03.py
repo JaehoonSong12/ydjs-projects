@@ -3,7 +3,7 @@
 """
 Instructions to run the tests via the CLI:
     1. Open your terminal or command prompt.
-    2. Run the tests by executing: `python async-ap/ap_quiz_package03.py`
+    2. Run the tests by executing: `python jayden-python/ap_quiz_package03.py`
 
 This is a list of quiz questions for practice, including:
 1.  commonTwo: Counts unique common strings in two sorted arrays.
@@ -83,31 +83,14 @@ def commonTwo(a: list[str], b: list[str]) -> int:
         int: The count of unique strings that appear in both `a` and `b`.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    temp = []
-    for string in a:
-        if string not in temp:
-            temp.append(string)
-    a = temp
-    temp = []
-    for string in b:
-        if string not in temp:
-            temp.append(string)
-    b = temp
-
-    count = 0
-    i = 0
-    while i < len(b):
-        if b[i] in a:
-            count += 1
-        i += 1
-    return count
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 # -----------------------------------------------------------------
 # Question 2: doubleChar
@@ -130,18 +113,14 @@ def doubleChar(s: str) -> str:
         str: A string where each character from `s` is repeated twice.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    new_str = ""
-    for char in s:
-        new_str += char
-        new_str += char
-    return new_str
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return ""
 
 # -----------------------------------------------------------------
 # Question 3: countHi
@@ -164,22 +143,14 @@ def countHi(s: str) -> int:
         int: Number of times "hi" appears.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    i = 0
-    count = 0
-    while i < len(s) - 1:
-        if s[i] == "h":
-            if s[i + 1] == "i":
-                count += 1
-        i += 1
-    return count
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 # -----------------------------------------------------------------
 # Question 4: countEvens
@@ -202,18 +173,14 @@ def countEvens(nums: list[int]) -> int:
         int: Count of even integers in the list.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    count = 0
-    for num in nums:
-        if num % 2 == 0:
-            count += 1
-    return count
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 # -----------------------------------------------------------------
 # Question 5: bigDiff
@@ -236,22 +203,14 @@ def bigDiff(nums: list[int]) -> int:
         int: The difference between the maximum and minimum values in the list.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    largest = nums[0]
-    smallest = nums[0]
-    for num in nums:
-        if num > largest:
-            largest = num
-        if num < smallest:
-            smallest = num
-    difference = largest - smallest
-    return difference
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return 0
 
 # -----------------------------------------------------------------
 # Question 6: centeredAverage
@@ -277,26 +236,15 @@ def centeredAverage(nums: list[int]) -> int:
         int: The centered average of the list using integer division.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    largest = nums[0]
-    smallest = nums[0]
-    for num in nums:
-        if num > largest:
-            largest = num
-        if num < smallest:
-            smallest = num
-    sum = 0
-    total = 0
-    for num in nums:
-        sum += num
-        total += 1
-    average = (sum - smallest - largest) // (total - 2)
-    return average
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return 0
+
 
 # -----------------------------------------------------------------
 # Question 7: makeBricks
@@ -325,23 +273,15 @@ def makeBricks(small: int, big: int, goal: int) -> bool:
         bool: True if the goal can be reached using the available bricks, False otherwise.
     """
     ### [Your Implementation Here]
-    if big * 5 > goal:
-        if goal % 5 == small:
-            return True
-    if big * 5 == goal:
-        return True
-    if small == goal:
-        return True
-    if big * 5 < goal:
-        if big * 5 + small >= goal:
-            return True
-    return False
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return False
+
 
 # -----------------------------------------------------------------
 # Question 8: countYZ
@@ -366,27 +306,14 @@ def countYZ(s: str) -> int:
         int: The number of words ending in 'y' or 'z'.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    i = 0
-    count = 0
-    s = s.lower()
-    while i < len(s):
-        if i == len(s) - 1:
-            if s[i] == "y" or s[i] == "z":
-                count += 1
-            break
-        if not s[i + 1].isalpha():
-            if s[i] == "y" or s[i] == "z":
-                count += 1
-        i += 1
-    return count
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
-
+    return 0
 
 
 # -----------------------------------------------------------------
@@ -413,37 +340,14 @@ def maxSpan(nums: list[int]) -> int:
         int: The largest span found in the array.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
-    if len(nums) == 0:
-        return 0
     
-    if len(nums) == len(list(set(nums))):
-        return 1
-
-
-    i = 0
-    current_span = 0
-    while i < len(nums):
-        j = i + 1
-        new_span = 0
-        start_span_ind = i
-        end_span_ind = j
-        while j < len(nums):
-            if nums[j] == nums[i]:
-                if j != end_span_ind:
-                    end_span_ind = j
-            j += 1
-        new_span = end_span_ind - start_span_ind + 1
-        if current_span < new_span:
-            current_span = new_span
-        i += 1
-    return current_span
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return 0
 
 
 # -----------------------------------------------------------------
@@ -469,30 +373,14 @@ def catDog(s: str) -> bool:
         bool: True if "cat" and "dog" occur the same number of times, False otherwise.
     """
     ### [Your Implementation Here]
-    i = 0
-    cat_count = 0
-    dog_count = 0
-    while i < len(s) - 2:
-        if s[i] == "c":
-            if s[i + 1] == "a":
-                if s[i + 2] == "t":
-                    cat_count += 1
-        if s[i] == "d":
-            if s[i + 1] == "o":
-                if s[i + 2] == "g":
-                    dog_count += 1
-        i += 1
-    if cat_count == dog_count:
-        return True
-    return False
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
-
+    return False
 
 
 

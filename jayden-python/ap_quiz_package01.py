@@ -4,7 +4,7 @@
 """
 Instructions to run the tests via the CLI:
     1. Open your terminal or command prompt.
-    2. Run the tests by executing: `python ap_quiz_package01.py`
+    2. Run the tests by executing: `python jayden-python/ap_quiz_package01.py`
 
 This is a list of quiz questions for practice, including:
 1.  scores_increasing: Checks if scores are in non-decreasing order.
@@ -71,10 +71,7 @@ def scores_increasing(scores: list[int]) -> bool:
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-    for i in range(1, len(scores)):
-        if scores[i - 1] > scores[i]: #scores = array: [1,3,4]
-            return False
-    return True
+    return False
 
 
 
@@ -142,14 +139,14 @@ def scoresClump(scores: list[int]) -> bool:
               otherwise False.
     """
     ### [Your Implementation Here]
-    return False
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return False
 
 
 
@@ -180,44 +177,14 @@ def scoresAverage(scores: list[int]) -> int:
         int: The higher integer average between the first and second half of the list.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    pl = ParallelList(scores)
-    first_avg = pl.get_first_avg()
-    second_avg = pl.get_second_avg()
-    return (first_avg) if (first_avg > second_avg) else (second_avg)
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
-
-class ParallelList:
-    def __init__(self, original: list[int]): # constructor
-        self.first_half = []
-        self.second_half = []
-        for i in range(len(original)):
-            if i < len(original) // 2:
-                self.first_half.append(original[i])
-            else:
-                self.second_half.append(original[i])
-    
-    def __repr__(self): # string representation
-        return f"first_half={self.first_half}, second_half={self.second_half}"
-
-    def get_average(self, list_data: list[int]):
-        sum = 0
-        for i in range(len(list_data)):
-            sum += list_data[i]
-        average = sum / len(list_data)
-        return average if list_data else 0
-    
-    def get_first_avg(self):
-        return self.get_average(self.first_half)
-    
-    def get_second_avg(self):
-        return self.get_average(self.second_half)
+    return 0
 
 
 
@@ -243,22 +210,14 @@ def wordsCount(words: list[str], length: int) -> int:
         int: The number of strings that have the given length.
     """
     ### [Your Implementation Here]
-    count = 0
-    for word in words:
-        if len(word) == length: 
-            count = count + 1
-    return count
-
-    # https://www.w3schools.com/python/python_strings.asp
-
-
 
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    return 0
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return 0
 
 
 
@@ -287,21 +246,14 @@ def wordsFront(words: List[str], n: int) -> List[str]:
     """
     
     ### [Your Implementation Here]
-    selectedlist=[]
-    count = 0
-    for word in words:
-        selectedlist.append(word)
-        count = count + 1
-        if(count == n): break
-    return selectedlist
 
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    return None
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return []
 
 # -----------------------------------------------------------------
 # Question 7: wordsWithoutList
@@ -325,14 +277,14 @@ def wordsWithoutList(words: List[str], length: int) -> List[str]:
         List[str]: A new list with all strings of the given length omitted.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    return None
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return []
 
 
 
@@ -357,14 +309,14 @@ def hasOne(n: int) -> bool:
         bool: True if the number contains at least one digit '1', False otherwise.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    return False
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return False
 
 
 # -----------------------------------------------------------------
@@ -392,15 +344,14 @@ def dividesSelf(n: int) -> bool:
         bool: True if the number divides itself, False otherwise.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    return False
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
+    return False
 
 # -----------------------------------------------------------------
 # Question 10: copyEvens
@@ -425,17 +376,14 @@ def copyEvens(nums: list[int], count: int) -> list[int]:
         list[int]: A list of the first `count` even integers from the original array.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-    return None
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
-
-
-
+    return []
 
 
 

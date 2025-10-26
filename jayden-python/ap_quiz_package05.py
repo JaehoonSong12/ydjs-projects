@@ -3,7 +3,7 @@
 """
 Instructions to run the tests via the CLI:
     1. Open your terminal or command prompt.
-    2. Run the tests by executing: `python async-ap/ap_quiz_package05.py`
+    2. Run the tests by executing: `python jayden-python/ap_quiz_package05.py`
 
 This is a list of quiz questions for practice, including:
 1.  more14: Check if the array contains more 1's than 4's.
@@ -80,13 +80,14 @@ def more14(nums: list[int]) -> bool:
         bool: True if count of 1's is greater than count of 4's, otherwise False.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return False
 
 # -----------------------------------------------------------------
 # Question 2: luckySum
@@ -112,13 +113,14 @@ def luckySum(a: int, b: int, c: int) -> int:
         int: The sum as described, skipping 13 and any values to its right.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return 0
 
 
 # -----------------------------------------------------------------
@@ -144,13 +146,14 @@ def equalIsNot(s: str) -> bool:
         bool: True if count of "is" equals count of "not", otherwise False.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return False
 
 
 # -----------------------------------------------------------------
@@ -179,13 +182,14 @@ def fix45(nums: list[int]) -> list[int]:
         list[int]: A new list where each 4 is immediately followed by a 5.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return []
 
 # -----------------------------------------------------------------
 # Question 5: repeatSeparator
@@ -210,13 +214,14 @@ def repeatSeparator(word: str, sep: str, count: int) -> str:
         str: The resulting string of repeated words separated by `sep`.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return ""
 
 # -----------------------------------------------------------------
 # Question 6: repeatFront
@@ -241,13 +246,14 @@ def repeatFront(s: str, n: int) -> str:
         str: The concatenated prefix sequence.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return ""
 
 
 # -----------------------------------------------------------------
@@ -271,13 +277,14 @@ def fizzArray(n: int) -> list[int]:
         list[int]: A list of integers from 0 up to n-1.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return []
 
 # -----------------------------------------------------------------
 # Question 8: only14
@@ -300,13 +307,14 @@ def only14(nums: list[int]) -> bool:
         bool: True if every element is 1 or 4, False otherwise.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return False
 
 # -----------------------------------------------------------------
 # Question 9: fizzArray2
@@ -330,13 +338,14 @@ def fizzArray2(n: int) -> list[str]:
         list[str]: A list of strings "0" through str(n-1).
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return []
 
 # -----------------------------------------------------------------
 # Question 10: noTeenSum
@@ -364,13 +373,14 @@ def noTeenSum(a: int, b: int, c: int) -> int:
         int: The sum after applying the teen rules.
     """
     ### [Your Implementation Here]
-    
+
     # Case-1. If the question can be solved with 'iteration (for/while)', 
     # design the most efficient algorithm.
-
+    
     # Case-2. If the question can be solved with 'recursion', design a 
     # correct algorithm. Since the recursion can be inefficient, use 
     # either 'tabulation' or 'memorization' to break it down into 'iteration'.
+    return 0
 
 
 
