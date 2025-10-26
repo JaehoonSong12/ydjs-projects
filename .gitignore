@@ -4,6 +4,7 @@
 .idea/
 .kotlin/
 
+
 # Platform dependent distributions (binary distros)
 build/
 release/
@@ -16,3 +17,4 @@ dist/
 
 # custom files
 /python*
+_coding*/
