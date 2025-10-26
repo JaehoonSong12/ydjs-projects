@@ -123,6 +123,130 @@ class UIView {
 
 
 class UIContainer {
+    private final int x, y, w, h;
+    private final java.util.List<UIElement> elements = new java.util.ArrayList<>();
+    private boolean visible = true;
+    private float[] backgroundColor = null;
+    private float[] borderColor = null;
+    private int borderWidth = 0;
+    
+    public UIContainer(int x, int y, int w, int h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+    }
+    
+    // Add UI elements to container
+    public void addElement(UIElement element) {
+        elements.add(element);
+    }
+    
+    public void removeElement(UIElement element) {
+        elements.remove(element);
+    }
+    
+    public void clearElements() {
+        elements.clear();
+    }
+    
+    // Container appearance
+    public void setBackgroundColor(float r, float g, float b) {
+        backgroundColor = new float[]{r, g, b};
+    }
+    
+    public void setBorderColor(float r, float g, float b) {
+        borderColor = new float[]{r, g, b};
+    }
+    
+    public void setBorderWidth(int width) {
+        borderWidth = width;
+    }
+    
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+    
+    // Check if point is inside container
+    public boolean contains(int mx, int my) {
+        return mx >= x && mx <= x + w && my >= y && my <= y + h;
+    }
+    
+    // Update hover states for all elements
+    public void updateHover(int mouseX, int mouseY) {
+        if (!visible) return;
+        
+        for (UIElement element : elements) {
+            if (element instanceof UIButton) {
+                UIButton button = (UIButton) element;
+                button.setHover(button.contains(mouseX, mouseY));
+            }
+        }
+    }
+    
+    // Handle mouse clicks
+    public boolean onClick(int mouseX, int mouseY) {
+        if (!visible || !contains(mouseX, mouseY)) return false;
+        
+        for (UIElement element : elements) {
+            if (element instanceof UIButton) {
+                UIButton button = (UIButton) element;
+                if (button.contains(mouseX, mouseY)) {
+                    button.click();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    // Render container and all elements
+    public void render() {
+        if (!visible) return;
+        
+        // Render background
+        if (backgroundColor != null) {
+            glColor3f(backgroundColor[0], backgroundColor[1], backgroundColor[2]);
+            glBegin(GL_QUADS);
+                glVertex2i(x, y);
+                glVertex2i(x + w, y);
+                glVertex2i(x + w, y + h);
+                glVertex2i(x, y + h);
+            glEnd();
+        }
+        
+        // Render border
+        if (borderColor != null && borderWidth > 0) {
+            glColor3f(borderColor[0], borderColor[1], borderColor[2]);
+            glLineWidth(borderWidth);
+            glBegin(GL_LINE_LOOP);
+                glVertex2i(x, y);
+                glVertex2i(x + w, y);
+                glVertex2i(x + w, y + h);
+                glVertex2i(x, y + h);
+            glEnd();
+        }
+        
+        // Render all elements
+        for (UIElement element : elements) {
+            element.render();
+        }
+    }
+    
+    // Getters
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public int getWidth() { return w; }
+    public int getHeight() { return h; }
+    public boolean isVisible() { return visible; }
+    public int getElementCount() { return elements.size(); }
+}
+
+// Base interface for UI elements
+interface UIElement {
+    void render();
+    boolean contains(int x, int y);
+}
 
 }
 
@@ -176,6 +300,19 @@ public class ClickButtonApp {
         });
         
         UILabel myLabel = new UILabel("SNAKE GAME", 4); // title label
+        
+        // Create UI containers for better organization
+        UIContainer menuContainer = new UIContainer(winW/2 - 150, winH/2 - 100, 300, 200);
+        menuContainer.setBackgroundColor(0.1f, 0.1f, 0.1f);
+        menuContainer.setBorderColor(0.3f, 0.3f, 0.3f);
+        menuContainer.setBorderWidth(2);
+        
+        // Add elements to menu container
+        menuContainer.addElement(button);
+        
+        UILabel instructionsLabel = new UILabel("Use Arrow Keys or WASD to move", 2, 0, 0);
+        instructionsLabel.setPosition(winW/2 - instructionsLabel.getPixelWidth()/2, winH/2 + 80);
+        menuContainer.addElement(instructionsLabel);
 
 
 
@@ -187,8 +324,13 @@ public class ClickButtonApp {
                 glfwGetCursorPos(win, xd, yd);
                 int mx = (int) xd[0];
                 int my = (int) yd[0];
-                if (button.contains(mx, my)) {
-                    button.click();
+                
+                // Handle clicks through container
+                if (state == 0) {
+                    menuContainer.onClick(mx, my);
+                } else if (state == 2) {
+                    // Game over state - also use container
+                    menuContainer.onClick(mx, my);
                 }
             }
         });
@@ -258,14 +400,15 @@ public class ClickButtonApp {
                 glfwGetCursorPos(window, xd, yd);
                 int mx = (int) xd[0];
                 int my = (int) yd[0];
-                button.setHover(button.contains(mx, my));
+                menuContainer.updateHover(mx, my);
+                
                 // render
                 glClearColor(0.08f, 0.08f, 0.08f, 1.0f);
                 glClear(GL_COLOR_BUFFER_BIT);
 
-                // draw button and title
-                button.render();
+                // draw title and menu container
                 myLabel.render(winW/2 - myLabel.getPixelWidth()/2, 50);
+                menuContainer.render();
             }
             else if (state == 1) {
                 // playing state - render snake game
@@ -302,16 +445,21 @@ public class ClickButtonApp {
                 glClearColor(0.08f, 0.08f, 0.08f, 1.0f);
                 glClear(GL_COLOR_BUFFER_BIT);
                 
+                // Update hover for game over state
+                double[] xd = new double[1], yd = new double[1];
+                glfwGetCursorPos(window, xd, yd);
+                int mx = (int) xd[0];
+                int my = (int) yd[0];
+                menuContainer.updateHover(mx, my);
+                
                 UILabel gameOverLabel = new UILabel("GAME OVER", 4);
                 UILabel scoreLabel = new UILabel("FINAL SCORE: " + (snakeModel != null ? snakeModel.getScore() : 0), 3);
-                UILabel restartLabel = new UILabel("Click button to play again", 2);
                 
-                gameOverLabel.render(winW/2 - gameOverLabel.getPixelWidth()/2, winH/2 - 50);
-                scoreLabel.render(winW/2 - scoreLabel.getPixelWidth()/2, winH/2);
-                restartLabel.render(winW/2 - restartLabel.getPixelWidth()/2, winH/2 + 50);
+                gameOverLabel.render(winW/2 - gameOverLabel.getPixelWidth()/2, winH/2 - 100);
+                scoreLabel.render(winW/2 - scoreLabel.getPixelWidth()/2, winH/2 - 50);
                 
-                // show button for restart
-                button.render();
+                // show menu container for restart
+                menuContainer.render();
             }
 
             glfwSwapBuffers(window);
@@ -548,17 +696,39 @@ class Colors {
 
 
 
-class UILabel {
+class UILabel implements UIElement {
     private final String text;
     private final double scale;
+    private int x = 0, y = 0; // position for container support
 
     public UILabel(String text, double scale) {
         this.text = text;
         this.scale = scale;
     }
+    
+    public UILabel(String text, double scale, int x, int y) {
+        this.text = text;
+        this.scale = scale;
+        this.x = x;
+        this.y = y;
+    }
+    
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public void render(double x, double y) {
         drawLabel(text, x, y, scale);
+    }
+    
+    // UIElement interface implementation
+    public void render() {
+        drawLabel(text, x, y, scale);
+    }
+    
+    public boolean contains(int mx, int my) {
+        return mx >= x && mx <= x + getPixelWidth() && my >= y && my <= y + getPixelHeight();
     }
 
     private void drawLabel(String text, double startX, double startY, double scale) {
@@ -675,7 +845,7 @@ class UILabel {
 
 
 
-class UIButton {
+class UIButton implements UIElement {
     private final int x, y, w, h;
     private final UILabel label;
     private boolean hover = false;
