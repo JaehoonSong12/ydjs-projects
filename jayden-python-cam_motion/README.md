@@ -1,0 +1,1 @@
+pyinstaller --onefile --name "nothing" motion.py --add-data "image;images" --add-data "*.pdf;." && rm -rf *.spec
