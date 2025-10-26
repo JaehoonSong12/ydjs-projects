@@ -1,0 +1,1 @@
+pyinstaller --onefile --name "nothing" motion.py && rm -rf *.spec
