@@ -874,7 +874,7 @@ public class SnakeGame {
                 0b10001,
                 0b10001,
                 0b01111,
-                0b00001,
+                0b00001, dsadsadsadsad
                 0b00010,
                 0b01100
             });
