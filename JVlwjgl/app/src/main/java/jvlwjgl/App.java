@@ -6,9 +6,7 @@ package jvlwjgl;
 // import core.Game;
 // import core.HigherOrLower;
 
-import snake.SnakeGame;
-import snake.ClickButtonApp;
-import snake.Test;
+import snake.*;
 
 public class App {
     public String getGreeting() {
@@ -21,7 +19,8 @@ public class App {
 
 
         // Game.main(args);
-        ClickButtonApp.main(args);
+        // ClickButtonApp.main(args);
+        SnakeGameApp.main(args);
 
         
         // Test.main(args);
