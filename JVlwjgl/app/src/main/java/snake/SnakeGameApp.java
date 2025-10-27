@@ -31,6 +31,8 @@ package snake;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.opengl.GL;
 
 import java.util.Deque;
 import java.util.HashMap;
@@ -40,12 +42,53 @@ import java.util.Map;
 import java.util.Random;
 import java.util.ArrayList; // Added for UIContainer
 
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.opengl.GL;
+
+import dev.lwjgl.ui.*;
+import dev.lwjgl.ui.components.*;
 
 // ========================================================================
 // 1. APPLICATION AND STATE MANAGEMENT (State Pattern)
 // ========================================================================
+
+
+
+/**
+ * Defines the contract for the "Context" of the State Pattern.
+ * This interface is implemented by SnakeGameApp and passed to each
+ * AppState, allowing states to access shared resources (like the window)
+ * and to request a state change (via setState).
+ */
+interface GameContext {
+    /**
+     * Requests a change to a new application state.
+     * @param newState The state to transition to.
+     */
+    void setState(AppState newState);
+
+    /**
+     * Gets the main application window wrapper.
+     * @return The UIWindow instance.
+     */
+    UIWindow getWindow();
+
+    /**
+     * Gets the current Snake game model.
+     * @return The SnakeModel instance, or null if one is not active.
+     */
+    SnakeModel getSnakeModel();
+
+    /**
+     * Creates a new, fresh SnakeModel.
+     */
+    void createNewSnakeModel();
+    
+    // --- Accessors for game grid configuration ---
+    int getGridW();
+    int getGridH();
+    int getCellSize();
+}
+
+
 
 /**
  * The main application class.
@@ -246,41 +289,30 @@ public class SnakeGameApp implements GameContext {
     public int getCellSize() { return this.cellSize; }
 }
 
-/**
- * Defines the contract for the "Context" of the State Pattern.
- * This interface is implemented by SnakeGameApp and passed to each
- * AppState, allowing states to access shared resources (like the window)
- * and to request a state change (via setState).
- */
-interface GameContext {
-    /**
-     * Requests a change to a new application state.
-     * @param newState The state to transition to.
-     */
-    void setState(AppState newState);
 
-    /**
-     * Gets the main application window wrapper.
-     * @return The UIWindow instance.
-     */
-    UIWindow getWindow();
 
-    /**
-     * Gets the current Snake game model.
-     * @return The SnakeModel instance, or null if one is not active.
-     */
-    SnakeModel getSnakeModel();
 
-    /**
-     * Creates a new, fresh SnakeModel.
-     */
-    void createNewSnakeModel();
-    
-    // --- Accessors for game grid configuration ---
-    int getGridW();
-    int getGridH();
-    int getCellSize();
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Defines the contract for a single "State" in the State Pattern.
@@ -444,10 +476,16 @@ class MainMenuState extends BaseAppState {
         double winH = context.getWindow().getWinH();
 
         // 1. Add Title Label
-        UILabel titleLabel = new UILabel("SNAKE GAME", 0, winH * 0.25, 4);
+        UILabel titleLabel = new UILabel("abcdefghijklmnopqrstuvwxyz", 0, winH * 0.25, 4);
         titleLabel.centerHorizontal(0, winW); // Center it
         this.view.add(titleLabel);
         
+        
+        UILabel titleLabel2 = new UILabel("Snake Game (Playable!)", 0, winH * 0.10, 2);
+        titleLabel2.centerHorizontal(0, winW); // Center it
+        this.view.add(titleLabel2);
+        
+
         // 2. Add Start Button
         UIButton startButton = new UIButton(
             "START SNAKE GAME",
@@ -711,6 +749,30 @@ class GameOverState extends BaseAppState {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ========================================================================
 // 2. WINDOW MANAGEMENT
 // ========================================================================
@@ -829,82 +891,14 @@ class UIWindow {
     }
 }
 
+
+
+
+
+
 // ========================================================================
 // 3. UI FRAMEWORK (Composite Pattern)
 // ========================================================================
-
-/**
- * The abstract base class for all UI elements. (Component)
- * This is the "Component" in the Composite Design Pattern.
- * It defines the common interface for both leaf nodes (like UIButton)
- * and composite nodes (UIContainer).
- */
-abstract class UIComponent {
-    protected double x, y, w, h;
-    protected boolean visible = true;
-    protected boolean enabled = true;
-
-    /**
-     * Constructs a new UIComponent with its position and size.
-     */
-    public UIComponent(double x, double y, double w, double h) {
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-    }
-
-    // --- Abstract methods to be implemented by all children ---
-
-    /**
-     * Renders the component to the screen.
-     */
-    public abstract void render();
-
-    // --- Virtual methods (default behavior) ---
-
-    /**
-     * Updates the component's state (e.g., for hover effects).
-     * @param mouseX Current mouse X position.
-     * @param mouseY Current mouse Y position.
-     */
-    public void update(double mouseX, double mouseY) {
-        // Default: do nothing
-    }
-
-    /**
-     * Handles a mouse button event.
-     * @param mouseX X position of the click.
-     * @param mouseY Y position of the click.
-     * @param button The mouse button (e.g., GLFW_MOUSE_BUTTON_LEFT).
-     * @param action The action (e.g., GLFW_PRESS).
-     * @return true if the event was consumed, false otherwise.
-     */
-    public boolean handleMouse(double mouseX, double mouseY, int button, int action) {
-        // Default: do nothing, do not consume event
-        return false;
-    }
-
-    // --- Concrete helper methods ---
-
-    /**
-     * Checks if a point (mx, my) is within the bounds of this component.
-     */
-    public boolean contains(double mx, double my) {
-        return mx >= x && mx <= x + w && my >= y && my <= y + h;
-    }
-    
-    // --- Getters and Setters ---
-    public void setVisible(boolean visible) { this.visible = visible; }
-    public boolean isVisible() { return this.visible; }
-    public void setEnabled(boolean enabled) { this.enabled = enabled; }
-    public boolean isEnabled() { return this.enabled; }
-    
-    public double getX() { return x; }
-    public double getY() { return y; }
-    public double getWidth() { return w; }
-    public double getHeight() { return h; }
-}
 
 /**
  * A UIComponent that can contain other UIComponents. (Composite)
@@ -1004,71 +998,10 @@ class UIContainer extends UIComponent {
 }
 
 
-/**
- * A UI element for displaying text. (Leaf)
- * This is a "Leaf" in the Composite Design Pattern.
- * It renders text by delegating to the BitmapFont utility.
- */
-class UILabel extends UIComponent {
-    
-    private String text;
-    private double scale;
-    private float[] color = { 0.96f, 0.96f, 0.96f }; // Default white-ish
 
-    public UILabel(String text, double x, double y, double scale) {
-        // Initial width and height are calculated from the text
-        super(x, y, 0, 0); 
-        this.scale = scale;
-        this.setText(text); // Call setText to set text and update bounds
-    }
 
-    /**
-     * Updates the text of the label and recalculates its
-     * width and height.
-     */
-    public void setText(String text) {
-        this.text = text.toUpperCase(); // Font only supports uppercase
-        // Update component bounds
-        this.w = BitmapFont.getInstance().getTextWidth(this.text, this.scale);
-        this.h = BitmapFont.getInstance().getTextHeight(this.scale);
-    }
-    
-    public void setColor(float[] color) {
-        this.color = color;
-    }
 
-    /**
-     * Renders the text at its stored x, y position.
-     */
-    @Override
-    public void render() {
-        if (!visible || this.text == null || this.text.isEmpty()) {
-            return;
-        }
-        
-        // Set the color and draw
-        Colors.setColor(this.color);
-        BitmapFont.getInstance().drawText(this.text, this.x, this.y, this.scale);
-    }
-    
-    /**
-     * Helper to center this label horizontally within a parent's bounds.
-     * @param parentX The parent's starting X.
-     * @param parentW The parent's total width.
-     */
-    public void centerHorizontal(double parentX, double parentW) {
-        this.x = parentX + (parentW - this.w) / 2.0;
-    }
 
-    /**
-     * Helper to center this label vertically within a parent's bounds.
-     * @param parentY The parent's starting Y.
-     * @param parentH The parent's total height.
-     */
-    public void centerVertical(double parentY, double parentH) {
-        this.y = parentY + (parentH - this.h) / 2.0;
-    }
-}
 
 /**
  * A clickable button component. (Leaf)
@@ -1191,208 +1124,6 @@ class UIButton extends UIComponent {
 // ========================================================================
 // 4. RENDERING UTILITIES
 // ========================================================================
-
-/**
- * A Singleton utility class for rendering the bitmap font.
- * This class encapsulates all the glyph data and drawing logic
- * that was previously inside the UILabel class.
- */
-class BitmapFont {
-    
-    // --- Singleton Pattern ---
-    private static BitmapFont instance;
-    public static BitmapFont getInstance() {
-        if (instance == null) {
-            instance = new BitmapFont();
-        }
-        return instance;
-    }
-    
-    /**
-     * The map of characters to their bitmap (integer array) representations.
-     */
-    private final Map<Character, int[]> glyphs;
-
-    /**
-     * Private constructor for the Singleton.
-     * Initializes the glyph map.
-     */
-    private BitmapFont() {
-        glyphs = new HashMap<>();
-        // (Copied from the original UILabel class)
-        glyphs.put('A', new int[]{0b010,0b101,0b111,0b101,0b101});
-        glyphs.put('B', new int[]{0b110,0b101,0b110,0b101,0b110});
-        glyphs.put('C', new int[]{0b01110,0b10001,0b10000,0b10000,0b10000,0b10001,0b01110});
-        glyphs.put('D', new int[]{0b110,0b101,0b101,0b101,0b110});
-        glyphs.put('E', new int[]{0b111,0b100,0b111,0b100,0b111});
-        glyphs.put('F', new int[]{0b111,0b100,0b111,0b100,0b100});
-        glyphs.put('G', new int[]{0b1111,0b1000,0b1011,0b1001,0b1111});
-        glyphs.put('H', new int[]{0b1001,0b1001,0b1111,0b1001,0b1001});
-        glyphs.put('I', new int[]{0b111,0b010,0b010,0b010,0b111});
-        glyphs.put('J', new int[]{0b111,0b001,0b001,0b101,0b111});
-        glyphs.put('K', new int[]{0b101,0b101,0b110,0b101,0b101});
-        glyphs.put('L', new int[]{0b100,0b100,0b100,0b100,0b111});
-        glyphs.put('M', new int[]{0b10001,0b11011,0b10101,0b10001,0b10001});
-        glyphs.put('N', new int[]{0b10001,0b11001,0b10101,0b10011,0b10001});
-        glyphs.put('O', new int[]{0b01110,0b10001,0b10001,0b10001,0b01110});
-        glyphs.put('P', new int[]{0b1111,0b1001,0b1111,0b1000,0b1000});
-        glyphs.put('Q', new int[]{0b111,0b101,0b111,0b10,0b011});
-        glyphs.put('R', new int[]{0b111,0b101,0b111,0b110,0b101});
-        glyphs.put('S', new int[]{0b011,0b100,0b010,0b001,0b110});
-        glyphs.put('T', new int[]{0b111,0b010,0b010,0b010,0b010});
-        glyphs.put('U', new int[]{0b1001,0b1001,0b1001,0b1001,0b0110});
-        glyphs.put('V', new int[]{0b10001,0b10001,0b01010,0b01010,0b00100});
-        glyphs.put('W', new int[]{0b10001,0b10001,0b10101,0b10101,0b01010});
-        glyphs.put('X', new int[]{0b10001,0b01010,0b00100,0b01010,0b10001});
-        glyphs.put('Y', new int[]{0b10001,0b01010,0b00100,0b00100,0b00100});
-        glyphs.put('Z', new int[]{0b11111,0b00010,0b00100,0b01000,0b11111});
-        glyphs.put(' ', new int[]{0b000,0b000,0b000,0b000,0b000});
-        // digits
-        glyphs.put('0', new int[]{0b111,0b101,0b101,0b101,0b111});
-        glyphs.put('1', new int[]{0b010,0b110,0b010,0b010,0b111});
-        glyphs.put('2', new int[]{0b111,0b001,0b111,0b100,0b111});
-        glyphs.put('3', new int[]{0b111,0b001,0b011,0b001,0b111});
-        glyphs.put('4', new int[]{0b1001,0b1001,0b1111,0b0001,0b0001});
-        glyphs.put('5', new int[]{0b1111,0b1000,0b1111,0b0001,0b1111});
-        glyphs.put('6', new int[]{0b11111,0b10000,0b11111,0b10001,0b11111});
-        glyphs.put('7', new int[]{0b1111,0b0010,0b0010,0b0100,0b0100});
-        glyphs.put('8', new int[]{0b11111,0b10001,0b10001,0b11111,0b10001,0b10001,0b11111});
-        glyphs.put('9', new int[]{0b1111,0b1001,0b1111,0b0001,0b1111});
-        // punctuations
-        glyphs.put(',', new int[]{0b00000,0b00000,0b00000,0b00000,0b00000,0b01000,0b01000,0b10000});
-        glyphs.put('=', new int[]{0b00000,0b01110,0b00000,0b01110});
-        glyphs.put(':', new int[]{0b000,0b000,0b010,0b000,0b010,0b000,});
-        glyphs.put(';', new int[]{0b000,0b000,0b010,0b000,0b010,0b100,});
-        glyphs.put('[', new int[]{0b01110,0b01000,0b01000,0b01000,0b01000,0b01110,});
-        glyphs.put(']', new int[]{0b01110,0b00010,0b00010,0b00010,0b00010,0b01110,});
-        glyphs.put('.', new int[]{0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00110,0b0110});
-        glyphs.put('!', new int[]{0b0010,0b0010,0b0010,0b0010,0b00000,0b00000,0b0010,0b00110});
-        glyphs.put('?', new int[]{0b01110,0b10001,0b0010,0b0010,0b00000,0b00000,0b00110,0b00110});
-    }
-
-    /**
-     * Renders a string of text at the specified location.
-     * (This logic is moved from the old UILabel.drawLabel)
-     */
-    public void drawText(String text, double startX, double startY, double scale) {
-        double cx = startX;
-        // Loop over each character in the string
-        for (char ch : text.toUpperCase().toCharArray()) {
-            int[] pattern = glyphs.getOrDefault(ch, glyphs.get(' '));
-            
-            // Get the "native" size of the glyph bitmap
-            int num_rows = getMaxNumRow(pattern);
-            int num_cols = getMaxNumCol(pattern);
-            
-            // Calculate scale to normalize glyphs to a 5x7 scaled box
-            // (This matches the original's complex logic)
-            double Hscale = (scale * 7.0) / num_rows;
-            double Lscale = (scale * 5.0) / num_cols;
-            
-            // Render the glyph "pixel by pixel"
-            for (int row = 0; row < num_rows; row++) {
-                int bits = (row < pattern.length) ? pattern[row] : 0;
-                for (int col = 0; col < num_cols; col++) {
-                    if (((bits >> (num_cols - col - 1)) & 1) == 1) {
-                        // This "pixel" is on, draw a quad
-                        double px = cx + col * Lscale;
-                        double py = startY + row * Hscale;
-                        glBegin(GL_QUADS);
-                            glVertex2d(px, py);
-                            glVertex2d(px + Lscale, py);
-                            glVertex2d(px + Lscale, py + Hscale);
-                            glVertex2d(px, py + Hscale);
-                        glEnd();
-                    }
-                }
-            }
-            // Advance cursor for the next character
-            // (The original used a fixed 6-pixel advance)
-            cx += (scale * 6); 
-        }
-    }
-
-    /**
-     * Calculates the pixel width of a string.
-     * (Matches original UILabel.getPixelWidth)
-     */
-    public double getTextWidth(String text, double scale) {
-        return text.length() * 6 * scale;
-    }
-
-    /**
-     * Calculates the pixel height of the font.
-     * (Corrected from original: font is scaled to 7 pixels high)
-     */
-    public double getTextHeight(double scale) {
-        return 7 * scale;
-    }
-
-    /**
-     * Helper to find the number of columns (bits) in a glyph.
-     * (Copied from original UILabel)
-     */
-    private int getMaxNumCol(int[] sample) {
-        int max_num_cols = -1;
-        for (int index = 0; index < sample.length; index++) {
-            int answer = 0;
-            int exponent_of_two = 1;
-            while (true) {
-                int digitBound = (1 << exponent_of_two) - 1;
-                if (sample[index] <= digitBound) {
-                    answer = exponent_of_two;
-                    break;
-                }
-                exponent_of_two++;
-                if (exponent_of_two > 16) break; // Safety break
-            }
-            if (max_num_cols < answer) max_num_cols = answer;
-        }
-        return Math.max(5, max_num_cols); // Default to at least 5
-    }
-
-    /**
-     * Helper to find the number of rows (array length) in a glyph.
-     * (Copied from original UILabel)
-     */
-    private int getMaxNumRow(int[] sample) {
-        return Math.max(7, sample.length); // Default to at least 7
-    }
-}
-
-
-/**
- * A utility class for storing color constants.
- * (Unchanged from original)
- */
-class Colors {
-    // Basic colors (RGB values 0.0f to 1.0f)
-    public static final float[] RED = {1.0f, 0.0f, 0.0f};
-    public static final float[] GREEN = {0.0f, 1.0f, 0.0f};
-    public static final float[] BLUE = {0.0f, 0.0f, 1.0f};
-    public static final float[] WHITE = {1.0f, 1.0f, 1.0f};
-    public static final float[] BLACK = {0.0f, 0.0f, 0.0f};
-    public static final float[] GRAY = {0.5f, 0.5f, 0.5f};
-    public static final float[] YELLOW = {1.0f, 1.0f, 0.0f};
-    public static final float[] CYAN = {0.0f, 1.0f, 1.0f};
-    public static final float[] MAGENTA = {1.0f, 0.0f, 1.0f};
-    
-    // Custom colors
-    public static final float[] DARK_RED = {0.8f, 0.2f, 0.2f};
-    public static final float[] LIGHT_BLUE = {0.7f, 0.9f, 1.0f};
-    public static final float[] ORANGE = {1.0f, 0.5f, 0.0f};
-    public static final float[] PURPLE = {0.5f, 0.0f, 0.5f};
-    
-    /**
-     * Helper method to set the current OpenGL color from an array.
-     */
-    public static void setColor(float[] color) {
-        if (color != null && color.length >= 3) {
-            glColor3f(color[0], color[1], color[2]);
-        }
-    }
-}
-
 
 /**
  * A simple rectangle drawing class.
