@@ -1,4 +1,3 @@
-_coding-*/
 
 # IDE dependent files
 .gradle/
@@ -17,6 +16,9 @@ dist/
 /venv
 /ext
 
+
+
 # custom files
 /python*
 _coding*/
+_coding-*/
