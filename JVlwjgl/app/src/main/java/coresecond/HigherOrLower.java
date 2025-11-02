@@ -1,4 +1,4 @@
-package core;
+package coresecond;
 import java.util.Scanner;
 
 public class HigherOrLower {

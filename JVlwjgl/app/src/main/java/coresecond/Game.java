@@ -1,15 +1,12 @@
 // src/main/java/com/example/Game.java
-package core;
-
-import java.net.URL;
+package coresecond;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.*;
-import static org.lwjgl.stb.STBTruetype.*;
-import org.lwjgl.stb.STBTTFontinfo;
+
 import org.lwjgl.system.MemoryStack;
 
 import java.util.List;
@@ -24,24 +21,18 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.InputStream;
-import java.nio.channels.Channels;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.io.File;
-
-import java.util.Scanner;
-import static org.lwjgl.opengl.GL11.*;
 
 // Add imports for Orbitron font rendering
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.geom.AffineTransform;
-import static org.lwjgl.system.MemoryUtil.*;
+
 import org.lwjgl.BufferUtils;
 
 public class Game {

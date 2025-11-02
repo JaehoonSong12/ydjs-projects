@@ -9,10 +9,6 @@ import dev.lwjgl.ui.*;
  */
 public class UILabel extends UIComponent {
 
-    private float[] color = { 0.96f, 0.96f, 0.96f }; // Default white-ish
-    public void setColor(float[] color) {
-        this.color = color;
-    }
     
 
     private String text;
@@ -33,7 +29,7 @@ public class UILabel extends UIComponent {
     private double scale;
     public UILabel(String text, double x, double y, double scale) {
         // Initial width and height are calculated from the text
-        super(x, y, 0, 0); 
+        super(x, y, 0, 0, Colors.LIGHT_GRAY);
         this.scale = scale;
         this.setText(text); // Call setText to set text and update bounds
     }

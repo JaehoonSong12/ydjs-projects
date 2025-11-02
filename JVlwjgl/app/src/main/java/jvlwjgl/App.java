@@ -6,7 +6,7 @@ package jvlwjgl;
 // import core.Game;
 // import core.HigherOrLower;
 
-import snake.*;
+import core.*;
 
 public class App {
     public String getGreeting() {

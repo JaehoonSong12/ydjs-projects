@@ -13,6 +13,10 @@ import dev.lwjgl.ui.*;
  */
 public abstract class UIComponent {
     protected double x, y, w, h;
+    protected float[] color;
+    public void setColor(float[] color) {
+        this.color = color;
+    }
     public double getX() { return x; }
     public double getY() { return y; }
     public double getWidth() { return w; }
@@ -30,11 +34,15 @@ public abstract class UIComponent {
     /**
      * Constructs a new UIComponent with its position and size.
      */
-    public UIComponent(double x, double y, double w, double h) {
+    public UIComponent(double x, double y, double w, double h, float[] color) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
+        this.color = color;
+    }
+    public UIComponent(double x, double y, double w, double h) {
+        this(x,y,w,h,Colors.DARK_RED); // default color
     }
 
     // --- Abstract methods to be implemented by all children ---
@@ -45,6 +53,8 @@ public abstract class UIComponent {
 
     
     protected void renderRect(double x, double y, double w, double h) {
+        // Use the stored color
+        Colors.setColor(this.color);
         glBegin(GL_QUADS);
             glVertex2d(x, y);
             glVertex2d(x + w, y);
@@ -54,6 +64,8 @@ public abstract class UIComponent {
     }
     // -------- Overloads for float (2D)
     protected void renderRect(float x, float y, float w, float h) {
+        // Use the stored color
+        Colors.setColor(this.color);
         glBegin(GL_QUADS);
             glVertex2f(x, y);
             glVertex2f(x + w, y);
@@ -63,6 +75,8 @@ public abstract class UIComponent {
     }
     // -------- Overloads for int (2D)
     protected void renderRect(int x, int y, int w, int h) {
+        // Use the stored color
+        Colors.setColor(this.color);
         glBegin(GL_QUADS);
             glVertex2i(x, y);
             glVertex2i(x + w, y);
@@ -75,6 +89,8 @@ public abstract class UIComponent {
 
     // -------- 3D versions (float)
     protected void renderRect3D(float x, float y, float z, float w, float h) {
+        // Use the stored color
+        Colors.setColor(this.color);
         glBegin(GL_QUADS);
             glVertex3f(x, y, z);
             glVertex3f(x + w, y, z);
@@ -84,6 +100,8 @@ public abstract class UIComponent {
     }
     // -------- 3D versions (double)
     protected void renderRect3D(double x, double y, double z, double w, double h) {
+        // Use the stored color
+        Colors.setColor(this.color);
         glBegin(GL_QUADS);
             glVertex3d(x, y, z);
             glVertex3d(x + w, y, z);
