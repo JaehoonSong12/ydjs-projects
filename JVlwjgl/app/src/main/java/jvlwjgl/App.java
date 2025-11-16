@@ -20,7 +20,8 @@ public class App {
 
         // Game.main(args);
         // ClickButtonApp.main(args);
-        SnakeGameApp.main(args);
+        SnakeGame.main(args);
+        // SnakeGameApp.main(args);
 
         
         // Test.main(args);
