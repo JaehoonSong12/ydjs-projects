@@ -778,7 +778,7 @@ class Player {
     private final int MAX_COUNTER = 300; //changeable
     private final int _COUNTER_INCREMENT = 10; //changeable
     public boolean testing = false; //changeable
-    public int witchCharter = 1; //changeable
+    public int witchCharter = 1; 
 
     public static float x, y;
     private float vx, vy;
@@ -822,7 +822,7 @@ class Player {
         if (dashCooldown <= 0.0f && !Game.freezeTime){
             dashStartX = x; // Record starting position
             if (dashCooldownTime > 0 && Game.wasBought){
-                dashCooldownTime -= ((Game.dashLevel/2) + 1.0f)*0.01f;
+                dashCooldownTime -= Game.dashLevel/0.1f;
                 Game.wasBought = false;
             }
             if (dashCooldownTime <= 0){dashCooldownTime =- 0.01f;}
@@ -900,7 +900,7 @@ class Player {
     public void update(float dt, List<Platform> plats) {
         if(!Game.freezeTime){
             x += vx * dt;
-            y += ((vy * dt) + (Game.dashLevel/2)*0.1f);
+            y += vy * dt;
             stopdashTellSpam += 1;
             onGround = false;
             testing = false;
