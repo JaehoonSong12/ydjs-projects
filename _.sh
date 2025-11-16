@@ -817,10 +817,15 @@ function SETUP_KOTLIN {
 
 
 
+
 TEMP=$PWD
 cd .. || exit
 
-if [[ $SCRIPT_AUTHOR == "Jaehoon Song" ]]; then # if current directory's name includes -, then echo hi
+# if [[ $SCRIPT_AUTHOR == "Jaehoon Song" ]]; then 
+#     return 1
+# fi
+
+if [[ "$(basename "$TEMP")" == *-* ]]; then # if current directory's name includes -, then echo hi
     on_jvm      # JAVA
     on_kt       # Kotlin
     on_gradle   # Gradle
