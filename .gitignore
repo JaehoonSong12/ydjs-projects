@@ -5,6 +5,11 @@
 .idea/
 .kotlin/
 
+*.exe
+*.flag
+*.log
+*.tmp
+
 
 # Platform dependent distributions (binary distros)
 build/
