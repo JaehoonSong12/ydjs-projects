@@ -1,0 +1,826 @@
+\documentclass{article}
+\usepackage{tikz}
+\usepackage{chemfig}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{environ}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage[
+    top=    0.50in,
+    bottom= 0.50in,
+    left=   0.50in,
+    right=  0.50in,
+]{geometry}
+
+\usepackage{hyperref}
+
+% no indent
+\setlength\parindent{0pt}
+
+% Theorem environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+\newtheorem{problem}{Problem}
+\newtheorem{corollary}{Corollary}
+
+\NewEnviron{answer}{%
+  \par\noindent\vspace{10pt}%
+  \textcolor{red}{\textbf{Answer}:}
+  \par\noindent\textcolor{red}{\BODY}%
+  \par\vspace{-0.5\baselineskip}\raggedleft\textcolor{red}{$\blacksquare$}%
+  \par\vspace{10pt}
+}
+
+
+
+
+
+
+
+
+
+\begin{document}
+
+
+
+
+
+
+
+
+
+
+
+\section*{1. Characteristics of Ionic, Covalent, and Metallic Compounds}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{4cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Property} & \textbf{Ionic} & \textbf{Covalent (Molecular)} & \textbf{Metallic} \\
+\hline
+\textbf{Formation} & Metal + nonmetal & Two or more nonmetals & Metal atoms only \\
+\hline
+\textbf{Electron behavior} & Transferred from metal to nonmetal & Shared between atoms & ``Sea of mobile electrons'' \\
+\hline
+\textbf{Melting/Boiling points} & High & Low & Variable (generally high) \\
+\hline
+\textbf{Electrical conductivity} & When molten or dissolved (aq) & Do not conduct & Conduct heat and electricity \\
+\hline
+\textbf{Physical properties} & Hard, brittle crystalline solids & Exist as individual molecules & Malleable, ductile, shiny \\
+\hline
+\end{tabular}
+\end{table}
+
+\section*{2. Identifying Bond Type Using Electronegativity Difference}
+
+Let $\Delta EN = |EN_1 - EN_2|$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|l|}
+\hline
+\textbf{$\Delta EN$ Range} & \textbf{Bond Type} \\
+\hline
+$0$ to $0.4$ & Nonpolar covalent \\
+\hline
+$0.5$ to $1.7$ & Polar covalent \\
+\hline
+$> 1.7$ & Ionic \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{General rule:} metal + nonmetal $\Rightarrow$ ionic;  
+nonmetal + nonmetal $\Rightarrow$ covalent.
+
+\section*{3. Oxidation States of Common Groups}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Group} & \textbf{Oxidation State} \\
+\hline
+Group 1 & +1 \\
+\hline
+Group 2 & +2 \\
+\hline
+Group 13 & +3 \\
+\hline
+Group 15 & --3 \\
+\hline
+Group 16 & --2 \\
+\hline
+Group 17 & --1 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Special cases:}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Element} & \textbf{Oxidation State} \\
+\hline
+Hydrogen & +1 (usually), --1 in metal hydrides \\
+\hline
+Oxygen & --2, except in peroxides (--1) \\
+\hline
+Transition metals & Multiple oxidation states \\
+\hline
+\end{tabular}
+\end{table}
+
+\section*{4. Covalent vs. Ionic Bonding Summary}
+
+\subsection*{Ionic Bonding}
+\begin{itemize}
+    \item Electrons transferred.
+    \item Attraction between cations and anions.
+\end{itemize}
+
+\subsection*{Covalent Bonding}
+\begin{itemize}
+    \item Electrons shared.
+    \item Bond order: single, double, triple.
+\end{itemize}
+
+\section*{5. Lewis Dot Structures (LDS)}
+
+Steps to draw:
+\begin{enumerate}
+    \item Count all valence electrons.
+    \item Draw a skeleton (central atom is least electronegative, never H).
+    \item Add single bonds.
+    \item Complete octets on outer atoms first.
+    \item Place remaining electrons on central atom.
+    \item Form double or triple bonds if needed to satisfy octet.
+\end{enumerate}
+
+\textbf{Octet rule exceptions:}
+\begin{itemize}
+    \item Incomplete octet: B, Be.
+    \item Expanded octet: P, S, Cl, Br, Xe (period 3+).
+    \item Odd-electron molecules (e.g., NO).
+\end{itemize}
+
+\section*{6. VSEPR Theory: Molecular Shapes}
+
+VSEPR formula: AX$_m$E$_n$ (A = central atom, X = bonded atoms, E = lone pairs).
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|l|c|}
+\hline
+\textbf{VSEPR Formula} & \textbf{Molecular Shape} & \textbf{Bond Angle} \\
+\hline
+AX$_2$ & Linear & 180$^\circ$ \\
+\hline
+AX$_3$ & Trigonal planar & 120$^\circ$ \\
+\hline
+AX$_2$E & Bent & 119$^\circ$ \\
+\hline
+AX$_4$ & Tetrahedral & 109.5$^\circ$ \\
+\hline
+AX$_3$E & Pyramidal & 107$^\circ$ \\
+\hline
+AX$_2$E$_2$ & Bent & 105$^\circ$ \\
+\hline
+AX$_5$ & Trigonal bipyramidal & -- \\
+\hline
+AX$_6$ & Octahedral & -- \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+
+
+
+\begin{table}[h!]
+  \centering
+  \small
+  \begin{tabularx}{\textwidth}{|p{1.8cm}|p{2.2cm}|p{2.5cm}|X|}
+  \hline
+  \textbf{Chemical Formula} & \textbf{Central Atom} & \textbf{AX$_m$E$_n$} & \textbf{Why the Formula Order Is Written This Way} \\
+  \hline
+  H$_2$O & O & AX$_2$E$_2$ & H written first because it is less electronegative than O. \\
+  \hline
+  NH$_3$ & N & AX$_3$E$_1$ & H written after N due to naming convention; N is more common central atom. \\
+  \hline
+  CH$_4$ & C & AX$_4$E$_0$ & C is always central in organic compounds; H never central. \\
+  \hline
+  CO$_2$ & C & AX$_2$E$_0$ & By convention, C is written before O (less electronegative). \\
+  \hline
+  SO$_2$ & S & AX$_2$E$_1$ & S is less electronegative, so written before O. \\
+  \hline
+  HCN & C & AX$_2$E$_0$ & Written H$-$C$\equiv$N; C is central but appears in the middle of the formula. \\
+  \hline
+  CH$_3$OH & C (O terminal) & AX$_4$E$_0$ (C); AX$_2$E$_2$ (O) & Formula follows organic grouping (CH$_3$)(OH). \\
+  \hline
+  HNO$_3$ & N & AX$_3$E$_0$ (approx.) & Acid formulas begin with H even though N is central. \\
+  \hline
+  H$_2$SO$_4$ & S & AX$_4$E$_0$ (expanded) & Acids list H first; central atom (S) appears later. \\
+  \hline
+  OCl$_2$ & O & AX$_2$E$_2$ & O is less common as central; formula still writes O first due to electronegativity pattern. \\
+  \hline
+  ClO$_2$ & Cl & AX$_2$E$_2$ & Written ClO$_2$ because Cl is central despite being more electronegative than O. \\
+  \hline
+  PCl$_3$ & P & AX$_3$E$_1$ & P is central atom but formula follows naming order. \\
+  \hline
+  \end{tabularx}
+  \caption{Examples Showing Formula Order vs.\ VSEPR Central Atom}
+\end{table}
+  
+
+\newpage
+
+\section*{7. Naming Ionic, Covalent, Polyatomic, and Acid Compounds}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{5cm}|p{4cm}|}
+\hline
+\textbf{Compound Type} & \textbf{Naming Rule} & \textbf{Example} \\
+\hline
+\textbf{Ionic} & Metal name + nonmetal root + ``ide'' & NaCl = sodium chloride \\
+\hline
+\textbf{Ionic (transition metal)} & Metal name (Roman numeral) + nonmetal root + ``ide'' & FeCl$_3$ = iron(III) chloride \\
+\hline
+\textbf{Polyatomic} & Keep ion name intact & NaNO$_3$ = sodium nitrate \\
+\hline
+\textbf{Covalent} & Use prefixes: mono-, di-, tri-, tetra-, penta-, hexa- & CO$_2$ = carbon dioxide \\
+\hline
+\textbf{Binary acid} & ``hydro'' + root + ``ic acid'' & HCl(aq) = hydrochloric acid \\
+\hline
+\textbf{Oxyacid (\textit{ate})} & stem\textit{ic} acid & HNO$_3$ = nitric acid \\
+\hline
+\textbf{Oxyacid (\textit{ite})} & stem\textit{ous} acid & HNO$_2$ = nitrous acid \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Note:} Polyatomic ions: \textit{ate} ending = more oxygen; \textit{ite} ending = less oxygen.
+
+\section*{8. Writing Formulas from Names}
+
+\begin{itemize}
+    \item Identify cation and anion.
+    \item Balance charges to make the compound neutral.
+    \item Place polyatomic ions in parentheses if more than one is needed:
+          Ca(OH)$_2$.
+\end{itemize}
+
+\section*{9. Writing Names from Formulas}
+
+\begin{itemize}
+    \item Ionic: metal name + nonmetal ending in \textit{ide}.
+    \item Covalent: use prefixes.
+    \item Polyatomic: keep ion name.
+    \item Acids: follow acid naming rules.
+\end{itemize}
+
+
+
+
+
+\newpage
+
+\section*{Bonding and Naming Practice (Lewis Structures)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+Ionic bonds are normally formed when: \\
+A. electrons are shared between a metal and a nonmetal \\
+B. electrons are shared between two nonmetals \\
+C. electrons are transferred from a metal to a nonmetal \\
+D. electrons are transferred from a nonmetal to a metal
+\end{problem}
+
+\begin{answer}
+Correct: C \\
+A metal transfers electrons to a nonmetal in ionic bonding.
+\end{answer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+Covalent bonds are normally formed when: \\
+A. electrons are shared between a metal and a nonmetal \\
+B. electrons are shared between two nonmetals \\
+C. electrons are transferred from a metal to a nonmetal \\
+D. electrons are transferred from a nonmetal to a metal
+\end{problem}
+
+\begin{answer}
+Correct: B \\
+Two nonmetals share electrons.
+\end{answer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+Which compound is ionic? \\
+A. CO2 \quad B. ZnCl2 \quad C. SF2 \quad D. SeBr2
+\end{problem}
+
+\begin{answer}
+Correct: B \\
+Zinc is a metal; chlorine is a nonmetal.
+\end{answer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+Which compound is covalent? \\
+A. PF3 \quad B. CNiBr3 \quad C. GaCl3 \quad D. CrO3
+\end{problem}
+
+\begin{answer}
+Correct: A \\
+
+Below is a Lewis structure for PF3 (trigonal pyramidal):
+
+\begin{center}
+\chemfig{P(-[:90]\charge{45=\|,225=\|,135=\|,315=\|}{F})(-[:210]\charge{45=\|,225=\|,135=\|,315=\|}{F})(-[:330]\charge{45=\|,225=\|,135=\|,315=\|}{F})\charge{90=\|,270=\|}{}}
+\end{center}
+
+\end{answer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+Which compound requires a Roman numeral? \\
+A. SF6 \quad B. AlBr3 \quad C. ZnO \quad D. PdCl2
+\end{problem}
+
+\begin{answer}
+Correct: D \\
+Palladium is a transition metal with variable oxidation states.
+\end{answer}
+
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The correct formula for strontium phosphide is: \\
+A. Sr3P \quad B. SrPO4 \quad C. Sr3P2 \quad D. Sr3(PO4)2
+\end{problem}
+
+\begin{answer}
+Correct: C \\
+Sr is 2+ and P is 3-, producing Sr3P2.
+\end{answer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The correct formula for aluminum sulfide is: \\
+A. Al2S3 \quad B. AlSO4 \quad C. Al5S2 \quad D. Al2(SO4)3
+\end{problem}
+
+\begin{answer}
+Correct: A \\
+Al is 3+ and S is 2-.
+\end{answer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 8
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The correct formula for calcium hydroxide is: \\
+A. CaO \quad B. CaOH2 \quad C. CaH2 \quad D. Ca(OH)2
+\end{problem}
+
+\begin{answer}
+Correct: D \\
+Calcium (2+) requires two hydroxide ions.
+\end{answer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 9
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The correct name for Na3N is: \\
+A. sodium nitride \\
+B. trisodium mononitride \\
+C. sodium(III) nitride \\
+D. sodium nitrate
+\end{problem}
+
+\begin{answer}
+Correct: A \\
+Standard ionic naming: sodium nitride.
+\end{answer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 10
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The correct name for CaCl2 is: \\
+A. calcium(II) chloride \\
+B. calcium chloride \\
+C. calcium dichloride \\
+D. calcium chlorate
+\end{problem}
+
+\begin{answer}
+Correct: B \\
+Ca forms only Ca2+.
+\end{answer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 11
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The correct formula for sodium carbonate is: \\
+A. NaC \quad B. Na2CO3 \quad C. NaCO3 \quad D. Na3CO3
+\end{problem}
+
+\begin{answer}
+Correct: B \\
+CO3 has a 2- charge, needing two Na+ ions.
+\end{answer}
+
+
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 12
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The correct name for Mg(NO3)2 is: \\
+A. magnesium nitride \\
+B. magnesium nitrate \\
+C. magnesium dinitrate \\
+D. magnesium(II) nitrate
+\end{problem}
+
+\begin{answer}
+Correct: B \\
+Nitrate is NO3-. Magnesium is always 2+.
+\end{answer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 13
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The correct formula for dinitrogen trioxide is: \\
+A. N2O \quad B. N2O4 \quad C. N2O3 \quad D. N3O2
+\end{problem}
+
+\begin{answer}
+Correct: C \\
+
+Lewis structure for N$_2$O$_3$ (one simplified resonance form):
+
+\begin{center}
+\chemfig{\charge{45=\|,225=\|,135=\|,315=\|}{O}=N(-[:90]\charge{45=\|,225=\|,135=\|,315=\|}{O})-N=\charge{45=\|,225=\|,135=\|,315=\|}{O}}
+\end{center}
+
+\end{answer}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 14
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The correct name for SF4 is: \\
+A. sulfur(IV) fluoride \\
+B. sulfur fluoride(IV) \\
+C. sulfur trifluoride \\
+D. sulfur tetrafluoride
+\end{problem}
+
+\begin{answer}
+Correct: D \\
+SF4 uses covalent naming. Four fluorine atoms give the prefix "tetra."
+\end{answer}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 15
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+Which of the following choices has classified the bonds correctly?
+\end{problem}
+
+\begin{answer}
+Correct: D \\
+
+H--O is covalent (nonmetal + nonmetal). \\
+Ca--N is ionic (metal + nonmetal).
+\end{answer}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 16
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+As a bond between a hydrogen atom and a sulfur atom is formed, electrons are: \\
+A. Shared to form an ionic bond \\
+B. Shared to form a covalent bond \\
+C. Transferred to form an ionic bond \\
+D. Transferred to form a covalent bond
+\end{problem}
+
+\begin{answer}
+Correct: B \\
+Hydrogen and sulfur are both nonmetals, forming covalent bonds by electron sharing.
+\end{answer}
+
+
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 17 — Lewis Dot (TikZ)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+Which of the following Lewis dot diagrams is correct?
+\end{problem}
+
+\begin{answer}
+Correct: C \\
+
+Below is a Lewis structure for CO showing the correct triple bond and lone pairs:
+
+\begin{center}
+\chemfig{\charge{45=\|,225=\|}{C}~\charge{45=\|,225=\|}{O}}
+\end{center}
+
+Note: Carbon monoxide has a triple bond between C and O, with a lone pair on each atom.
+
+\end{answer}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 18
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The molecular shape of BF3 is: \\
+A. bent \\ B. pyramidal \\ C. tetrahedral \\ D. trigonal planar
+\end{problem}
+
+\begin{answer}
+Correct: D \\
+Boron has three bonds and zero lone pairs, giving trigonal planar shape.
+\end{answer}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 19
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+The molecular shape of silicon dioxide (SiO2) is: \\
+A. linear \\ B. pyramidal \\ C. bent \\ D. trigonal planar
+\end{problem}
+
+\begin{answer}
+Correct: A \\
+
+A representation of linear O=Si=O:
+
+\begin{center}
+\chemfig{O=Si=O}
+\end{center}
+
+\end{answer}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 20
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+Given the Lewis structure O=O, what is the total number of electrons shared 
+between the two oxygen atoms? \\
+A. 1 \\
+B. 2 \\
+C. 3 \\
+D. 4
+\end{problem}
+
+\begin{answer}
+Correct: D \\
+A double bond contains 4 shared electrons.
+\end{answer}
+
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 21 — OCTET VIOLATION (TikZ)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+In the Lewis structure of SOCl2, which atom violates the octet rule?
+\end{problem}
+
+\begin{answer}
+Correct: A (sulfur) \\
+
+A sketch of SOCl2 structure:
+
+\begin{center}
+\chemfig{S(=[:90]\charge{45=\|,225=\|,135=\|,315=\|}{O})(-[:210]\charge{45=\|,225=\|,135=\|,315=\|}{Cl})(-[:330]\charge{45=\|,225=\|,135=\|,315=\|}{Cl})}
+\end{center}
+
+Sulfur has 10 electrons around it (expanded octet).
+\end{answer}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 22 — STRUCTURE OF C2H3Cl
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+Which Lewis structure best represents C2H3Cl?
+\end{problem}
+
+\begin{answer}
+Correct: B \\
+
+Structure shows C=C double bond with three hydrogens and one chlorine:
+
+\begin{center}
+\chemfig{C(-[:90]H)(-[:270]H)=C(-[:270]H)(-[:90]Cl)}
+\end{center}
+
+\end{answer}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM 23 — POLARITY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+Hexane (C6H14) and water do not form a solution. Which statement explains this phenomenon? \\
+A. Hexane is polar and water is nonpolar. \\
+B. Hexane is ionic and water is polar. \\
+C. Hexane is nonpolar and water is polar. \\
+D. Hexane is nonpolar and water is ionic.
+\end{problem}
+
+\begin{answer}
+Correct: C \\
+Nonpolar substances do not dissolve in polar solvents ("like dissolves like").
+\end{answer}
+
+
+
+
+
+
+%============ 24 ============%
+\begin{problem}
+Which of the Lewis structures below best represents the molecule CHF$_3$?
+\end{problem}
+
+\begin{answer}
+Correct choice: A.
+
+A correct Lewis structure for CHF$_3$ has carbon in the center with
+four single bonds (three to F, one to H). Each F has three lone pairs
+and H has none. A Lewis structure:
+
+\begin{center}
+\chemfig{C(-[:90]\charge{45=\|,225=\|,135=\|,315=\|}{F})(-[:210]\charge{45=\|,225=\|,135=\|,315=\|}{F})(-[:330]\charge{45=\|,225=\|,135=\|,315=\|}{F})(-[:270]H)}
+\end{center}
+\end{answer}
+
+
+\newpage
+
+%============ 25 ============%
+\begin{problem}
+Electronegativity is defined as the tendency of an atom to\\
+A. donate electrons to other atoms in a chemical bond\\
+B. share electrons equally with other atoms\\
+C. lose its valence electrons to become an ion\\
+D. attract electrons toward itself in a chemical bond
+\end{problem}
+
+\begin{answer}
+Correct choice: D.
+
+Electronegativity measures how strongly an atom attracts the shared
+electrons in a bond.
+\end{answer}
+
+
+%============ 26 ============%
+\begin{problem}
+Based on its location on the periodic table, which of the following
+elements should have the largest value for electronegativity?\\
+A. lithium \qquad
+B. oxygen \qquad
+C. potassium \qquad
+D. selenium
+\end{problem}
+
+\begin{answer}
+Correct choice: B (oxygen).
+
+Electronegativity increases across a period and decreases down a group;
+among these options oxygen is closest to the top right of the table.
+\end{answer}
+
+
+%============ 27 ============%
+\begin{problem}
+Which formula represents a nonpolar molecule containing polar
+covalent bonds?\\
+A. H$_2$O \qquad
+B. CCl$_4$ \qquad
+C. NH$_3$ \qquad
+D. H$_2$
+\end{problem}
+
+\begin{answer}
+Correct choice: B (CCl$_4$).
+
+Each C--Cl bond is polar, but the tetrahedral geometry is perfectly
+symmetric, so the molecular dipoles cancel and the molecule is overall
+nonpolar.
+\end{answer}
+
+
+
+
+
+%============ SHORT ANSWER Q1 ============%
+\begin{problem}
+Decide if each description represents \textbf{IONIC}
+bonding or \textbf{COVALENT} bonding.
+\end{problem}
+
+\begin{answer}
+\begin{enumerate}
+  \item ``It is a non conductor of electricity, whether it exists as a
+        solid, melted, or dissolved in water.'' \\
+        \textbf{Covalent} (molecular compounds do not conduct in any state).
+
+  \item ``It is a nonelectrolyte in the solid form, but it can become a
+        good conductor when melted or dissolved in water.'' \\
+        \textbf{Ionic} (ions are free to move in the molten or aqueous state).
+
+  \item ``The building blocks of this type of compound are called
+        molecules.'' \\
+        \textbf{Covalent} (molecules are made of covalently bonded atoms).
+
+  \item ``The electrons are transferred from one element to another to
+        form this type of bond.'' \\
+        \textbf{Ionic}.
+
+  \item ``The electrons are shared in between elements in this type of
+        bond.'' \\
+        \textbf{Covalent}.
+\end{enumerate}
+\end{answer}
+  
+
+
+
+
+
+
+\end{document}
