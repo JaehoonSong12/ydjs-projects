@@ -1,6 +1,8 @@
 package snake;
 
 import dev.lwjgl.ui.components.UILabel;
+import dev.lwjgl.ui.components.UIPolygon;
+import dev.lwjgl.ui.components.UIStar;
 import dev.lwjgl.ui.components.controls.UIButton;
 import dev.lwjgl.ui.components.UIContainer;
 import dev.lwjgl.UIWindow;
@@ -12,7 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
  * A single class that encapsulates all finite state machine logic
  * for the menu, playing, and game over phases.
  */
-public class GameState {
+public class SnakeGameState {
 
     private enum Phase {MENU, PLAYING, GAME_OVER}
 
@@ -29,7 +31,7 @@ public class GameState {
     private UILabel scoreLabel;
     private double accumulator = 0.0;
 
-    public GameState(UIWindow window) {
+    public SnakeGameState(UIWindow window) {
         this.window = window;
         this.gridW = window.getGridW();
         this.gridH = window.getGridH();
@@ -129,6 +131,20 @@ public class GameState {
 
         double winW = window.getWinW();
         double winH = window.getWinH();
+        int n = 5;
+//        UIRectangle rectangle = new UIRectangle(winW / 2, winH * 3/4, 20, 10);
+//        rootView.add(rectangle);
+
+        UIPolygon polygon = new UIPolygon(n, winW / 2 - 100 , winH * 4/5, 30, 0);
+        polygon.setGrowing(true);
+        polygon.setRotating(true);
+        rootView.add(polygon);
+
+
+        UIStar star = new UIStar(n, winW / 2 + 100, winH * 4/5, 30, 0);
+        star.setGrowing(true);
+        star.setRotating(true);
+        rootView.add(star);
 
         UILabel motif = new UILabel("abcdefghijklmnopqrstuvwxyz", 0, winH * 0.25, 4);
         motif.centerHorizontal(0, winW);
@@ -157,6 +173,8 @@ public class GameState {
 
         this.scoreLabel = new UILabel("SCORE: 0", 10, 10, 2);
         rootView.add(scoreLabel);
+
+
     }
 
     private void buildGameOverUI() {

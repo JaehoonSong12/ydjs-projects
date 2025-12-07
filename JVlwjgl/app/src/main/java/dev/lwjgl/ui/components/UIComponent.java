@@ -43,7 +43,62 @@ public abstract class UIComponent {
      */
     public abstract void render();
 
-    
+
+
+
+    protected void renderPolygon(int n, double x, double y, double radius, double rotationalAngle) {
+        glBegin(GL_POLYGON);
+        double rot = Math.toRadians(rotationalAngle);
+        for (int i = 0; i < n; i++) {
+            double angle = rot + (2 * Math.PI * i / n);
+            double vx = x + radius * Math.cos(angle);
+            double vy = y + radius * Math.sin(angle);
+            glVertex2d(vx, vy);
+        }
+        glEnd();
+    }
+
+    protected void renderStar(int n, double x, double y, double radius, double rotationalAngle) {
+        double rot = Math.toRadians(rotationalAngle);
+        
+        // Inner radius for star valleys
+        double innerRadius = radius * 0.4;
+
+        // Render star using triangles from center - guarantees all tips are pointy
+        glBegin(GL_TRIANGLES);
+        
+        for (int i = 0; i < n; i++) {
+            // Current tip
+            double tipAngle = rot + (2 * Math.PI * i / n);
+            double tipX = x + radius * Math.cos(tipAngle);
+            double tipY = y + radius * Math.sin(tipAngle);
+            
+            // Valley before this tip (between previous tip and current tip)
+            double valleyAngle1 = rot + (2 * Math.PI * (i - 0.5) / n);
+            double valleyX1 = x + innerRadius * Math.cos(valleyAngle1);
+            double valleyY1 = y + innerRadius * Math.sin(valleyAngle1);
+            
+            // Valley after this tip (between current tip and next tip)
+            double valleyAngle2 = rot + (2 * Math.PI * (i + 0.5) / n);
+            double valleyX2 = x + innerRadius * Math.cos(valleyAngle2);
+            double valleyY2 = y + innerRadius * Math.sin(valleyAngle2);
+            
+            // Render two triangles for this star arm: center -> valley1 -> tip, and center -> tip -> valley2
+            glVertex2d(x, y);           // Center
+            glVertex2d(valleyX1, valleyY1); // Valley before tip
+            glVertex2d(tipX, tipY);      // Tip (pointy!)
+            
+            glVertex2d(x, y);           // Center
+            glVertex2d(tipX, tipY);      // Tip (pointy!)
+            glVertex2d(valleyX2, valleyY2); // Valley after tip
+        }
+        
+        glEnd();
+    }
+
+
+
+
     protected void renderRect(double x, double y, double w, double h) {
         glBegin(GL_QUADS);
             glVertex2d(x, y);
