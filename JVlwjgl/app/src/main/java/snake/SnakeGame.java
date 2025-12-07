@@ -12,7 +12,7 @@ import dev.lwjgl.UIWindow;
 public class SnakeGame {
 
     private UIWindow window;
-    private GameState state;
+    private SnakeGameState state;
 
     public static void main(String[] args) {
         new SnakeGame().run();
@@ -31,7 +31,7 @@ public class SnakeGame {
 
     private void init() {
         this.window = new UIWindow("Snake Game", 640, 480, 20);
-        this.state = new GameState(window);
+        this.state = new SnakeGameState(window);
 
         window.setKeyCallback((win, key, scancode, action, mods) -> state.onKey(key, action));
         window.setMouseButtonCallback((win, button, action, mods) -> {
