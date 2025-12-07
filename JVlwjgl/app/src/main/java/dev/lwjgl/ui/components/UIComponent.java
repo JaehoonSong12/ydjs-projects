@@ -1,9 +1,15 @@
 package dev.lwjgl.ui.components;
 
-import static org.lwjgl.opengl.GL11.*;
-
-
-import dev.lwjgl.ui.*;
+import static org.lwjgl.opengl.GL11.GL_POLYGON;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glVertex2d;
+import static org.lwjgl.opengl.GL11.glVertex2f;
+import static org.lwjgl.opengl.GL11.glVertex2i;
+import static org.lwjgl.opengl.GL11.glVertex3d;
+import static org.lwjgl.opengl.GL11.glVertex3f;
 
 /**
  * The abstract base class for all UI elements. (Component)
