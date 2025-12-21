@@ -32,6 +32,9 @@ import static org.lwjgl.opengl.GL11.glPushAttrib;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
+
+
+
 import dev.lwjgl.TextureLoader;
 import dev.lwjgl.ui.MessageSystem;
 
@@ -48,7 +51,7 @@ public class PlatformerModel {
     }
 
     // Game state
-    public static int gameTime = 0;
+    public static long gameTime = 0;
     public static boolean freezeTime = false;
     public static float dashLevel = 1.0f;
     public static boolean dashLevelWasBrought = false;
@@ -69,14 +72,14 @@ public class PlatformerModel {
         }
     }
 
-    private final Difficulty difficulty = Difficulty.HARD;
+    private final Difficulty difficulty = Difficulty.IMPOSSIBLE;
     private final float mapCenterX = WORLD_WIDTH / 2.0f;
     private final float mapCenterY = WORLD_HEIGHT / 2.0f;
     private final float pctWidth = WORLD_WIDTH * 0.8f;
     private final float pctHeight = WORLD_HEIGHT * 0.8f;
 
     // Spawn areas
-    private final float[] starRectSpawnArea = {50, 20, 1, 1};
+    private final float[] starRectSpawnArea = {mapCenterX, mapCenterY, pctWidth, pctHeight};
     private final float[] mobsRectsSpanArea = {mapCenterX, mapCenterY, pctWidth, pctHeight};
 
     // Game entities
@@ -87,7 +90,6 @@ public class PlatformerModel {
     private List<MobA> mobs;
 
     // Systems
-    private final ControlMapper controlMapper;
     private final MessageSystem messageSystem;
     private final ShopSystem shopSystem;
 
@@ -99,7 +101,7 @@ public class PlatformerModel {
     private double mobsThatIsLeftover = 0;
     private boolean addMobsA = false;
     private final boolean mobsEnabled = true;
-    private final int spawnMobsPerXStarsCollected = 1;
+    public static int spawnMobsPerXStarsCollected = 0;
 
     // UI
     private int[] digitTextures = null;
@@ -111,11 +113,22 @@ public class PlatformerModel {
         this.screenHeight = screenHeight;
         this.messageSystem = new MessageSystem(screenWidth, screenHeight);
         this.shopSystem = new ShopSystem();
-        
-        boolean keyShuffling = (difficulty == Difficulty.NIGHTMARE);
-        this.controlMapper = new ControlMapper(keyShuffling);
+
         
         initialize();
+    }
+
+    public void showKeys(boolean isInitial) {
+        KeyboardControlManager keyManager = KeyboardControlManager.getInstance();
+        showMessage("Key Mapping:");
+        showMessage("UP    = " + keyManager.getKeys().get(0));
+        showMessage("LEFT  = " + keyManager.getKeys().get(1));
+        showMessage("RIGHT = " + keyManager.getKeys().get(2));
+        showMessage("DOWN  = " + keyManager.getKeys().get(3));
+        showMessage("CHARATER SKILL = " + keyManager.getKeys().get(4));
+        if (!isInitial) return;
+        showMessage("Press Enter For Shop");
+        return;
     }
 
     private void initialize() {
@@ -124,34 +137,17 @@ public class PlatformerModel {
         generatePlatforms();
         spawnStars(5);
         mobs = new ArrayList<>();
-        
-        controlMapper.randomizeControls();
-        if (controlMapper.isKeyShuffling()) {
-            showMessage("Key Mapping:");
-            showMessage("UP    = " + controlMapper.getKeys().get(0));
-            showMessage("LEFT  = " + controlMapper.getKeys().get(1));
-            showMessage("RIGHT = " + controlMapper.getKeys().get(2));
-            showMessage("DOWN  = " + controlMapper.getKeys().get(3));
-            showMessage("CHARATER SKILL = " + controlMapper.getKeys().get(4));
-            controlMapper.resetDisplayKeyMappingCounter();
-        }
-        showMessage("Press Enter For Shop");
+
+        KeyboardControlManager keyManager = KeyboardControlManager.getInstance();
+        if (difficulty == Difficulty.NIGHTMARE) keyManager.randomizeKeys();
+        showKeys(true);
     }
 
     public void update(float dt) {
         gameTime++;
-        
-        if (controlMapper.isKeyShuffling()) {
-            controlMapper.incrementDisplayKeyMappingCounter();
-            if (controlMapper.getDisplayKeyMappingCounter() >= 500) {
-                showMessage("Key Mapping:");
-                showMessage("UP    = " + controlMapper.getKeys().get(0));
-                showMessage("LEFT  = " + controlMapper.getKeys().get(1));
-                showMessage("RIGHT = " + controlMapper.getKeys().get(2));
-                showMessage("DOWN  = " + controlMapper.getKeys().get(3));
-                controlMapper.resetDisplayKeyMappingCounter();
-            }
-        }
+
+        KeyboardControlManager keyManager = KeyboardControlManager.getInstance();
+        if ((gameTime % 500) == 0 && keyManager.didRandomize()) showKeys(false);
         
         player.applyGravity(dt);
         player.update(dt, platforms);
@@ -168,7 +164,7 @@ public class PlatformerModel {
         
         if (stars.isEmpty()) {
             spawnStars(5);
-            controlMapper.randomizeControls();
+            if (difficulty == Difficulty.NIGHTMARE) KeyboardControlManager.getInstance().randomizeKeys();
         }
 
         // Spawn mobs
@@ -206,6 +202,11 @@ public class PlatformerModel {
         if (showDashCooldownMessage) {
             showMessage("Dash is on cooldown! Wait for " + String.format("%.1f", player.getDashCooldown()) + " seconds.");
             showDashCooldownMessage = false;
+        }
+
+        if (Player.showStabCooldownMessage) {
+            showMessage("Stab is on cooldown! Wait for " + String.format("%.1f", player.stabCurrentCooldown) + " seconds.");
+            Player.showStabCooldownMessage = false;
         }
     }
 
@@ -378,7 +379,6 @@ public class PlatformerModel {
     public List<Platform> getPlatforms() { return platforms; }
     public List<Star> getStars() { return stars; }
     public List<MobA> getMobs() { return mobs; }
-    public ControlMapper getControlMapper() { return controlMapper; }
     public MessageSystem getMessageSystem() { return messageSystem; }
     public ShopSystem getShopSystem() { return shopSystem; }
     public int getLives() { return lives; }
