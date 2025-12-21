@@ -10,6 +10,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 import static org.lwjgl.opengl.GL11.glVertex3f;
+import static org.lwjgl.opengl.GL11C.GL_LINE_STRIP;
 
 /**
  * The abstract base class for all UI elements. (Component)
@@ -152,7 +153,6 @@ public abstract class UIComponent {
             glVertex3d(x, y + h, z);
         glEnd();
     }
-
 
 
 

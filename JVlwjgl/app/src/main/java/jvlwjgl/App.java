@@ -7,7 +7,7 @@ package jvlwjgl;
 // import core.HigherOrLower;
 
 import platformer.PlatformerGame;
-
+import snake.SnakeGame;
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -20,7 +20,7 @@ public class App {
 
         //Game.main(args);
         // ClickButtonApp.main(args);
-        // SnakeGame.main(args);
+         //SnakeGame.main(args);
         PlatformerGame.main(args);
 
         
