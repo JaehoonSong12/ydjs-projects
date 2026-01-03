@@ -29,7 +29,7 @@ public class PlatformerGameState {
     }
     
     private void handleContinuousInput() {
-        var keyMap = KeyboardControlManager.getInstance().getKeyMap();
+        var keyMap = model.getControlMapper().getKeyMap();
         var player = model.getPlayer();
         var shop = model.getShopSystem();
         
@@ -65,15 +65,12 @@ public class PlatformerGameState {
             player.jCharge();
         }
         
-        // Handle fall (continuous) ?????????????????????????????//THIS IS WHERE DOWN IS OR WHERE IS DOWN
+        // Handle fall (continuous)
         if (keyStates[keyMap.get("DOWN")]) {
             player.fall();
-            model.showMessage("" + PlatformerModel.spawnMobsPerXStarsCollected);
         }
     }
-    public void keys() {
-        model.showKeys(false);
-    }
+
     public void render() {
         glClearColor(0.5f, 0.8f, 1f, 0);
         model.render();
@@ -88,7 +85,7 @@ public class PlatformerGameState {
             keyStates[key] = false;
             
             // Handle key release events
-            var keyMap = KeyboardControlManager.getInstance().getKeyMap();
+            var keyMap = model.getControlMapper().getKeyMap();
             if (key == keyMap.get("UP")) {
                 model.getPlayer().jump();
             }
@@ -103,10 +100,9 @@ public class PlatformerGameState {
         }
 
         // Handle shop toggle
-        if (key == GLFW.GLFW_KEY_ENTER) {
-            handleShopToggle(action);
+        if (key == GLFW.GLFW_KEY_ENTER && action == GLFW.GLFW_PRESS) {
+            handleShopToggle();
         }
-
 
         // Handle shop purchases
         if (model.getShopSystem().isShopOpened()) {
@@ -122,51 +118,40 @@ public class PlatformerGameState {
         // Mouse handling if needed
     }
 
-    private void handleShopToggle(int action) {
+    private void handleShopToggle() {
         var shop = model.getShopSystem();
-
-        boolean submitDown = (action == GLFW.GLFW_PRESS);
-
-        // Detect PRESS but only when previously NOT down
-        if (submitDown && !shop.isSubmitKeyPreviouslyDown()) {
-
-            // Toggle open/close
+        boolean submitKeyPreviouslyDown = shop.isSubmitKeyPreviouslyDown();
+        
+        if (!submitKeyPreviouslyDown) {
             shop.toggleShop();
             PlatformerModel.freezeTime = shop.isShopOpened();
-
+            
             if (shop.isShopOpened()) {
-                // OPEN SHOP
                 model.getMessageSystem().clear();
                 model.showMessage("You have entered the shop");
                 model.showMessage("The things you can buy:");
                 shop.setDelay(true);
-
-                var player = model.getPlayer();
-
-                if (player.whichcharacter == 0 && shop.isDelay()) {
+                
+                if (model.getPlayer().whichcharacter == 0 && shop.isDelay()) {
                     model.showMessage("Press 1 for the next dash level for " + shop.getDashLevelPrice() + " score");
-                    if (!player.skipGambling) {
+                    if (!model.getPlayer().skipGambling) {
                         model.showMessage("Press 2 to change your skill to gambling");
                     } else {
                         model.showMessage("Press 2 to change your skill to stabbing");
                     }
                     shop.setDelay(false);
-
-                } else if (player.whichcharacter == 1 && !shop.isDealarPayedThisRound() && shop.isDelay()) {
+                } else if (model.getPlayer().whichcharacter == 1 && !shop.isDealarPayedThisRound() && shop.isDelay()) {
                     model.showMessage("Press 1 to pay the dealer this round for 20 score");
                     model.showMessage("Press 2 to change your skill to dash");
                     shop.setDelay(false);
                 }
-
             } else {
-                // CLOSE SHOP
                 model.showMessage("You have left the shop");
                 shop.setShopOpenMovedisabldNoifcation(false);
             }
         }
-
-        // Update the previous state (VERY IMPORTANT)
-        shop.setSubmitKeyPreviouslyDown(submitDown);
+        
+        shop.setSubmitKeyPreviouslyDown(true);
     }
 
 

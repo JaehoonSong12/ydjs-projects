@@ -37,7 +37,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
  */
 public class MessageSystem {
     private final Deque<Message> messages = new ArrayDeque<>();
-    private static final int MAX_MESSAGES = 6;
+    private static final int MAX_MESSAGES = 5;
     private static final double DISPLAY_DURATION = 5.5;
     private final int screenWidth;
     private final int screenHeight;

@@ -18,23 +18,31 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
  * Player entity with movement, jumping, dashing, and stabbing abilities.
  */
 public class Player {
-
     private final int width = 800, height = 600;
     private final float worldWidth = width * 3f, worldHeight = height;
     private final float speed = 200;
+    private float jumpSpeed = 400;
+    private final float higherJumpAdditionalSpeed = 300;
+    private final float additionalJumpSpeed = 400;
+    private final int MAX_ADDITIONAL_JUMP = 3;
+    private final int MAX_COUNTER = 300;
+    private final int _COUNTER_INCREMENT = 10;
+    
     public static boolean testing = true;
-    public int whichcharacter = 2;
+    public int whichcharacter = 0;
     public boolean skipGambling = true;
     
     // Position and velocity
     public static float x, y;
     private float vx, vy;
     private boolean onGround;
+    private int counter;
+    private boolean enableAdditionalJump;
     private boolean isfaceingRight = false;
     
     // Dash system
     public static float dashCooldownTime = 0.6f;
-    private float dashCurrentTime = dashCooldownTime;
+    private float dashCooldown = dashCooldownTime;
     private boolean showDashEffect = false;
     private float dashEffectTimer = 0f;
     private final float dashEffectDuration = 0.1f;
@@ -43,22 +51,19 @@ public class Player {
     private boolean uhhIThinkIsAboutTimeWhereDashShouldTell;
     public static boolean showDashCooldownMessage = false;
     
-    // jump system
-    private float jumpSpeed = 400;
-    private final float higherJumpAdditionalSpeed = 300;
-    private int jumpChargeCounter;
-    private final int maxJumpCount = 300;
-    private final int jumpChargeCounterIncremants = 10;
-    private boolean enableAdditionalJump;
-    private int numberOfJump;
-    private final int MAX_ADDITIONAL_JUMP = 3;
-    private final float additionalJumpSpeed = 400;
-    private boolean showAdditionalJumpOval = false;//currently
+    // Additional jump oval rendering
+    private boolean showAdditionalJumpOval = false;
     private float jumpOvalTimer = 0f;
     private final float jumpOvalDuration = 0.3f;
     private float jumpOvalX = 0f, jumpOvalY = 0f;
     private float jumpOvalAlpha = 0f;
-
+    private int numberOfJump;
+    
+    // Stab system
+    public boolean didstab;
+    private final float stabCooldownTime = 0.0f;
+    public float stabCooldown = stabCooldownTime;
+    private final float stabRange = 50.0f;
 
     public Player(float x, float y) {
         this.x = x;
@@ -73,7 +78,7 @@ public class Player {
     }
 
     public void dash() {
-        if (dashCurrentTime <= 0.0f && !PlatformerModel.freezeTime) {
+        if (dashCooldown <= 0.0f && !PlatformerModel.freezeTime) {
             if (dashCooldownTime > 0 && PlatformerModel.dashLevelWasBrought) {
                 dashCooldownTime -= ((PlatformerModel.dashLevel / 2) + 1.0f) * 0.01f;
                 PlatformerModel.dashLevelWasBrought = false;
@@ -85,7 +90,7 @@ public class Player {
             } else {
                 x += -200;
             }
-            dashCurrentTime = dashCooldownTime;
+            dashCooldown = dashCooldownTime;
             dashEffectTimer = dashEffectDuration;
             dashEffectAlpha = dashCooldownTime;
             showDashEffect = true;
@@ -96,24 +101,30 @@ public class Player {
         }
     }
 
+    public void stab() {
+        if (stabCooldown <= 0.0f && !PlatformerModel.freezeTime) {
+            stabCooldown = stabCooldownTime - 2.0f;
+            didstab = true;
+        }
+    }
 
     public void jCharge() {
         if (!PlatformerModel.freezeTime) {
             enableAdditionalJump = (!onGround && numberOfJump < MAX_ADDITIONAL_JUMP);
-            if (onGround && jumpChargeCounter < maxJumpCount) {
-                jumpChargeCounter += jumpChargeCounterIncremants;
+            if (onGround && counter < MAX_COUNTER) {
+                counter += _COUNTER_INCREMENT;
             }
-            if (jumpChargeCounter >= higherJumpAdditionalSpeed) {
-                jumpChargeCounter = maxJumpCount;
+            if (counter >= higherJumpAdditionalSpeed) {
+                counter = MAX_COUNTER;
             }
         }
     }
 
     public void jump() {
         if (!PlatformerModel.freezeTime) {
-            if (jumpChargeCounter > jumpChargeCounterIncremants && onGround) {
-                vy = jumpSpeed + jumpChargeCounter;
-                jumpChargeCounter = 0;
+            if (counter > _COUNTER_INCREMENT && onGround) {
+                vy = jumpSpeed + counter;
+                counter = 0;
             }
             if (enableAdditionalJump && !onGround) {
                 vy = additionalJumpSpeed;
@@ -140,25 +151,6 @@ public class Player {
         }
     }
 
-    // Stab system
-    public boolean isStabbing;
-    private final float stabCooldownCap = 1.0f;
-    public float stabCurrentCooldown;
-    public final float stabDurationCap = 0.1f;
-    private float stabCurrentDuration;
-    private final float stabRange = 50.0f;
-
-
-    public static boolean showStabCooldownMessage;
-    public void stab() {
-        if (this.stabCurrentCooldown <= 0.0f && !PlatformerModel.freezeTime) {
-            stabCurrentCooldown = stabCooldownCap;
-            stabCurrentDuration = stabDurationCap;
-            isStabbing = true;
-        }else {
-            showStabCooldownMessage = true;
-        }
-    }
     public void update(float dt, List<Platform> plats) {
         if (!PlatformerModel.freezeTime) {
             if (PlatformerModel.dashLevelWasBrought) {
@@ -191,27 +183,20 @@ public class Player {
                 }
             }
             
-            if (dashCurrentTime > 0.0f) {
-                dashCurrentTime -= 1.0f * dt;
-                if (dashCurrentTime < 0.0f) dashCurrentTime = 0.0f;
+            if (dashCooldown > 0.0f) {
+                dashCooldown -= 1.0f * dt;
+                if (dashCooldown < 0.0f) dashCooldown = 0.0f;
             }
-
-            if (stabCurrentDuration > 0.0f) {
-                stabCurrentDuration -= 1.0f * dt;
-                if (stabCurrentDuration <= 0.0f) {
-                    stabCurrentDuration = 0.0f;
-                    isStabbing = false;
-                }
+            
+            if (stabCooldown > 0.0f) {
+                stabCooldown -= 1.0f * dt;
+                if (stabCooldown < 0.0f) stabCooldown = 0.0f;
             }
-            if (stabCurrentCooldown > 0.0f) { // countdown
-                stabCurrentCooldown -= 1.0f * dt;
-                if (stabCurrentCooldown <= 0.0f) {
-                    stabCurrentCooldown = 0.0f;
-                }
+            
+            if (stabCooldown <= stabCooldownTime / (9.0f / 10.0f)) {
+                didstab = false;
             }
-           // if (stabCurrentTime <= 0) isStabbing = false;
-
-
+            
             if (showAdditionalJumpOval) {
                 jumpOvalTimer += dt;
                 if (jumpOvalTimer <= 0.2f) {
@@ -255,26 +240,24 @@ public class Player {
     }
     
     public boolean mobCollidesWithStab(MobA m) {
-        if (isStabbing) {
-            double mx = m.x;
-            double my = m.y;
-            double ms = m.size;
-            double stabX, stabWidth;
-
-            if (isfaceingRight) {
-                stabX = x + 20;
-                stabWidth = stabRange;
-            } else {
-                stabX = x - stabRange;
-                stabWidth = stabRange;
-            }
-
-            double stabY = y;
-            double stabHeight = 20;
-
-            return stabX < mx + ms && stabX + stabWidth > mx && stabY < my + ms && stabY + stabHeight > my;
+        if (!didstab) return false;
+        double mx = m.x;
+        double my = m.y;
+        double ms = m.size;
+        double stabX, stabWidth;
+        
+        if (isfaceingRight) {
+            stabX = x + 20;
+            stabWidth = stabRange;
+        } else {
+            stabX = x - stabRange;
+            stabWidth = stabRange;
         }
-        return false;
+        
+        double stabY = y;
+        double stabHeight = 20;
+        
+        return stabX < mx + ms && stabX + stabWidth > mx && stabY < my + ms && stabY + stabHeight > my;
     }
 
     public boolean isStarInDashTriangle(Star s) {
@@ -283,7 +266,7 @@ public class Player {
     }
     
     public float getDashCooldown() {
-        return dashCurrentTime;
+        return dashCooldown;
     }
 
     public void renderJumpOval() {
@@ -311,10 +294,10 @@ public class Player {
         glPushMatrix();
         glTranslatef(x, y, 0);
         
-        if (jumpChargeCounter == 0) {
+        if (counter == 0) {
             glColor4f(0, 0, 1, dashEffectAlpha);
         } else {
-            float red = Math.min(1.0f, jumpChargeCounter / 300f);
+            float red = Math.min(1.0f, counter / 300f);
             glColor4f(red, 0, 1 - red, dashEffectAlpha);
         }
         
@@ -332,39 +315,14 @@ public class Player {
         glPopMatrix();
     }
 
-    public void renderStabEffect() {
-        if (isStabbing) {
-            glPushMatrix();
-            glTranslatef(x, y, 0);
-
-            glBegin(GL_QUADS);
-            glColor4f(0.5f, 0.5f, 0.5f, 0.5f);
-            if (isfaceingRight) {
-                // Rectangle extending to the right
-                glVertex2f(0, 0);
-                glVertex2f(0, 20);
-                glVertex2f(stabRange + 20, 20);
-                glVertex2f(stabRange + 20, 0);
-            } else {
-                // Rectangle extending to the left
-                glVertex2f(0, 0);
-                glVertex2f(0, 20);
-                glVertex2f(-stabRange, 20);
-                glVertex2f(-stabRange, 0);
-            }
-
-            glEnd();
-            glPopMatrix();
-        }
-    }
     public void render() {
         renderJumpOval();
         renderDashEffect();
-        renderStabEffect();
-        if (jumpChargeCounter == 0) {
+        
+        if (counter == 0) {
             glColor3f(0, 0, 1);
         } else {
-            float red = Math.min(1.0f, jumpChargeCounter / 300f);
+            float red = Math.min(1.0f, counter / 300f);
             glColor3f(red, 0, 1 - red);
         }
         
