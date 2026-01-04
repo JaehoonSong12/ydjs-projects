@@ -109,7 +109,24 @@ tasks.register<Exec>("jpackage") {
 // [Robust Clean]
 tasks.named("clean") {
     doFirst {
-        val distDir = layout.buildDirectory.dir("dist").get().asFile
+        // bin folder (in the root of app) should be cleaned
+        val binDir = layout.projectDirectory.dir("bin").asFile // get() is not needed**
+        if (binDir.exists()) {
+            val isWindows = System.getProperty("os.name").lowercase().contains("win")
+            if (isWindows) {
+                println("Attempting to force-delete bin directory via shell...")
+                exec {
+                    commandLine("cmd", "/c", "rmdir", "/s", "/q", binDir.absolutePath)
+                    isIgnoreExitValue = true
+                }
+            } else {
+                delete(binDir)
+            }
+        }
+
+
+        // build/dist should be cleaned as well
+        val distDir = layout.buildDirectory.dir("dist").get().asFile // get() is required.
         if (distDir.exists()) {
             val isWindows = System.getProperty("os.name").lowercase().contains("win")
             
