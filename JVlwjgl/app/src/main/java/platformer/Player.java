@@ -1,18 +1,12 @@
 package platformer;
 
+import dev.lwjgl.ui.components.UIPolygon;
+
+import java.nio.channels.ClosedSelectorException;
 import java.util.List;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLE_FAN;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glColor4f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
+import static org.lwjgl.opengl.GL11.*;
+import static platformer.PlatformerModel.*;
 
 /**
  * Player entity with movement, jumping, dashing, and stabbing abilities.
@@ -31,6 +25,10 @@ public class Player {
     public static boolean testing = true;
     public int whichcharacter = 0;
     public boolean skipGambling = true;
+    private float invisibileFramDurration = 0.1f;
+    private float invisibileFramCurrentTime;
+    public static boolean isInvisibile;
+
     
     // Position and velocity
     public static float x, y;
@@ -39,6 +37,8 @@ public class Player {
     private int counter;
     private boolean enableAdditionalJump;
     private boolean isfaceingRight = false;
+    private boolean fall;
+    private float shouldFall;
     
     // Dash system
     public static float dashCooldownTime = 0.6f;
@@ -47,8 +47,6 @@ public class Player {
     private float dashEffectTimer = 0f;
     private final float dashEffectDuration = 0.1f;
     private float dashEffectAlpha = 0f;
-    private int stopdashTellSpam;
-    private boolean uhhIThinkIsAboutTimeWhereDashShouldTell;
     public static boolean showDashCooldownMessage = false;
     
     // Additional jump oval rendering
@@ -71,9 +69,14 @@ public class Player {
     }
 
     public void moveHoriz(int dir, boolean leftOrRight) {
-        if (!PlatformerModel.freezeTime) {
+        if (!PlatformerModel.freezeTime && !shouldntMove) {
             vx = dir * speed;
             isfaceingRight = leftOrRight;
+        }
+    }
+    public void fall() {
+        if (!PlatformerModel.freezeTime) {
+            shouldFall = 0.1f;
         }
     }
 
@@ -94,10 +97,9 @@ public class Player {
             dashEffectTimer = dashEffectDuration;
             dashEffectAlpha = dashCooldownTime;
             showDashEffect = true;
-            uhhIThinkIsAboutTimeWhereDashShouldTell = false;
-        } else if (!PlatformerModel.freezeTime && uhhIThinkIsAboutTimeWhereDashShouldTell) {
-            PlatformerModel.showDashCooldownMessage = true;
-            uhhIThinkIsAboutTimeWhereDashShouldTell = false;
+            invisibileFramCurrentTime = invisibileFramDurration;
+        } else if (!PlatformerModel.freezeTime) {
+            showDashCooldownMessage = true;
         }
     }
 
@@ -139,14 +141,10 @@ public class Player {
         }
     }
 
-    public void fall() {
-        if (!PlatformerModel.freezeTime) {
-            y += -20;
-        }
-    }
+
 
     public void applyGravity(float dt) {
-        if (!PlatformerModel.freezeTime) {
+        if (!PlatformerModel.freezeTime && !shouldntMove) {
             vy -= 980 * dt;
         }
     }
@@ -157,29 +155,48 @@ public class Player {
                 jumpSpeed = (jumpSpeed + (PlatformerModel.dashLevel / 2) * 0.1f);
                 PlatformerModel.dashLevelWasBrought = false;
             }
-            x += vx * dt;
-            y += vy * dt;
-            stopdashTellSpam += 1;
-            onGround = false;
-            
-            if (stopdashTellSpam >= 10) {
-                stopdashTellSpam = 0;
-                uhhIThinkIsAboutTimeWhereDashShouldTell = true;
+            if (!shouldntMove) {
+                x += vx * dt;
+                y += vy * dt;
             }
-            
+            onGround = false;
+            fall = false;
+            if (y <= 20) {
+                y = 20;
+                onGround = true;
+                vy = 0;
+            }
+            vx = 0;
             if (x > worldWidth - 20) x = worldWidth - 20;
             if (x < 0) x = 0;
             if (y > worldHeight - 20) y = worldHeight - 20;
             if (y < 20) y = 20;
-            
-            for (Platform p : plats) {
-                if (p.x - 20 < x && x < p.x + p.w && p.y + p.h - 5 < y && y < p.y + p.h + 5) {
-                    if (vy <= -1) {
-                        y = p.y + p.h;
-                        onGround = true;
-                        numberOfJump = 0;
-                        vy = 0;
-                    }
+            if(forefield && !initializeStabVarables){
+                stabYRange *= 2;
+                stabXRange *= 2;
+                initializeStabVarables = true;
+            }
+                //Clocks/Timers
+            if (showAdditionalJumpOval) {
+                jumpOvalTimer += dt;
+                if (jumpOvalTimer <= 0.2f) {
+                    jumpOvalAlpha = jumpOvalTimer / 0.2f;
+                } else if (jumpOvalTimer <= 1.0f) {
+                    jumpOvalAlpha = 1f - (jumpOvalTimer - 0.2f) / 0.8f;
+                } else {
+                    showAdditionalJumpOval = false;
+                    jumpOvalAlpha = 0f;
+                    jumpOvalTimer = 0f;
+                }
+            }
+            if (showDashEffect) {
+                dashEffectTimer -= dt;
+                if (dashEffectTimer <= 0) {
+                    showDashEffect = false;
+                    dashEffectTimer = 0;
+                    dashEffectAlpha = 0;
+                } else {
+                    dashEffectAlpha = dashEffectTimer / dashEffectDuration;
                 }
             }
             
@@ -209,25 +226,27 @@ public class Player {
                     jumpOvalTimer = 0f;
                 }
             }
-            
-            if (showDashEffect) {
-                dashEffectTimer -= dt;
-                if (dashEffectTimer <= 0) {
-                    showDashEffect = false;
-                    dashEffectTimer = 0;
-                    dashEffectAlpha = 0;
-                } else {
-                    dashEffectAlpha = dashEffectTimer / dashEffectDuration;
+            if (invisibileFramCurrentTime > 0.0f) { // countdown
+                invisibileFramCurrentTime -= 1.0f * dt;
+                isInvisibile = true;
+                if (invisibileFramCurrentTime <= 0.0f) {
+                    invisibileFramCurrentTime = 0.0f;
+                    isInvisibile = false;
                 }
             }
-            
-            if (y <= 20) {
-                y = 20;
-                onGround = true;
-                vy = 0;
+            if (startPrayTimer) { // countUp
+                prayTimer += 1.0f * dt;
             }
-            
-            vx = 0;
+            for (Platform p : plats) {
+                if (p.x - 20 < x && x < p.x + p.w && p.y + p.h - 5 < y && y < p.y + p.h + 5 && !fall) {
+                    if (vy <= -1) {
+                        y = p.y + p.h;
+                        onGround = true;
+                        numberOfJump = 0;
+                        vy = 0;
+                    }
+                }
+            }
         }
     }
 

@@ -17,6 +17,8 @@ public class PlatformerGameState {
     // Key state tracking for continuous input
     private final boolean[] keyStates = new boolean[512];
 
+    private boolean[] prevKeyStates = new boolean[512];
+
     public PlatformerGameState(UIWindow window) {
         this.window = window;
         this.model = new PlatformerModel(window.getWinW(), window.getWinH());
@@ -27,40 +29,58 @@ public class PlatformerGameState {
         handleContinuousInput();
         model.update((float) delta);
     }
-    
+
     private void handleContinuousInput() {
         var keyMap = model.getControlMapper().getKeyMap();
         var player = model.getPlayer();
         var shop = model.getShopSystem();
-        
-        // Handle continuous movement
+
+        // ---------- MOVE LEFT ----------
         if (keyStates[keyMap.get("LEFT")] && !PlatformerModel.freezeTime) {
             player.moveHoriz(-1, false);
         } else if (keyStates[keyMap.get("LEFT")] && !shop.isShopOpenMovedisabldNoifcation()) {
             model.showMessage("You cant move while shop is open");
             shop.setShopOpenMovedisabldNoifcation(true);
         }
-        
+
+        // ---------- MOVE RIGHT ----------
         if (keyStates[keyMap.get("RIGHT")] && !PlatformerModel.freezeTime) {
             player.moveHoriz(1, true);
         } else if (keyStates[keyMap.get("RIGHT")] && !shop.isShopOpenMovedisabldNoifcation()) {
             model.showMessage("You cant move while shop is open");
             shop.setShopOpenMovedisabldNoifcation(true);
         }
-        
-        // Handle character skill (continuous)
-        if (keyStates[keyMap.get("CHARATER SKILL")]) {
+
+        // ---------- CHARACTER SKILL ----------
+        int skillKey = keyMap.get("CHARATER SKILL");
+
+        boolean skillPressed  =  keyStates[skillKey] && !prevKeyStates[skillKey];
+        boolean skillHeld     =  keyStates[skillKey];
+        boolean skillReleased = !keyStates[skillKey] &&  prevKeyStates[skillKey];
+
+        if (skillHeld) {
             if (player.whichcharacter == 0) {
                 player.dash();
-            } else if (player.whichcharacter == 1 && shop.canGamble() && !player.skipGambling) {
+            }
+            else if (player.whichcharacter == 1 && shop.canGamble() && !player.skipGambling) {
                 shop.setCanGamble(false);
                 model.performGambling();
-            } else if (player.whichcharacter == 2) {
+            }
+            else if (player.whichcharacter == 2) {
                 player.stab();
             }
+            else if (player.whichcharacter == 3) {
+                player.prayHold();   // HOLD behavior
+            }
         }
-        
-        // Handle jump charge (continuous)
+
+        if (skillReleased) {
+            if (player.whichcharacter == 3) {
+                player.prayRelease(); // RELEASE behavior (heal here)
+            }
+        }
+
+        // ---------- JUMP CHARGE ----------
         if (keyStates[keyMap.get("UP")]) {
             player.jCharge();
         }
@@ -69,6 +89,10 @@ public class PlatformerGameState {
         if (keyStates[keyMap.get("DOWN")]) {
             player.fall();
         }
+            // PlatformerModel.gainLife(); // move this to prayRelease or elsewhere
+
+        // ---------- SAVE PREVIOUS STATES ----------
+        System.arraycopy(keyStates, 0, prevKeyStates, 0, keyStates.length);
     }
 
     public void render() {
@@ -159,6 +183,8 @@ public class PlatformerGameState {
         var shop = model.getShopSystem();
         var player = model.getPlayer();
         
+        // Prevent immediate purchases when shop just opened
+        
         if (player.whichcharacter == 0 && model.getScore() >= shop.getDashLevelPrice()) {
             // Purchase dash level
             model.setScore(model.getScore() - shop.getDashLevelPrice());
@@ -182,8 +208,9 @@ public class PlatformerGameState {
     }
 
     private void handleShopPurchase2() {
-        var shop = model.getShopSystem();
         var player = model.getPlayer();
+        
+        // Prevent immediate purchases when shop just opened
         
         if (player.whichcharacter == 0) {
             if (!player.skipGambling) {
@@ -197,6 +224,9 @@ public class PlatformerGameState {
             player.whichcharacter = 0;
             model.showMessage("Your charator skil is now dash");
         } else if (player.whichcharacter == 2) {
+            player.whichcharacter = 3;
+            model.showMessage("Your charator skil is now praying");
+        }else if (player.whichcharacter == 3) {
             player.whichcharacter = 0;
             model.showMessage("Your charator skil is now dash");
         }
