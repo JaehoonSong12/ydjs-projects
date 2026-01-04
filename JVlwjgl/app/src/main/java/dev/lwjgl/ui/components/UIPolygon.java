@@ -38,14 +38,9 @@ public class UIPolygon extends UIComponent {
     double radius;
     double rotationalAngle;
     public static float time = (float) (System.nanoTime() * 0.000000002);
-    public float glowSpeed = 1.0f;  // Controls how fast the glow pulses (1.0 = normal, 0.5 = half speed, 2.0 = double speed)
 
     public UIPolygon(int n, double xCenter, double yCenter, double radius, double rotationalAngle) {
-        this(n, xCenter, yCenter, radius, rotationalAngle, Colors.DARK_RED, 1.0f);
-    }
-
-    public UIPolygon(int n, double xCenter, double yCenter, double radius, double rotationalAngle, float glowSpeed) {
-        this(n, xCenter, yCenter, radius, rotationalAngle, Colors.DARK_RED, glowSpeed);
+        this(n, xCenter, yCenter, radius, rotationalAngle, Colors.DARK_RED);
     }
 
     public UIPolygon(
@@ -55,18 +50,6 @@ public class UIPolygon extends UIComponent {
             double radius,
             double rotationalAngle,
             float[] color
-    ) {
-        this(n, xCenter, yCenter, radius, rotationalAngle, color, 1.0f);
-    }
-
-    public UIPolygon(
-            int n,
-            double xCenter,
-            double yCenter,
-            double radius,
-            double rotationalAngle,
-            float[] color,
-            float glowSpeed
     ) {
         super(
                 xCenter - radius / Math.sqrt(2),
@@ -81,7 +64,6 @@ public class UIPolygon extends UIComponent {
         this.radius = radius;
         this.rotationalAngle = rotationalAngle + 90;
         this.color = color;
-        this.glowSpeed = glowSpeed;
     }
 
     @Override
@@ -109,8 +91,8 @@ public class UIPolygon extends UIComponent {
             float min = 0.02f;
             float max = 0.12f;
 
-            // Update time every frame for pulse animation with configurable speed
-            float pulse = (float) (Math.sin(time * glowSpeed) * 0.5 + 0.5);
+            // Update time every frame for pulse animation
+            float pulse = (float) (Math.sin(time) * 0.5 + 0.5);
 
             for (int i = layers; i >= 1; i--) {
                 float t = i / (float) layers;
