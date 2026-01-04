@@ -52,7 +52,7 @@ public class Game {
     private final float mapCenterX = worldWidth / 2.0f, mapCenterY = worldHeight / 2.0f;
     private final float pctWidth = worldWidth*0.8f, pctHeight = worldHeight*0.8f;
 
-    private float[] starRectSpawnArea = {mapCenterX,mapCenterY,pctWidth,pctHeight}; //changeable
+    private float[] starRectSpawnArea = {50,20,1,1}; //changeable
     private float[] mobsRectsSpanArea = {mapCenterX,mapCenterY,pctWidth,pctHeight};
     //[0]	Center X position of the rectangle,  [1]	Center Y position of the rectangle,
     //  [2]	Width of the rectangle, [3]	Height of the rectangle
@@ -89,12 +89,13 @@ public class Game {
 
 
     private boolean addMobsA = false;
-    private boolean MobsAlwayed = false; //changeable
+    private boolean MobsAlwayed = true; //changeable
     
     private int spawnMobsPerXStarsCollected = 1;
 
     private double mobsThatIsLeftover;
 
+    private int pastScore = 0;
 
     // Texture cache for digits
     private int[] digitTextures = null;
@@ -123,11 +124,7 @@ public class Game {
     public static boolean showDashCooldownMessage = false;
     // UI
     private int lives = 5;
-    private long score = 0;
-    private int starAmount = 1;
-    private int pastScore = 0;
-
-    public static long pointsPerStar = 2147483647;//checkpoint
+    private int score = 0;
     private boolean shopOpenMovedisabldNoifcation;
 
     // Message system with Orbitron font
@@ -160,7 +157,7 @@ public class Game {
         randomizeControls();
         player = new Player(100, 50);
         generatePlatforms();
-        spawnStars(starAmount);
+        spawnStars(5);
         mobs = new ArrayList<>();
 
         // Font system initialized in showMessage
@@ -370,13 +367,13 @@ public class Game {
         // collect stars
         stars.removeIf(s -> {  
             if (player.playerCollidesWithStar(s) || player.isStarInDashTriangle(s)) {
-                score+= pointsPerStar;
+                score++;
                 return true;
             }
             return false;
         });
         if (stars.isEmpty()) {
-            spawnStars(starAmount);
+            spawnStars(5);
             randomizeControls();
         }
         if (spawnMobsPerXStarsCollected == score - pastScore){
@@ -400,7 +397,7 @@ public class Game {
 
             spawnMobsA(wholenumbersMobs);
 
-            pastScore = (int) score;
+            pastScore = score;
             addMobsA = false;
         }
 
@@ -607,7 +604,7 @@ public class Game {
             }
         }
 
-        String scoreStr = Long.toString(score);
+        String scoreStr = Integer.toString(score);
         float sx = width / 2f - (scoreStr.length() * 20) / 2f;
         float sy = height - 30;
         float dx = 0;

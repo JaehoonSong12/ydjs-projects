@@ -1,7 +1,10 @@
 package snake;
 
-import dev.lwjgl.ui.components.*;
+import dev.lwjgl.ui.components.UILabel;
+import dev.lwjgl.ui.components.UIPolygon;
+import dev.lwjgl.ui.components.UIStar;
 import dev.lwjgl.ui.components.controls.UIButton;
+import dev.lwjgl.ui.components.UIContainer;
 import dev.lwjgl.UIWindow;
 
 import java.awt.*;
@@ -138,17 +141,16 @@ public class SnakeGameState {
 
 
         UIPolygon polygon = new UIPolygon(n, winW / 2 - 100 , winH * 4/5, 30, 0);
-        //polygon.setGrowing(true);
+        polygon.setGrowing(true);
         polygon.setRotating(true);
         polygon.setGlowing(true);
         rootView.add(polygon);
 
 
-
-//        UIStar star = new UIStar(n, winW / 2 + 100, winH * 4/5, 30, 0);
-//        star.setGrowing(true);
-//        star.setRotating(true);
-//        rootView.add(star);
+        UIStar star = new UIStar(n, winW / 2 + 100, winH * 4/5, 30, 0);
+        star.setGrowing(true);
+        star.setRotating(true);
+        rootView.add(star);
 
         UILabel motif = new UILabel("abcdefghijklmnopqrstuvwxyz", 0, winH * 0.25, 4);
         motif.centerHorizontal(0, winW);
