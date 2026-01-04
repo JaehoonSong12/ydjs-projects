@@ -31,12 +31,14 @@ import static org.lwjgl.opengl.GL11.glPopAttrib;
 import static org.lwjgl.opengl.GL11.glPushAttrib;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
-
-
+import static org.lwjgl.opengl.GL11C.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.*;
 
 
 import dev.lwjgl.TextureLoader;
 import dev.lwjgl.ui.MessageSystem;
+import dev.lwjgl.ui.Colors;
+import dev.lwjgl.ui.components.*;
 
 /**
  * Core game model that encapsulates all game logic and state.
@@ -55,7 +57,6 @@ public class PlatformerModel {
     public static boolean freezeTime = false;
     public static float dashLevel = 1.0f;
     public static boolean dashLevelWasBrought = false;
-    public static boolean showDashCooldownMessage = false;
 
     // Difficulty
     public enum Difficulty {
@@ -64,22 +65,26 @@ public class PlatformerModel {
         HARD(1),
         IMPOSSIBLE(0.5f),
         NIGHTMARE(0.25f);
-        
+
         public final float mobPerStar;
-        
         Difficulty(float mobPerStar) {
             this.mobPerStar = mobPerStar;
         }
     }
 
-    private final Difficulty difficulty = Difficulty.IMPOSSIBLE;
+    public static final Difficulty difficulty = Difficulty.EASY;
+    private int totalMobsA = 0;
+    private int pastScore = 0;
+    private double mobsThatIsLeftover = 0;
+    private boolean addMobsA = false;
+    private final boolean mobsEnabled = true;
     private final float mapCenterX = WORLD_WIDTH / 2.0f;
     private final float mapCenterY = WORLD_HEIGHT / 2.0f;
     private final float pctWidth = WORLD_WIDTH * 0.8f;
     private final float pctHeight = WORLD_HEIGHT * 0.8f;
 
     // Spawn areas
-    private final float[] starRectSpawnArea = {mapCenterX, mapCenterY, pctWidth, pctHeight};
+    private final float[] starRectSpawnArea = {50,20,0,0};
     private final float[] mobsRectsSpanArea = {mapCenterX, mapCenterY, pctWidth, pctHeight};
 
     // Game entities
@@ -88,20 +93,46 @@ public class PlatformerModel {
     private List<Platform> platforms;
     private List<Star> stars;
     private List<MobA> mobs;
+    public static List<UIPolygon> polygons = new ArrayList<>();
+
+
 
     // Systems
     private final MessageSystem messageSystem;
     private final ShopSystem shopSystem;
 
     // Game stats
-    private int lives = 5;
+    // Assume these are class variables:
+    private double lifeWidth = 15;
+    private double lifeHeight = 15;
+    private double lifeSpacing = 25;
+    private double lifeYOffset = 25;
+
+    private static int currentLives = 5;  // starting lives
+    private static int maxLives = 10;     // maximum lives
+    private static List<UIRectangle> livesRectangles;
+
+    public void initLivesUI() {
+        livesRectangles = new ArrayList<>();
+
+           for (int i = 0; i < maxLives; i++) {
+            UIRectangle life = new UIRectangle(
+                    10 + i * lifeSpacing,
+                    screenHeight - lifeYOffset,
+                    lifeWidth,
+                    lifeHeight
+            );
+            
+            // Hide lives beyond the starting amount
+            if (i >= currentLives) {
+                life.setShrinking(true);
+            }
+
+            livesRectangles.add(life);
+        }
+    }
+
     private int score = 0;
-    private int totalMobsA = 0;
-    private int pastScore = 0;
-    private double mobsThatIsLeftover = 0;
-    private boolean addMobsA = false;
-    private final boolean mobsEnabled = true;
-    public static int spawnMobsPerXStarsCollected = 0;
 
     // UI
     private int[] digitTextures = null;
@@ -141,6 +172,7 @@ public class PlatformerModel {
         KeyboardControlManager keyManager = KeyboardControlManager.getInstance();
         if (difficulty == Difficulty.NIGHTMARE) keyManager.randomizeKeys();
         showKeys(true);
+        initLivesUI();
     }
 
     public void update(float dt) {
@@ -168,7 +200,7 @@ public class PlatformerModel {
         }
 
         // Spawn mobs
-        if ((score - pastScore) >= spawnMobsPerXStarsCollected) {
+        if ((score - pastScore) >= difficulty.mobPerStar) {
             addMobsA = true;
         }
 
@@ -182,13 +214,12 @@ public class PlatformerModel {
             pastScore = score;
             addMobsA = false;
         }
-
         // Update mobs
         if (mobs != null) {
             for (MobA m : mobs) m.update(dt);
             mobs.removeIf(m -> {
                 if (player.playerCollidesWithMob(m)) {
-                    lives--;
+                    loseLife(1);
                     totalMobsA--;
                     return true;
                 } else if (player.mobCollidesWithStab(m)) {
@@ -199,15 +230,20 @@ public class PlatformerModel {
             });
         }
 
-        if (showDashCooldownMessage) {
+        if (Player.showDashCooldownMessage) {
             showMessage("Dash is on cooldown! Wait for " + String.format("%.1f", player.getDashCooldown()) + " seconds.");
-            showDashCooldownMessage = false;
+            Player.showDashCooldownMessage = false;
         }
 
         if (Player.showStabCooldownMessage) {
             showMessage("Stab is on cooldown! Wait for " + String.format("%.1f", player.stabCurrentCooldown) + " seconds.");
             Player.showStabCooldownMessage = false;
         }
+       if (Player.renderPray) {
+            updatePrayPolygons();
+       } else {
+           polygons.clear();
+       }
     }
 
     // Input handling is now done in PlatformerGameState
@@ -254,6 +290,40 @@ public class PlatformerModel {
             showMessage("Your new score is " + score);
         }
     }
+
+
+
+
+    // Call when losing a life
+    public static void loseLife(int heartsLoss) {
+        while (heartsLoss > 0 && currentLives > 0 && !Player.isInvisibile && !freezeTime) {
+            currentLives--;
+            UIRectangle lost = livesRectangles.get(currentLives);
+            lost.setShrinking(true); // triggers shrinking
+            lost.setGlowing(false);  // stop any glow
+            heartsLoss--;
+            if (currentLives > 0){
+                heartsLoss = 0;
+            }
+        }
+    }
+
+
+    public static void gainLife(int heartsGain) {
+        while (heartsGain > 0 && currentLives < livesRectangles.size() && !freezeTime) {
+            UIRectangle gained = livesRectangles.get(currentLives);
+            gained.setShrinking(false);    // make it visible
+            gained.setGlowing(true);       // glow the new life
+            gained.setMaxGlowPulses(1);    // optional: single pulse pop
+            currentLives++;
+            heartsGain--;
+            if (currentLives == maxLives){
+                heartsGain = 0;
+            }
+        }
+    }
+
+
 
     private void generatePlatforms() {
         platforms = new ArrayList<>();
@@ -308,14 +378,15 @@ public class PlatformerModel {
 
         // Lives
         glColor3f(1, 0, 0);
-        for (int i = 0; i < lives; i++) {
-            glBegin(GL_QUADS);
-            glVertex2f(10 + i * 25, screenHeight - 10);
-            glVertex2f(25 + i * 25, screenHeight - 10);
-            glVertex2f(25 + i * 25, screenHeight - 25);
-            glVertex2f(10 + i * 25, screenHeight - 25);
-            glEnd();
+        for (UIRectangle rect : livesRectangles) {
+            rect.render();
         }
+
+        // Render pray polygons
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        renderPrayPolygons();
+        glDisable(GL_BLEND);
 
         // Score
         if (digitTextures == null) {
@@ -373,6 +444,47 @@ public class PlatformerModel {
         return TextureLoader.loadTexture(resourcePath, getClass());
     }
 
+    /**
+     * Updates pray polygons every frame to stay centered on the player.
+     */
+    private void updatePrayPolygons() {
+        // Create polygons once when they're needed
+        if (polygons.isEmpty()) {
+            // Convert player world position to screen position
+            float screenX = camera.worldToScreenX(player.x);
+            float screenY = camera.worldToScreenY(player.y);
+            
+            // Create polygons centered on player
+            addPrayPolygon(5, screenX + 10, screenY + 10, 30, 0);
+            addPrayPolygon(5, screenX + 10, screenY + 10, 30, 180);
+        } else {
+            // Update existing polygon positions to follow player
+            float screenX = camera.worldToScreenX(player.x);
+            float screenY = camera.worldToScreenY(player.y);
+            
+            for (UIPolygon p : polygons) {
+                p.xCenter = screenX;
+                p.yCenter = screenY;
+            }
+        }
+    }
+
+    public static void addPrayPolygon(int sides, float x, float y, float size, float rotation) {
+        addPrayPolygon(sides, x, y, size, rotation, Player.heartsPerNTimer);
+    }
+
+    public static void addPrayPolygon(int sides, float x, float y, float size, float rotation, float glowSpeed) {
+        UIPolygon polygon = new UIPolygon(sides, x, y, size, rotation, glowSpeed);
+        polygon.setRotating(true);
+        polygon.setGlowing(true);
+        polygons.add(polygon);
+    }
+    private void renderPrayPolygons() {
+        for (UIPolygon p : polygons) {
+            p.render();
+        }
+    }
+
     // Getters
     public Player getPlayer() { return player; }
     public GameCamera getCamera() { return camera; }
@@ -381,7 +493,6 @@ public class PlatformerModel {
     public List<MobA> getMobs() { return mobs; }
     public MessageSystem getMessageSystem() { return messageSystem; }
     public ShopSystem getShopSystem() { return shopSystem; }
-    public int getLives() { return lives; }
     public int getScore() { return score; }
     public void setScore(int score) { this.score = score; }
     public void showMessage(String text) { messageSystem.showMessage(text); }

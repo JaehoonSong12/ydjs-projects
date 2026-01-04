@@ -27,8 +27,10 @@ public class MobA {
         
         int maxSpeed = 3;
         int minSpeed = 1;
-        movementdistants = (float) ((maxSpeed - minSpeed) / PlatformerModel.getWorldWidth() * distanceToPlayer + minSpeed);
-        
+        movementdistants = ((maxSpeed - minSpeed) / PlatformerModel.getWorldWidth() * distanceToPlayer + minSpeed);
+        if(Player.isInvisibile){
+            movementdistants = -movementdistants;
+        }
         if (Player.x - x > 0) x += movementdistants;
         if (Player.x - x < 0) x += -movementdistants;
         if (Player.y - y > 0) y += movementdistants;

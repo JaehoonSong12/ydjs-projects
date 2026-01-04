@@ -1,18 +1,12 @@
 package platformer;
 
+import dev.lwjgl.ui.components.UIPolygon;
+
+import java.nio.channels.ClosedSelectorException;
 import java.util.List;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLE_FAN;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glColor4f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
+import static org.lwjgl.opengl.GL11.*;
+import static platformer.PlatformerModel.*;
 
 /**
  * Player entity with movement, jumping, dashing, and stabbing abilities.
@@ -25,12 +19,18 @@ public class Player {
     public static boolean testing = true;
     public int whichcharacter = 2;
     public boolean skipGambling = true;
+    private float invisibileFramDurration = 0.1f;
+    private float invisibileFramCurrentTime;
+    public static boolean isInvisibile;
+
     
     // Position and velocity
     public static float x, y;
     private float vx, vy;
     private boolean onGround;
     private boolean isfaceingRight = false;
+    private boolean fall;
+    private float shouldFall;
     
     // Dash system
     public static float dashCooldownTime = 0.6f;
@@ -39,8 +39,6 @@ public class Player {
     private float dashEffectTimer = 0f;
     private final float dashEffectDuration = 0.1f;
     private float dashEffectAlpha = 0f;
-    private int stopdashTellSpam;
-    private boolean uhhIThinkIsAboutTimeWhereDashShouldTell;
     public static boolean showDashCooldownMessage = false;
     
     // jump system
@@ -58,6 +56,28 @@ public class Player {
     private final float jumpOvalDuration = 0.3f;
     private float jumpOvalX = 0f, jumpOvalY = 0f;
     private float jumpOvalAlpha = 0f;
+    // Stab system
+    public boolean isStabbing;
+    private final float stabCooldownCap = 0.0f;
+    public float stabCurrentCooldown;
+    public final float stabDurationCap = 0.1f;
+    private float stabCurrentDuration;
+    private float stabXRange = 50.0f;
+    private float stabYRange = 20.0f;
+    private final boolean forefield = true;
+    public static boolean showStabCooldownMessage;
+    public boolean initializeStabVarables;
+
+    // Pray system
+    public static boolean startPrayTimer;
+    public static float prayTimer;
+    public static float StartingStrikeChance = 0.001f;
+    public static float strikeChance = StartingStrikeChance;
+    private boolean canStrike = false;
+    public static float heartsPerNTimer = 2.0f;  // 10 seconds = 1 heart
+    private boolean shouldntMove;
+    public static boolean renderPray;
+
 
 
     public Player(float x, float y) {
@@ -66,9 +86,14 @@ public class Player {
     }
 
     public void moveHoriz(int dir, boolean leftOrRight) {
-        if (!PlatformerModel.freezeTime) {
+        if (!PlatformerModel.freezeTime && !shouldntMove) {
             vx = dir * speed;
             isfaceingRight = leftOrRight;
+        }
+    }
+    public void fall() {
+        if (!PlatformerModel.freezeTime) {
+            shouldFall = 0.1f;
         }
     }
 
@@ -89,14 +114,47 @@ public class Player {
             dashEffectTimer = dashEffectDuration;
             dashEffectAlpha = dashCooldownTime;
             showDashEffect = true;
-            uhhIThinkIsAboutTimeWhereDashShouldTell = false;
-        } else if (!PlatformerModel.freezeTime && uhhIThinkIsAboutTimeWhereDashShouldTell) {
-            PlatformerModel.showDashCooldownMessage = true;
-            uhhIThinkIsAboutTimeWhereDashShouldTell = false;
+            invisibileFramCurrentTime = invisibileFramDurration;
+        } else if (!PlatformerModel.freezeTime) {
+            showDashCooldownMessage = true;
         }
     }
 
-
+    public void stab() {
+        if (this.stabCurrentCooldown <= 0.0f && !PlatformerModel.freezeTime) {
+            stabCurrentCooldown = stabCooldownCap;
+            stabCurrentDuration = stabDurationCap;
+            isStabbing = true;
+        }else if (!PlatformerModel.freezeTime) {
+            showStabCooldownMessage = true;
+        }
+    }
+    public void prayHold(){
+        if (!PlatformerModel.freezeTime) {
+            startPrayTimer = true;
+            shouldntMove = true;
+            renderPray = true;
+        }
+    }
+    public void prayRelease(){
+        if (!PlatformerModel.freezeTime) {
+            shouldntMove = false;
+            startPrayTimer = false;
+            renderPray = false;
+            if (canStrike) {
+                if ((Math.random() < strikeChance)) {
+                    strikeChance = StartingStrikeChance;
+                    loseLife((int) (prayTimer / heartsPerNTimer));
+                } else {
+                    gainLife((int) (prayTimer / heartsPerNTimer));
+                    strikeChance += Math.random() * difficulty.mobPerStar;
+                }
+            } else {
+                gainLife((int) (prayTimer / 1));
+            }
+            prayTimer = 0;
+        }
+    }
     public void jCharge() {
         if (!PlatformerModel.freezeTime) {
             enableAdditionalJump = (!onGround && numberOfJump < MAX_ADDITIONAL_JUMP);
@@ -128,69 +186,65 @@ public class Player {
         }
     }
 
-    public void fall() {
-        if (!PlatformerModel.freezeTime) {
-            y += -20;
-        }
-    }
+
 
     public void applyGravity(float dt) {
-        if (!PlatformerModel.freezeTime) {
+        if (!PlatformerModel.freezeTime && !shouldntMove) {
             vy -= 980 * dt;
         }
     }
 
-    // Stab system
-    public boolean isStabbing;
-    private final float stabCooldownCap = 1.0f;
-    public float stabCurrentCooldown;
-    public final float stabDurationCap = 0.1f;
-    private float stabCurrentDuration;
-    private final float stabRange = 50.0f;
 
-
-    public static boolean showStabCooldownMessage;
-    public void stab() {
-        if (this.stabCurrentCooldown <= 0.0f && !PlatformerModel.freezeTime) {
-            stabCurrentCooldown = stabCooldownCap;
-            stabCurrentDuration = stabDurationCap;
-            isStabbing = true;
-        }else {
-            showStabCooldownMessage = true;
-        }
-    }
     public void update(float dt, List<Platform> plats) {
         if (!PlatformerModel.freezeTime) {
             if (PlatformerModel.dashLevelWasBrought) {
                 jumpSpeed = (jumpSpeed + (PlatformerModel.dashLevel / 2) * 0.1f);
                 PlatformerModel.dashLevelWasBrought = false;
             }
-            x += vx * dt;
-            y += vy * dt;
-            stopdashTellSpam += 1;
-            onGround = false;
-            
-            if (stopdashTellSpam >= 10) {
-                stopdashTellSpam = 0;
-                uhhIThinkIsAboutTimeWhereDashShouldTell = true;
+            if (!shouldntMove) {
+                x += vx * dt;
+                y += vy * dt;
             }
-            
+            onGround = false;
+            fall = false;
+            if (y <= 20) {
+                y = 20;
+                onGround = true;
+                vy = 0;
+            }
+            vx = 0;
             if (x > worldWidth - 20) x = worldWidth - 20;
             if (x < 0) x = 0;
             if (y > worldHeight - 20) y = worldHeight - 20;
             if (y < 20) y = 20;
-            
-            for (Platform p : plats) {
-                if (p.x - 20 < x && x < p.x + p.w && p.y + p.h - 5 < y && y < p.y + p.h + 5) {
-                    if (vy <= -1) {
-                        y = p.y + p.h;
-                        onGround = true;
-                        numberOfJump = 0;
-                        vy = 0;
-                    }
+            if(forefield && !initializeStabVarables){
+                stabYRange *= 2;
+                stabXRange *= 2;
+                initializeStabVarables = true;
+            }
+                //Clocks/Timers
+            if (showAdditionalJumpOval) {
+                jumpOvalTimer += dt;
+                if (jumpOvalTimer <= 0.2f) {
+                    jumpOvalAlpha = jumpOvalTimer / 0.2f;
+                } else if (jumpOvalTimer <= 1.0f) {
+                    jumpOvalAlpha = 1f - (jumpOvalTimer - 0.2f) / 0.8f;
+                } else {
+                    showAdditionalJumpOval = false;
+                    jumpOvalAlpha = 0f;
+                    jumpOvalTimer = 0f;
                 }
             }
-            
+            if (showDashEffect) {
+                dashEffectTimer -= dt;
+                if (dashEffectTimer <= 0) {
+                    showDashEffect = false;
+                    dashEffectTimer = 0;
+                    dashEffectAlpha = 0;
+                } else {
+                    dashEffectAlpha = dashEffectTimer / dashEffectDuration;
+                }
+            }
             if (dashCurrentTime > 0.0f) {
                 dashCurrentTime -= 1.0f * dt;
                 if (dashCurrentTime < 0.0f) dashCurrentTime = 0.0f;
@@ -209,40 +263,35 @@ public class Player {
                     stabCurrentCooldown = 0.0f;
                 }
             }
-           // if (stabCurrentTime <= 0) isStabbing = false;
-
-
-            if (showAdditionalJumpOval) {
-                jumpOvalTimer += dt;
-                if (jumpOvalTimer <= 0.2f) {
-                    jumpOvalAlpha = jumpOvalTimer / 0.2f;
-                } else if (jumpOvalTimer <= 1.0f) {
-                    jumpOvalAlpha = 1f - (jumpOvalTimer - 0.2f) / 0.8f;
-                } else {
-                    showAdditionalJumpOval = false;
-                    jumpOvalAlpha = 0f;
-                    jumpOvalTimer = 0f;
+            if (shouldFall > 0.0f) { // countdown
+                shouldFall -= 1.0f * dt;
+                fall = true;
+                if (shouldFall <= 0.0f) {
+                    shouldFall = 0.0f;
+                    fall = false;
                 }
             }
-            
-            if (showDashEffect) {
-                dashEffectTimer -= dt;
-                if (dashEffectTimer <= 0) {
-                    showDashEffect = false;
-                    dashEffectTimer = 0;
-                    dashEffectAlpha = 0;
-                } else {
-                    dashEffectAlpha = dashEffectTimer / dashEffectDuration;
+            if (invisibileFramCurrentTime > 0.0f) { // countdown
+                invisibileFramCurrentTime -= 1.0f * dt;
+                isInvisibile = true;
+                if (invisibileFramCurrentTime <= 0.0f) {
+                    invisibileFramCurrentTime = 0.0f;
+                    isInvisibile = false;
                 }
             }
-            
-            if (y <= 20) {
-                y = 20;
-                onGround = true;
-                vy = 0;
+            if (startPrayTimer) { // countUp
+                prayTimer += 1.0f * dt;
             }
-            
-            vx = 0;
+            for (Platform p : plats) {
+                if (p.x - 20 < x && x < p.x + p.w && p.y + p.h - 5 < y && y < p.y + p.h + 5 && !fall) {
+                    if (vy <= -1) {
+                        y = p.y + p.h;
+                        onGround = true;
+                        numberOfJump = 0;
+                        vy = 0;
+                    }
+                }
+            }
         }
     }
 
@@ -260,19 +309,23 @@ public class Player {
             double my = m.y;
             double ms = m.size;
             double stabX, stabWidth;
-
+            if (forefield){
+                stabX = x - 10;
+                double stabY = y - (onGround ? 0 : 10);
+                stabWidth  = 40;
+                return stabX < mx + ms && stabX + stabWidth > mx && stabY < my + ms && stabY + stabYRange > my;
+            }
             if (isfaceingRight) {
                 stabX = x + 20;
-                stabWidth = stabRange;
+                stabWidth = stabXRange;
             } else {
-                stabX = x - stabRange;
-                stabWidth = stabRange;
+                stabX = x - stabXRange;
+                stabWidth = stabXRange;
             }
 
             double stabY = y;
-            double stabHeight = 20;
 
-            return stabX < mx + ms && stabX + stabWidth > mx && stabY < my + ms && stabY + stabHeight > my;
+            return stabX < mx + ms && stabX + stabWidth > mx && stabY < my + ms && stabY + stabYRange > my;
         }
         return false;
     }
@@ -333,28 +386,49 @@ public class Player {
     }
 
     public void renderStabEffect() {
-        if (isStabbing) {
+        if (isStabbing && !forefield) {
             glPushMatrix();
             glTranslatef(x, y, 0);
 
             glBegin(GL_QUADS);
-            glColor4f(0.5f, 0.5f, 0.5f, 0.5f);
+            glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
             if (isfaceingRight) {
                 // Rectangle extending to the right
                 glVertex2f(0, 0);
-                glVertex2f(0, 20);
-                glVertex2f(stabRange + 20, 20);
-                glVertex2f(stabRange + 20, 0);
+                glVertex2f(0, stabYRange);
+                glVertex2f(stabXRange + 20, stabYRange);
+                glVertex2f(stabXRange + 20, 0);
             } else {
                 // Rectangle extending to the left
                 glVertex2f(0, 0);
-                glVertex2f(0, 20);
-                glVertex2f(-stabRange, 20);
-                glVertex2f(-stabRange, 0);
+                glVertex2f(0, stabYRange);
+                glVertex2f(-stabXRange, stabYRange);
+                glVertex2f(-stabXRange, 0);
             }
 
             glEnd();
             glPopMatrix();
+        } else if (isStabbing){
+            glPushMatrix();
+            glTranslatef(x, y, 0);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
+            glBegin(GL_QUADS);
+            if (onGround){
+                glVertex2f(-10, 0);
+                glVertex2f(-10,  30);
+                glVertex2f( 30,  30);
+                glVertex2f( 30, 0);
+            } else {
+                glVertex2f(-10, -10);
+                glVertex2f(-10,  30);
+                glVertex2f( 30,  30);
+                glVertex2f( 30, -10);
+            }
+            glEnd();
+            glPopMatrix();
+
         }
     }
     public void render() {

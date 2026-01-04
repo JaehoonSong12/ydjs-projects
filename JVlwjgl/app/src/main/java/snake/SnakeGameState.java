@@ -4,6 +4,8 @@ import dev.lwjgl.ui.components.*;
 import dev.lwjgl.ui.components.controls.UIButton;
 import dev.lwjgl.UIWindow;
 
+import java.awt.*;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -129,12 +131,16 @@ public class SnakeGameState {
         double winW = window.getWinW();
         double winH = window.getWinH();
         int n = 5;
-//        UIRectangle rectangle = new UIRectangle(winW / 2, winH * 3/4, 20, 10);
-//        rootView.add(rectangle);
+
+        UIRectangle rectangle = new UIRectangle(winW / 2, winH * 3/4, 200, 100);
+        rootView.add(rectangle);
+        rectangle.setGlowing(true);   //  correct
+
 
         UIPolygon polygon = new UIPolygon(n, winW / 2 - 100 , winH * 4/5, 30, 0);
         //polygon.setGrowing(true);
         polygon.setRotating(true);
+        polygon.setGlowing(true);
         rootView.add(polygon);
 
 

@@ -33,5 +33,20 @@ public class GameCamera {
     public void end() {
         camera.end();
     }
+    
+    /**
+     * Converts world x coordinate to screen x coordinate.
+     */
+    public float worldToScreenX(float worldX) {
+        return worldX - camera.getX();
+    }
+    
+    /**
+     * Converts world y coordinate to screen y coordinate.
+     * (Y is already in screen space in this game)
+     */
+    public float worldToScreenY(float worldY) {
+        return worldY;
+    }
 }
 
