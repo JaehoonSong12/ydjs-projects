@@ -1,10 +1,7 @@
 package snake;
 
-import dev.lwjgl.ui.components.UILabel;
-import dev.lwjgl.ui.components.UIPolygon;
-import dev.lwjgl.ui.components.UIStar;
+import dev.lwjgl.ui.components.*;
 import dev.lwjgl.ui.components.controls.UIButton;
-import dev.lwjgl.ui.components.UIContainer;
 import dev.lwjgl.UIWindow;
 
 import java.awt.*;

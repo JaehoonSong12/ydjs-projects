@@ -69,7 +69,7 @@ public class PlatformerModel {
         }
     }
 
-    private final Difficulty difficulty = Difficulty.HARD;
+    public static Difficulty difficulty = Difficulty.HARD;
     private final float mapCenterX = WORLD_WIDTH / 2.0f;
     private final float mapCenterY = WORLD_HEIGHT / 2.0f;
     private final float pctWidth = WORLD_WIDTH * 0.8f;
@@ -464,7 +464,7 @@ public class PlatformerModel {
     }
 
     public static void addPrayPolygon(int sides, float x, float y, float size, float rotation) {
-        addPrayPolygon(sides, x, y, size, rotation, Player.heartsPerNTimer);
+        addPrayPolygon(sides, x + 10, y + 10, size, rotation, Player.heartsPerNTimer);
     }
 
     public static void addPrayPolygon(int sides, float x, float y, float size, float rotation, float glowSpeed) {
