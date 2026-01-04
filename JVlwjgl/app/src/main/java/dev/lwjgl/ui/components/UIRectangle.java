@@ -120,7 +120,7 @@ public class UIRectangle extends UIComponent {
         float brightness = 1.0f;
         if (coreBrightnessPulse) {
             float coreTime = (float) (System.nanoTime() * pulseSpeed);
-            float pulse = (float) (Math.sin(coreTime) * 0.5 + 0.5); // 0 → 1 → 0
+            float pulse = (float) (Math.sin(coreTime) * 0.5 + 0.5); // 0  1  0
             brightness = 1.0f + (float)(pulseAmount * pulse);
         }
 

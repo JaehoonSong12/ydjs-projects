@@ -8,6 +8,7 @@ public class ShopSystem {
     private boolean submitKeyPreviouslyDown = false;
     private boolean key1PreviouslyDown = false;
     private boolean key2PreviouslyDown = false;
+    private boolean isDelay = true;
     private boolean shopOpenMovedisabldNoifcation = false;
     
     private int dashLevelPrice = 5;
@@ -20,7 +21,9 @@ public class ShopSystem {
 
     public void toggleShop() {
         shopOpened = !shopOpened;
-        if (!shopOpened) {
+        if (shopOpened) {
+            isDelay = true;
+        } else {
             shopOpenMovedisabldNoifcation = false;
         }
     }
@@ -49,7 +52,13 @@ public class ShopSystem {
         key2PreviouslyDown = value;
     }
 
+    public boolean isDelay() {
+        return isDelay;
+    }
 
+    public void setDelay(boolean value) {
+        isDelay = value;
+    }
 
     public boolean isShopOpenMovedisabldNoifcation() {
         return shopOpenMovedisabldNoifcation;
