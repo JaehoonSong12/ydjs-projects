@@ -20,33 +20,6 @@ public class UIRectangle extends UIComponent {
         if (shrinking) shrinkScale = 1.0;
     }
 
-    // ---------- GLOW ----------
-    private boolean isGlowing = false;
-    private double glowSpeed = 0.000000002;
-    private float glowMin = 0.08f;
-    private float glowMax = 0.12f;
-
-    private Integer maxGlowPulses = null; // null = unlimited
-    private int glowCounter = 0;
-
-    // Core brightness pulse
-    private boolean coreBrightnessPulse = false;
-    private double pulseAmount = 0.3;     // how much brighter (0.3 = 30%)
-    private double pulseSpeed = 0.000000005;
-
-    public void setGlowing(boolean glowing) {
-        this.isGlowing = glowing;
-        if (glowing) glowCounter = 0;
-    }
-
-    public void setMaxGlowPulses(Integer maxPulses) {
-        this.maxGlowPulses = maxPulses;
-        glowCounter = 0;
-    }
-
-    public void setCoreBrightnessPulse(boolean pulse) {
-        this.coreBrightnessPulse = pulse;
-    }
 
     // ---------- CONSTRUCTORS ----------
     public UIRectangle(double x, double y, double w, double h) {
@@ -84,8 +57,7 @@ public class UIRectangle extends UIComponent {
             glEnable(GL_BLEND);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
-            float time = (float) (System.nanoTime() * glowSpeed);
-            float pulse = (float) (Math.sin(time) * 0.5 + 0.5);
+            float pulse = calculateGlowPulse();
 
             double centerX = x + baseW / 2.0;
             double centerY = y + baseH / 2.0;
@@ -109,22 +81,15 @@ public class UIRectangle extends UIComponent {
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-            if (pulse > 0.95f) glowCounter++;
-            if (maxGlowPulses != null && glowCounter >= maxGlowPulses) isGlowing = false;
+            updateGlowState(pulse);
         }
 
         // ---------- CORE RECTANGLE ----------
         double finalW = drawW;
         double finalH = drawH;
 
-        float brightness = 1.0f;
-        if (coreBrightnessPulse) {
-            float coreTime = (float) (System.nanoTime() * pulseSpeed);
-            float pulse = (float) (Math.sin(coreTime) * 0.5 + 0.5); // 0  1  0
-            brightness = 1.0f + (float)(pulseAmount * pulse);
-        }
-
-        glColor3f(color[0]* brightness, color[1]* brightness, color[2]* brightness);
+        float brightness = calculateCoreBrightness();
+        glColor3f(color[0] * brightness, color[1] * brightness, color[2] * brightness);
 
 
         renderRect(

@@ -24,12 +24,6 @@ public class UIPolygon extends UIComponent {
         this.isGrowing = isGrowing;
     }
 
-    // ---------- GLOW (NEW) ----------
-    boolean isGlowing = false; // default OFF
-
-    public void setGlowing(boolean isGlowing) {
-        this.isGlowing = isGlowing;
-    }
 
     // ---------- POLYGON DATA ----------
     int n;
@@ -37,7 +31,6 @@ public class UIPolygon extends UIComponent {
     public double yCenter;
     double radius;
     double rotationalAngle;
-    public static float time = (float) (System.nanoTime() * 0.000000002);
 
     public UIPolygon(int n, double xCenter, double yCenter, double radius, double rotationalAngle) {
         this(n, xCenter, yCenter, radius, rotationalAngle, Colors.DARK_RED);
@@ -88,15 +81,11 @@ public class UIPolygon extends UIComponent {
             int layers = 8;
             double glowPercent = 0.4; // 40% of radius
 
-            float min = 0.02f;
-            float max = 0.12f;
-
-            // Update time every frame for pulse animation
-            float pulse = (float) (Math.sin(time) * 0.5 + 0.5);
+            float pulse = calculateGlowPulse();
 
             for (int i = layers; i >= 1; i--) {
                 float t = i / (float) layers;
-                float alpha = (min + (max - min) * pulse) * t * t;
+                float alpha = (glowMin + (glowMax - glowMin) * pulse) * t * t;
 
                 glColor4f(
                         color[0],
@@ -116,8 +105,7 @@ public class UIPolygon extends UIComponent {
             }
 
             // ---------- CORE POLYGON ----------
-            float maxBoost = 1.25f;
-            float brightness = 1.0f + (maxBoost - 1.0f) * pulse;
+            float brightness = calculateCoreBrightness();
 
             glColor4f(
                     color[0] * brightness,
@@ -135,9 +123,11 @@ public class UIPolygon extends UIComponent {
             );
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            updateGlowState(pulse);
         } else {
-            //  THIS IS THE MISSING PART
-            glColor4f(color[0], color[1], color[2], 1.0f);
+            //  NO GLOW
+            float brightness = calculateCoreBrightness();
+            glColor4f(color[0] * brightness, color[1] * brightness, color[2] * brightness, 1.0f);
             renderPolygon(
                     this.n,
                     this.xCenter,

@@ -137,16 +137,17 @@ public class SnakeGameState {
         rectangle.setGlowing(true);   //  correct
 
 
-        UIPolygon polygon = new UIPolygon(n, winW / 2 - 100 , winH * 4/5, 30, 0);
-        polygon.setGrowing(true);
+        UIPolygon polygon = new UIPolygon(n, winW / 2 - 100 , winH * 4/5, 100, 0);
+//        polygon.setGrowing(true);
         polygon.setRotating(true);
         polygon.setGlowing(true);
         rootView.add(polygon);
 
 
-        UIStar star = new UIStar(n, winW / 2 + 100, winH * 4/5, 30, 0);
-        star.setGrowing(true);
-        star.setRotating(true);
+        UIStar star = new UIStar(n, winW / 2 + 100, winH * 1/5, 100, 0);
+//        star.setGrowing(true);
+        star.setGlowing(true);
+//        star.setRotating(true);
         rootView.add(star);
 
         UILabel motif = new UILabel("abcdefghijklmnopqrstuvwxyz", 0, winH * 0.25, 4);

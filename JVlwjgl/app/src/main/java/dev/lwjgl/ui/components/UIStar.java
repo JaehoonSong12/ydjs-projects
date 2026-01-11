@@ -2,44 +2,55 @@ package dev.lwjgl.ui.components;
 
 import dev.lwjgl.ui.Colors;
 
-public class UIStar  extends UIComponent {
+import static org.lwjgl.opengl.GL11.*;
+
+public class UIStar extends UIComponent {
 
     private float[] color;
 
-
-
+    // ---------- ROTATION ----------
     int rotationCounter;
     boolean isRotating;
+
     public void setRotating(boolean isRotating) {
         this.isRotating = isRotating;
         this.rotationCounter = 0;
     }
 
-
+    // ---------- GROW ----------
     boolean isGrowing;
 
     public void setGrowing(boolean isGrowing) {
         this.isGrowing = isGrowing;
     }
 
+
+    // ---------- STAR DATA ----------
     int n;
-    double xCenter;
-    double yCenter;
+    public double xCenter;
+    public double yCenter;
     double radius;
     double rotationalAngle;
 
-
-    public UIStar(int n, double xCenter, double yCenter, double radius, double rotationalAngle) { // x,y are centers
-//        double side = Math.sqrt(2) * radius;
+    public UIStar(int n, double xCenter, double yCenter, double radius, double rotationalAngle) {
         this(n, xCenter, yCenter, radius, rotationalAngle, Colors.DARK_RED);
     }
 
-    public UIStar(int n, double xCenter, double yCenter, double radius, double rotationalAngle, float[] color) {
+    public UIStar(
+            int n,
+            double xCenter,
+            double yCenter,
+            double radius,
+            double rotationalAngle,
+            float[] color
+    ) {
         super(
-                xCenter - radius/Math.sqrt(2), yCenter- radius/Math.sqrt(2),
+                xCenter - radius / Math.sqrt(2),
+                yCenter - radius / Math.sqrt(2),
                 Math.sqrt(2) * radius,
                 Math.sqrt(2) * radius
         );
+
         this.n = n;
         this.xCenter = xCenter;
         this.yCenter = yCenter;
@@ -48,22 +59,44 @@ public class UIStar  extends UIComponent {
         this.color = color;
     }
 
-    @Override public void render() {
-        Colors.setColor(this.color);
+    @Override
+    public void render() {
         double angleInDegree = this.rotationalAngle;
-        if (this.isRotating) {
-            angleInDegree += (1.0) * this.rotationCounter;
-            this.rotationCounter++;
+
+        if (isRotating) {
+            angleInDegree += rotationCounter;
+            rotationCounter++;
         }
-        if (this.isGrowing) {
-            if (this.radius < 3000) this.radius++;
+
+        if (isGrowing && radius < 3000) {
+            radius++;
         }
-        renderStar(
-                this.n,
-                this.xCenter,
-                this.yCenter,
-                this.radius,
-                angleInDegree
-        );
+
+        if (isGlowing) { // glow variables live in parent
+            int layers = 8;
+            double glowPercent = 0.4;
+
+            for (int i = layers; i >= 1; i--) {
+                float rawPulse = calculateGlowPulse();      // from parent
+                float pulse = shapePulse(rawPulse);         // from parent
+                float alpha = glowMin + (glowMax - glowMin) * pulse; // from parent
+
+                glColor4f(color[0], color[1], color[2], alpha);
+                renderStar(n, xCenter, yCenter,
+                        radius + radius * glowPercent * i / layers,
+                        angleInDegree);
+            }
+
+            float brightness = calculateCoreBrightness(); // from parent
+            glColor4f(color[0] * brightness, color[1] * brightness, color[2] * brightness, 1f);
+            renderStar(n, xCenter, yCenter, radius, angleInDegree);
+
+            float pulse = calculateGlowPulse();
+            updateGlowState(pulse); // from parent
+        } else {
+            float brightness = calculateCoreBrightness(); // from parent
+            glColor4f(color[0] * brightness, color[1] * brightness, color[2] * brightness, 1f);
+            renderStar(n, xCenter, yCenter, radius, angleInDegree);
+        }
     }
 }

@@ -84,7 +84,7 @@ public class PlatformerModel {
     private final float pctHeight = WORLD_HEIGHT * 0.8f;
 
     // Spawn areas
-    private final float[] starRectSpawnArea = {50,20,0,0};
+    private final float[] starRectSpawnArea = {mapCenterX, mapCenterY, pctWidth, pctHeight};
     private final float[] mobsRectsSpanArea = {mapCenterX, mapCenterY, pctWidth, pctHeight};
 
     // Game entities
@@ -460,8 +460,8 @@ public class PlatformerModel {
             float screenY = camera.worldToScreenY(player.y);
             
             // Create polygons centered on player
-            addPrayPolygon(5, screenX + 10, screenY + 10, 30, 0);
-            addPrayPolygon(5, screenX + 10, screenY + 10, 30, 180);
+            addPrayPolygon(5, screenX + 10, screenY + 10, 50, 0);
+            addPrayPolygon(5, screenX + 10, screenY + 10, 50, 180);
         } else {
             // Update existing polygon positions to follow player
             float screenX = camera.worldToScreenX(player.x);
