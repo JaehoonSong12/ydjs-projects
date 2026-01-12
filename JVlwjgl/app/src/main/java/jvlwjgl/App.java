@@ -18,9 +18,8 @@ public class App {
 
 
 
-        //Game.main(args);
         // ClickButtonApp.main(args);
-        // SnakeGame.main(args);
+//        snake.SnakeGame.main(args);
         PlatformerGame.main(args);
 
         

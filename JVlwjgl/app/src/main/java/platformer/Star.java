@@ -1,24 +1,34 @@
 package platformer;
 
-import static org.lwjgl.opengl.GL11.glColor3f;
-
-import dev.lwjgl.ShapeRenderer;
+import dev.lwjgl.ui.components.UIStar;
+import dev.lwjgl.ui.Colors;
 
 /**
  * Collectible star entity.
- * Uses framework ShapeRenderer for rendering.
+ * Uses UIStar for rendering with glow effects.
  */
 public class Star {
     public float x, y;
+    private UIStar star;
     
     public Star(float x, float y) {
         this.x = x;
         this.y = y;
+        // Create a 5-pointed star with yellow color and glow effect
+        this.star = new UIStar(5, x, y, 100, 90, Colors.YELLOW);
+        this.star.setGlowing(true);
+        this.star.setRotating(true);
     }
     
     public void render() {
-        glColor3f(1, 1, 0);
-        ShapeRenderer.renderTriangle(x, y, x + 10, y, x + 5, y + 15);
+        star.render();
+    }
+    
+    public void updatePosition(float newX, float newY) {
+        this.x = newX;
+        this.y = newY;
+        this.star.xCenter = newX;
+        this.star.yCenter = newY;
     }
 }
 

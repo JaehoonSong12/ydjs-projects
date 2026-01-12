@@ -1,9 +1,16 @@
 package dev.lwjgl.ui.components;
 
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_ONE;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_POLYGON;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2d;
 import static org.lwjgl.opengl.GL11.glVertex2f;
@@ -32,6 +39,69 @@ public abstract class UIComponent {
     public boolean isEnabled() { return this.enabled; }
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
     
+    // ---------- GLOW ----------
+    protected boolean isGlowing = false;
+    protected double glowSpeed = 0.000000005;  // Speed of pulse animation (unchanged)
+    protected float glowMin = 0.05f; // minimum alpha value - closer to max for smaller increments
+    protected float glowMax = 0.08f; // maximum alpha value - closer to min for smaller increments
+    
+    protected Integer maxGlowPulses = null; // null = unlimited ????? max number of pulses
+    protected int glowCounter = 0; // count the number of pulses
+    
+    // Core brightness pulse
+    protected boolean coreBrightnessPulse = false; // if true, the core brightness will pulse
+    protected double pulseAmount = 0.15;     // how much brighter (0.3 = 30%) ????? how much brighter
+    protected double pulseSpeed = 0.00000001;  // Slower for smoother, more gradual brightness changes ????? time between pulses
+
+    public void setGlowing(boolean glowing) {
+        this.isGlowing = glowing;
+        if (glowing) glowCounter = 0;
+    }
+
+    public void setMaxGlowPulses(Integer maxPulses) {
+        this.maxGlowPulses = maxPulses;
+        glowCounter = 0;
+    }
+
+    public void setCoreBrightnessPulse(boolean pulse) {
+        this.coreBrightnessPulse = pulse;
+    }
+
+    /**
+     * Calculates the glow pulse value (0.0 to 1.0) based on current time.
+     * @return Pulse value between 0.0 and 1.0
+     */
+    protected float calculateGlowPulse() {
+        float time = (float) (System.nanoTime() * glowSpeed);
+        return (float) (Math.sin(time) * 0.5 + 0.5);
+    }
+    protected float shapePulse(float pulse) {
+        float exponent = 4.8f; // increase for more visible steps
+        return (float) Math.pow(pulse, exponent);
+    }
+
+    /**
+     * Calculates the core brightness multiplier based on coreBrightnessPulse setting.
+     * @return Brightness multiplier (1.0f if pulse is disabled, otherwise varies)
+     */
+    protected float calculateCoreBrightness() {
+        if (!coreBrightnessPulse) {
+            return 1.0f;
+        }
+        float coreTime = (float) (System.nanoTime() * pulseSpeed);
+        float pulse = (float) (Math.sin(coreTime) * 0.5 + 0.5); // 0  1  0
+        return 1.0f + (float)(pulseAmount * pulse);
+    }
+
+    /**
+     * Updates glow state based on pulse. Should be called by children after rendering glow.
+     * @param pulse The current pulse value (0.0 to 1.0)
+     */
+    protected void updateGlowState(float pulse) {
+        if (pulse > 0.95f) glowCounter++;
+        if (maxGlowPulses != null && glowCounter >= maxGlowPulses) isGlowing = false;
+    }
+
 
     /**
      * Constructs a new UIComponent with its position and size.
