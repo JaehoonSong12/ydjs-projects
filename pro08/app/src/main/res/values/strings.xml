@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">rfhnfn</string>
-    <string name="btn_name">This is button</string>
-    <string name="text_name">Welcome!</string>
-    <string name="text_hint">Enter your name</string>
-    <string name="af_text_name">Hello Jayden!</string>
-    <string name="black_elon_name">Black elon</string>
-    <string name="text_view_empty">Enter your name</string>
-</resources>

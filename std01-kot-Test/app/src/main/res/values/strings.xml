@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">Test</string>
-    <string name="input_box">Enter Todo Title</string>
-    <string name="input_add_button">Add Todo</string>
-    <string name="input_delete_button">Delete Todo</string>
-    <string name="yes_this">Example</string>
-</resources>
