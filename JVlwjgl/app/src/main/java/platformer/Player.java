@@ -207,7 +207,7 @@ public class Player {
             }
             onGround = false;
             fall = false;
-            if (y <= 20) {
+            if (y <= 25) {
                 y = 20;
                 onGround = true;
                 vy = 0;
@@ -296,7 +296,7 @@ public class Player {
     }
 
     public boolean playerCollidesWithStar(Star s) {
-        return Math.hypot((x + 10) - s.x, (y + 10) - s.y) < 15;
+        return Math.hypot((x + 10) - s.x, (y + 10) - s.y) < Star.starSize;
     }
 
     public boolean playerCollidesWithMob(MobA m) {
@@ -332,7 +332,7 @@ public class Player {
 
     public boolean isStarInDashTriangle(Star s) {
         if (!showDashEffect) return false;
-        return Math.abs((isfaceingRight ? x - 200 : x + 200) - s.x) <= 201 && Math.abs((y + 10) - s.y) < 15;
+        return Math.abs((isfaceingRight ? x - 200 : x + 200) - s.x) <= 201 && Math.abs((y + 10) - s.y) < Star.starSize;
     }
 
     public float getDashCooldown() {

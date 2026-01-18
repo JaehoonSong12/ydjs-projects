@@ -10,12 +10,12 @@ import dev.lwjgl.ui.Colors;
 public class Star {
     public float x, y;
     private UIStar star;
-    
+    public static int starSize = 20;
     public Star(float x, float y) {
         this.x = x;
         this.y = y;
         // Create a 5-pointed star with yellow color and glow effect
-        this.star = new UIStar(5, x, y, 100, 90, Colors.YELLOW);
+        this.star = new UIStar(5, x, y, starSize/2, 90, Colors.YELLOW);
         this.star.setGlowing(true);
         this.star.setRotating(true);
     }
