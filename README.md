@@ -43,9 +43,24 @@ This command creates a "portable" folder containing the game executable and a bu
 3.  **Shadow Jar**: Bundles all code and dependencies into `app/build/libs/app-all.jar`.
 4.  **JPackage**: Uses the JDK's `jpackage` tool to wrap the Jar and a custom JRE into a standalone executable folder.
 
+### 2. Building a Debian Package (Linux / Chromebook)
+
+To create a `.deb` installer (ideal for Debian, Ubuntu, and Chromebook/ChromeOS Linux):
+
+```bash
+./gradlew clean jpackage -PjpackageType=deb
+```
+
+*   **Output Location**: `app/build/dist/`
+*   **Requirements**: Requires `dpkg-deb` and `fakeroot` (standard on Debian/Ubuntu).
+*   **Custom Version**: You can specify the version:
+    ```bash
+    ./gradlew clean jpackage -PjpackageType=deb -PappVersion=1.0.1
+    ```
+
 ---
 
-### 2. Running from Source (Development)
+### 3. Running from Source (Development)
 
 To quickly compile and run the game without packaging:
 

@@ -84,16 +84,28 @@ tasks.register<Exec>("jpackage") {
     val jarName = "app-all.jar"
 
     // [Execution] Run the jpackage command
-    commandLine(
+    val packageType = if (project.hasProperty("jpackageType")) project.property("jpackageType") as String else "app-image"
+    val appVersion = if (project.hasProperty("appVersion")) project.property("appVersion") as String else "1.0.0"
+    
+    val args = mutableListOf(
         jpackageTool,
-        "--type", "app-image",          // Create directory structure (portable)
+        "--type", packageType,          // Create directory structure (portable) or specific package
         "--dest", outputDir,
         "--input", inputDir,
         "--main-jar", jarName,
         "--main-class", "jvlwjgl.App",
-        "--name", "platformer"
-        // "--win-console"              // Windows only: Keep console open
+        "--name", "platformer",
+        "--app-version", appVersion
     )
+
+    // if (packageType == "deb") {
+    //     val maintainer = if (project.hasProperty("linuxDebMaintainer")) project.property("linuxDebMaintainer") as String else "JaehoonSong12 <jaehoonsong12@github.com>"
+    //     args.add("--linux-deb-maintainer")
+    //     args.add(maintainer)
+    //     args.add("--linux-shortcut")
+    // }
+
+    commandLine(args)
 
     // [Pre-Clean] specific to this task
     doFirst {
