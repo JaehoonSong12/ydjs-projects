@@ -53,10 +53,12 @@ public class PlatformerModel {
     }
 
     // Game state
-    public static long gameTime = 0;
+    public static long gameTime;
+    public static long secondGameTime;
     public static boolean freezeTime = false;
     public static float dashLevel = 1.0f;
     public static boolean dashLevelWasBrought = false;
+    public static int gameState;
 
     // Difficulty
     public enum Difficulty {
@@ -72,7 +74,7 @@ public class PlatformerModel {
         }
     }
 
-    public static final Difficulty difficulty = Difficulty.EASY;
+    public static final Difficulty difficulty = Difficulty.IMPOSSIBLE;
     private int totalMobsA = 0;
     private int pastScore = 0;
     private double mobsThatIsLeftover = 0;
@@ -84,7 +86,7 @@ public class PlatformerModel {
     private final float pctHeight = WORLD_HEIGHT * 0.8f;
 
     // Spawn areas
-    private final float[] starRectSpawnArea = {mapCenterX, mapCenterY, pctWidth, pctHeight};
+    private final float[] starRectSpawnArea = {20,20,0,0};
     private final float[] mobsRectsSpanArea = {mapCenterX, mapCenterY, pctWidth, pctHeight};
 
     // Game entities
@@ -159,7 +161,6 @@ public class PlatformerModel {
         showMessage("CHARATER SKILL = " + keyManager.getKeys().get(4));
         if (!isInitial) return;
         showMessage("Press Enter For Shop");
-        return;
     }
 
     private void initialize() {
@@ -177,7 +178,10 @@ public class PlatformerModel {
 
     public void update(float dt) {
         gameTime++;
-
+        if(gameTime == Long.MAX_VALUE){
+            gameTime = 0;
+            secondGameTime++;
+        }
         // Clear shop delay after first frame when shop is open
         if (shopSystem.isShopOpened() && shopSystem.isDelay()) {
             shopSystem.setDelay(false);
@@ -244,11 +248,7 @@ public class PlatformerModel {
             showMessage("Stab is on cooldown! Wait for " + String.format("%.1f", player.stabCurrentCooldown) + " seconds.");
             Player.showStabCooldownMessage = false;
         }
-       if (Player.renderPray) {
-            updatePrayPolygons();
-       } else {
-           polygons.clear();
-       }
+        updatePolygons();
     }
 
     // Input handling is now done in PlatformerGameState
@@ -390,7 +390,7 @@ public class PlatformerModel {
         // Render pray polygons
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        renderPrayPolygons();
+        renderPolygons();
         glDisable(GL_BLEND);
 
         // Score
@@ -452,35 +452,82 @@ public class PlatformerModel {
     /**
      * Updates pray polygons every frame to stay centered on the player.
      */
-    private void updatePrayPolygons() {
+    private void updatePolygons() {
         // Create polygons once when they're needed
-        if (polygons.isEmpty()) {
-            // Convert player world position to screen position
-            float screenX = camera.worldToScreenX(player.x);
-            float screenY = camera.worldToScreenY(player.y);
-            
-            // Create polygons centered on player
-            addPrayPolygon(5, screenX + 10, screenY + 10, 50, 0);
-            addPrayPolygon(5, screenX + 10, screenY + 10, 50, 180);
-        } else {
-            // Update existing polygon positions to follow player
-            float screenX = camera.worldToScreenX(player.x);
-            float screenY = camera.worldToScreenY(player.y);
-            
-            for (UIPolygon p : polygons) {
-                p.xCenter = screenX;
-                p.yCenter = screenY;
+        if (Player.renderPray) {
+            if (!polygons.stream().anyMatch(p -> "prayPolygon".equals(p.getName()))) {
+                // Convert player world position to screen position
+                float screenX = camera.worldToScreenX(player.x + 10);
+                float screenY = camera.worldToScreenY(player.y + 10);
+
+                // Create polygons centered on player
+                addPolygon("prayPolygon", "null",5, screenX + 10, screenY + 10, 50, 0, true, true, 1);
+                addPolygon("prayPolygon", "null",5, screenX + 10, screenY + 10, 50, 180, true, true, 1);
+
+            } else {
+                // Update existing polygon positions to follow player
+                float screenX = camera.worldToScreenX(player.x + 10);
+                float screenY = camera.worldToScreenY(player.y + 10);
+
+                for (UIPolygon p : polygons) {
+                    p.xCenter = screenX;
+                    p.yCenter = screenY;
+                }
             }
+        } else {
+            polygons.removeIf(p -> "prayPolygon".equals(p.getName()));
+        }
+        if (Player.windBurst) {
+            if (!polygons.stream().anyMatch(p -> "WindBurst".equals(p.getName()))) {
+                addPolygon("WindBurst", "yellow", 100, Player.x, Player.y, Player.windBurstSize, 0, false, false, 0.5f);
+            } else {
+                // Update existing polygon positions to follow player
+                float screenX = camera.worldToScreenX(player.x + 10);
+                float screenY = camera.worldToScreenY(player.y + 10);
+
+                for (UIPolygon p : polygons) {
+                    p.xCenter = screenX;
+                    p.yCenter = screenY;
+                }
+            }
+        } else {
+            polygons.removeIf(p -> "WindBurst".equals(p.getName()));
         }
     }
 
-    public static void addPrayPolygon(int sides, float x, float y, float size, float rotation) {
-        UIPolygon polygon = new UIPolygon(sides, x, y, size, rotation);
-        polygon.setRotating(true);
-        polygon.setGlowing(true);
+    public static void addPolygon(
+            String name,
+            String colorName,
+            int sides,
+            float x,
+            float y,
+            float size,
+            float rotation,
+            boolean isRotating,
+            boolean isGlowing,
+            float alpha
+    ) {
+        // Convert color string to float[]
+        float[] color = Colors.getColorByName(colorName);
+
+        UIPolygon polygon;
+
+        if (color == null) {
+            // default color if null
+            polygon = new UIPolygon(name, sides, x + 10, y + 10, size, rotation, alpha);
+        } else {
+            polygon = new UIPolygon(name, sides, x + 10, y + 10, size, rotation, color, alpha);
+        }
+
+        // Set effects
+        if (isRotating) polygon.setRotating(true);
+        if (isGlowing) polygon.setGlowing(true);
+
+        // Add to list
         polygons.add(polygon);
     }
-    private void renderPrayPolygons() {
+
+    private void renderPolygons() {
         for (UIPolygon p : polygons) {
             p.render();
         }

@@ -137,7 +137,7 @@ public class SnakeGameState {
         rectangle.setGlowing(true);   //  correct
 
 
-        UIPolygon polygon = new UIPolygon(n, winW / 2 - 100 , winH * 4/5, 100, 0);
+        UIPolygon polygon = new UIPolygon("sanke", n, winW / 2 - 100 , winH * 4/5, 100, 0, 1f);
 //        polygon.setGrowing(true);
         polygon.setRotating(true);
         polygon.setGlowing(true);

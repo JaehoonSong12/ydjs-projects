@@ -50,7 +50,7 @@ This command creates a "portable" folder containing the game executable and a bu
 To quickly compile and run the game without packaging:
 
 ```bash
-./gradlew run
+./gradlew clean build run
 ```
 
 ---

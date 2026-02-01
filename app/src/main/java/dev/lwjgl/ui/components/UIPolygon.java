@@ -5,8 +5,18 @@ import dev.lwjgl.ui.Colors;
 import static org.lwjgl.opengl.GL11.*;
 
 public class UIPolygon extends UIComponent {
+    private String name;
+    public String getName() {
+        return this.name;
+    }
+
+    // optional: only if you want to change the name later
+    public void setName(String name) {
+        this.name = name;
+    }
 
     private float[] color;
+    private float alpha;
 
     // ---------- ROTATION ----------
     int rotationCounter;
@@ -32,17 +42,19 @@ public class UIPolygon extends UIComponent {
     double radius;
     double rotationalAngle;
 
-    public UIPolygon(int n, double xCenter, double yCenter, double radius, double rotationalAngle) {
-        this(n, xCenter, yCenter, radius, rotationalAngle, Colors.DARK_RED);
+    public UIPolygon(String name, int n, double xCenter, double yCenter, double radius, double rotationalAngle, float alpha) {
+        this(name, n, xCenter, yCenter, radius, rotationalAngle, Colors.DARK_RED, alpha);
     }
 
     public UIPolygon(
+            String name,
             int n,
             double xCenter,
             double yCenter,
             double radius,
             double rotationalAngle,
-            float[] color
+            float[] color,
+            float alpha
     ) {
         super(
                 xCenter - radius / Math.sqrt(2),
@@ -50,13 +62,14 @@ public class UIPolygon extends UIComponent {
                 Math.sqrt(2) * radius,
                 Math.sqrt(2) * radius
         );
-
+        this.name = name;
         this.n = n;
         this.xCenter = xCenter;
         this.yCenter = yCenter;
         this.radius = radius;
         this.rotationalAngle = rotationalAngle + 90;
         this.color = color;
+        this.alpha = alpha;
     }
 
     @Override
@@ -124,10 +137,12 @@ public class UIPolygon extends UIComponent {
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             updateGlowState(pulse);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glDisable(GL_BLEND);
         } else {
             //  NO GLOW
             float brightness = calculateCoreBrightness();
-            glColor4f(color[0] * brightness, color[1] * brightness, color[2] * brightness, 1.0f);
+            glColor4f(color[0] * brightness, color[1] * brightness, color[2] * brightness, alpha);
             renderPolygon(
                     this.n,
                     this.xCenter,
@@ -135,6 +150,8 @@ public class UIPolygon extends UIComponent {
                     this.radius,
                     angleInDegree
             );
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glDisable(GL_BLEND);
         }
     }
 }

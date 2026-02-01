@@ -10,8 +10,8 @@ public class ShopSystem {
     private boolean key2PreviouslyDown = false;
     private boolean isDelay = true;
     private boolean shopOpenMovedisabldNoifcation = false;
-    
-    private int dashLevelPrice = 5;
+    public static boolean reopenShop;
+    private int dashLevelPrice = 0;
     private boolean dealarPayedThisRound = false;
     private boolean canGamble = true;
 
