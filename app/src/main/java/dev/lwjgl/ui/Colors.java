@@ -40,4 +40,25 @@ public class Colors {
             glColor3f(color[0], color[1], color[2]);
         }
     }
+    public static float[] getColorByName(String name) {
+        if (name == null) return null;
+
+        switch(name.toLowerCase()) {
+            case "red": return RED;
+            case "green": return GREEN;
+            case "blue": return BLUE;
+            case "white": return WHITE;
+            case "black": return BLACK;
+            case "gray": return GRAY;
+            case "yellow": return YELLOW;
+            case "cyan": return CYAN;
+            case "magenta": return MAGENTA;
+            case "dark_red": return DARK_RED;
+            case "light_blue": return LIGHT_BLUE;
+            case "orange": return ORANGE;
+            case "purple": return PURPLE;
+            default: return null; // fallback to default color
+        }
+    }
+
 }

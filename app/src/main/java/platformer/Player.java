@@ -1,8 +1,5 @@
 package platformer;
 
-import dev.lwjgl.ui.components.UIPolygon;
-
-import java.nio.channels.ClosedSelectorException;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -14,7 +11,7 @@ import static platformer.PlatformerModel.*;
 public class Player {
 
     private final int width = 800, height = 600;
-    private final float worldWidth = width * 3f, worldHeight = height;
+    private final float worldWidth = PlatformerModel.WORLD_WIDTH, worldHeight = PlatformerModel.WORLD_HEIGHT;
     private final float speed = 200;
     public static boolean testing = true;
     public int whichcharacter = 2;
@@ -40,23 +37,28 @@ public class Player {
     private final float dashEffectDuration = 0.1f;
     private float dashEffectAlpha = 0f;
     public static boolean showDashCooldownMessage = false;
+    public float getDashCooldown() {
+        return dashCurrentTime;
+    }
 
     // jump system
-    private float jumpSpeed = 400;
-    private final float higherJumpAdditionalSpeed = 300;
+    private float jumpSpeed = 600;
+    private boolean startJumpChargeCounter;
     private int jumpChargeCounter;
-    private final int maxJumpCount = 300;
     private final int jumpChargeCounterIncremants = 10;
     private boolean enableAdditionalJump;
     private int numberOfJump;
-    private final int MAX_ADDITIONAL_JUMP = 3;
-    private final float additionalJumpSpeed = 400;
-    private boolean showAdditionalJumpOval = false;//currently
+    private final int MAX_ADDITIONAL_JUMP = 3 + 1;// the +1 is because its coded so the first jump counts two times.
+    private final float additionalJumpSpeed = 400; // its merged with maxJumpCounter
+    public int currentGameTimeForJump;
+    public static boolean canReleaseJump;
+    private boolean showAdditionalJumpOval = false;//currently DON'T CHANGE
     private float jumpOvalTimer = 0f;
     private final float jumpOvalDuration = 0.3f;
     private float jumpOvalX = 0f, jumpOvalY = 0f;
     private float jumpOvalAlpha = 0f;
-    // Stab system
+
+    // Stab system //1
     public boolean isStabbing;
     private final float stabCooldownCap = 0.0f;
     public float stabCurrentCooldown;
@@ -64,7 +66,7 @@ public class Player {
     private float stabCurrentDuration;
     private float stabXRange = 50.0f;
     private float stabYRange = 20.0f;
-    private final boolean forefield = true;
+    private final boolean forefield = false;
     public static boolean showStabCooldownMessage;
     public boolean initializeStabVarables;
 
@@ -73,10 +75,16 @@ public class Player {
     public static float prayTimer;
     public static float StartingStrikeChance = 0.001f;
     public static float strikeChance = StartingStrikeChance;
-    private boolean canStrike = false;
+    private boolean canStrike = true;
     public static float heartsPerNTimer = 2.0f;  // 10 seconds = 1 heart
     private boolean shouldntMove;
     public static boolean renderPray;
+
+    //Wind Burst
+    public static boolean windBurst;
+    public static final int windBurstSize = 100;
+    public int currentGameTimeForWindBurst;
+
 
 
 
@@ -145,9 +153,11 @@ public class Player {
                 if ((Math.random() < strikeChance)) {
                     strikeChance = StartingStrikeChance;
                     loseLife((int) (prayTimer / heartsPerNTimer));
+                    System.out.println("You have been striked by the gods.");
                 } else {
                     gainLife((int) (prayTimer / heartsPerNTimer));
                     strikeChance += Math.random() * PlatformerModel.difficulty.mobPerStar;
+                    System.out.println("You have been healed by the gods but this will not happen always");
                 }
             } else {
                 gainLife((int) (prayTimer / 1));
@@ -155,37 +165,46 @@ public class Player {
             prayTimer = 0;
         }
     }
-    public void jCharge() {
+    public void jump() {
         if (!PlatformerModel.freezeTime) {
-            enableAdditionalJump = (!onGround && numberOfJump < MAX_ADDITIONAL_JUMP);
-            if (onGround && jumpChargeCounter < maxJumpCount) {
-                jumpChargeCounter += jumpChargeCounterIncremants;
-            }
-            if (jumpChargeCounter >= higherJumpAdditionalSpeed) {
-                jumpChargeCounter = maxJumpCount;
+            if (onGround && numberOfJump == 0) {
+                canReleaseJump = true;
+                vy = jumpSpeed;
+                startJumpChargeCounter = true;
+                onGround = false;
+                currentGameTimeForJump = (int) PlatformerModel.gameTime;
             }
         }
     }
-
-    public void jump() {
-        if (!PlatformerModel.freezeTime) {
-            if (jumpChargeCounter > jumpChargeCounterIncremants && onGround) {
-                vy = jumpSpeed + jumpChargeCounter;
-                jumpChargeCounter = 0;
-            }
-            if (enableAdditionalJump && !onGround) {
-                vy = additionalJumpSpeed;
-                this.enableAdditionalJump = false;
-                numberOfJump++;
+    public void jumpAir() {
+        enableAdditionalJump = (!onGround && numberOfJump < MAX_ADDITIONAL_JUMP && numberOfJump >= 1);
+        if (enableAdditionalJump && !onGround && numberOfJump > 0) {
+            vy = additionalJumpSpeed;
+            this.enableAdditionalJump = false;
+            // Show oval only when additional jump occurs
+            if (numberOfJump >= 1) {
                 showAdditionalJumpOval = true;
                 jumpOvalTimer = jumpOvalDuration;
                 jumpOvalX = x + 10;
                 jumpOvalY = y - 5;
                 jumpOvalAlpha = 0.5f;
             }
+            numberOfJump++;
         }
     }
-
+    public void jumpReleased(){
+        if(numberOfJump == 0 && canReleaseJump){
+            canReleaseJump = false;
+            vy = jumpChargeCounter;
+            startJumpChargeCounter = false;
+            jumpChargeCounter = 0;
+            numberOfJump++;
+        }
+    }
+    public void windBurst(){
+        windBurst = true;
+        currentGameTimeForWindBurst = (int) PlatformerModel.gameTime;
+    }
 
 
     public void applyGravity(float dt) {
@@ -196,10 +215,24 @@ public class Player {
 
 
     public void update(float dt, List<Platform> plats) {
+        if (PlatformerModel.dashLevelWasBrought && dashCooldownTime > 0) {
+            dashCooldownTime -= ((PlatformerModel.dashLevel / 2) * 0.1f);
+            if (dashCooldownTime <= 0){
+                dashCooldownTime = 0.1f;
+            }
+            PlatformerModel.dashLevelWasBrought = false;
+        }
         if (!PlatformerModel.freezeTime) {
-            if (PlatformerModel.dashLevelWasBrought) {
-                jumpSpeed = (jumpSpeed + (PlatformerModel.dashLevel / 2) * 0.1f);
-                PlatformerModel.dashLevelWasBrought = false;
+            if (currentGameTimeForJump + 25 <= (int) PlatformerModel.gameTime){
+                jumpReleased();
+            }
+            if (currentGameTimeForWindBurst + 100 <= (int) PlatformerModel.gameTime){
+                windBurst = false;
+            }
+            if (onGround){
+                startJumpChargeCounter = false;
+                jumpChargeCounter = 0;
+                numberOfJump = 0;
             }
             if (!shouldntMove) {
                 x += vx * dt;
@@ -222,7 +255,14 @@ public class Player {
                 stabXRange *= 2;
                 initializeStabVarables = true;
             }
-                //Clocks/Timers
+            //Clocks/Timers
+            if (startJumpChargeCounter){
+                jumpChargeCounter += jumpChargeCounterIncremants;
+                if(jumpChargeCounter > additionalJumpSpeed){
+                    jumpChargeCounter = (int) additionalJumpSpeed;
+                    jumpReleased();
+                }
+            }
             if (showAdditionalJumpOval) {
                 jumpOvalTimer += dt;
                 if (jumpOvalTimer <= 0.2f) {
@@ -304,40 +344,47 @@ public class Player {
     }
 
     public boolean mobCollidesWithStab(MobA m) {
-        if (isStabbing) {
-            double mx = m.x;
-            double my = m.y;
-            double ms = m.size;
-            double stabX, stabWidth;
-            if (forefield){
-                stabX = x - 10;
-                double stabY = y - (onGround ? 0 : 10);
-                stabWidth  = 40;
-                return stabX < mx + ms && stabX + stabWidth > mx && stabY < my + ms && stabY + stabYRange > my;
-            }
-            if (isfaceingRight) {
-                stabX = x + 20;
-                stabWidth = stabXRange;
-            } else {
-                stabX = x - stabXRange;
-                stabWidth = stabXRange;
-            }
+        if (!isStabbing) return false;
 
-            double stabY = y;
+        double mx = m.x;
+        double my = m.y;
+        double ms = m.size;
 
-            return stabX < mx + ms && stabX + stabWidth > mx && stabY < my + ms && stabY + stabYRange > my;
+        double stabX, stabWidth;
+
+        double stabY = y - 5;
+        double stabHeight = stabYRange + 10;
+
+        if (forefield) {
+            stabX = x - 10;
+            stabWidth = 40;
+
+            return stabX < mx + ms &&
+                    stabX + stabWidth > mx &&
+                    stabY < my + ms &&
+                    stabY + stabHeight > my;
         }
-        return false;
+
+        if (isfaceingRight) {
+            stabX = x + 20;
+            stabWidth = stabXRange;
+        } else {
+            stabX = x - stabXRange;
+            stabWidth = stabXRange;
+        }
+
+        return stabX < mx + ms &&
+                stabX + stabWidth > mx &&
+                stabY < my + ms &&
+                stabY + stabHeight > my;
     }
+
 
     public boolean isStarInDashTriangle(Star s) {
         if (!showDashEffect) return false;
         return Math.abs((isfaceingRight ? x - 200 : x + 200) - s.x) <= 201 && Math.abs((y + 10) - s.y) < Star.starSize;
     }
 
-    public float getDashCooldown() {
-        return dashCurrentTime;
-    }
 
     public void renderJumpOval() {
         if (!showAdditionalJumpOval || jumpOvalAlpha <= 0f) return;
@@ -396,14 +443,14 @@ public class Player {
                 // Rectangle extending to the right
                 glVertex2f(0, 0);
                 glVertex2f(0, stabYRange);
-                glVertex2f(stabXRange + 20, stabYRange);
-                glVertex2f(stabXRange + 20, 0);
+                glVertex2f(stabXRange + 10, stabYRange);
+                glVertex2f(stabXRange + 10, 0);
             } else {
                 // Rectangle extending to the left
-                glVertex2f(0, 0);
-                glVertex2f(0, stabYRange);
-                glVertex2f(-stabXRange, stabYRange);
-                glVertex2f(-stabXRange, 0);
+                glVertex2f(0 + 10, 0);
+                glVertex2f(0 + 10, stabYRange);
+                glVertex2f(-stabXRange + 10, stabYRange);
+                glVertex2f(-stabXRange + 10, 0);
             }
 
             glEnd();
@@ -431,17 +478,13 @@ public class Player {
 
         }
     }
+
+
     public void render() {
         renderJumpOval();
         renderDashEffect();
         renderStabEffect();
-        if (jumpChargeCounter == 0) {
-            glColor3f(0, 0, 1);
-        } else {
-            float red = Math.min(1.0f, jumpChargeCounter / 300f);
-            glColor3f(red, 0, 1 - red);
-        }
-        
+        glColor3f(0, 0, 1);
         glBegin(GL_QUADS);
         glVertex2f(x, y);
         glVertex2f(x + 20, y);

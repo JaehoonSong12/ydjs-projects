@@ -13,7 +13,10 @@ import org.lwjgl.glfw.GLFW;
  * Manages key mapping and control randomization.
  */
 public class ControlMapper {
-    private final List<Character> keys = new ArrayList<>(Arrays.asList('W', 'A', 'D', 'S', 'Q', 'E'));
+    private static final List<Character> keys = new ArrayList<>(Arrays.asList('W', 'A', 'D', 'S', 'Q', 'E'));
+    public static char getkey(int whereInList){
+        return keys.get(whereInList);
+    }
     private Map<String, Integer> keyMap;
     private final boolean keyShuffling;
     private int displayKeyMappingCounter = 0;
@@ -38,6 +41,7 @@ public class ControlMapper {
         keyMap.put("RIGHT", getKeyCode(keys.get(2)));
         keyMap.put("DOWN", getKeyCode(keys.get(3)));
         keyMap.put("CHARATER SKILL", getKeyCode(keys.get(4)));
+        keyMap.put("CHANGE CHARATER SKILL", getKeyCode(keys.get(5)));
         keyMap.put("SUBMIT", GLFW.GLFW_KEY_ENTER);
     }
 

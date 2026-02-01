@@ -39,7 +39,7 @@ public class PlatformerGameState {
         if (keyStates[keyMap.get("LEFT")] && !PlatformerModel.freezeTime) {
             player.moveHoriz(-1, false);
         } else if (keyStates[keyMap.get("LEFT")] && !shop.isShopOpenMovedisabldNoifcation()) {
-            model.showMessage("You cant move while shop is open");
+            model.showMessage("You cant move while shop is open. To close shop press enter");
             shop.setShopOpenMovedisabldNoifcation(true);
         }
 
@@ -47,7 +47,7 @@ public class PlatformerGameState {
         if (keyStates[keyMap.get("RIGHT")] && !PlatformerModel.freezeTime) {
             player.moveHoriz(1, true);
         } else if (keyStates[keyMap.get("RIGHT")] && !shop.isShopOpenMovedisabldNoifcation()) {
-            model.showMessage("You cant move while shop is open");
+            model.showMessage("You cant move while shop is open. To close shop press enter");
             shop.setShopOpenMovedisabldNoifcation(true);
         }
 
@@ -79,17 +79,19 @@ public class PlatformerGameState {
                 player.prayRelease(); // RELEASE behavior (heal here)
             }
         }
-
+        if (skillPressed){
+            if (player.whichcharacter == 4) {
+                player.windBurst();
+            }
+        }
         // ---------- JUMP CHARGE ----------
         if (keyStates[keyMap.get("UP")]) {
-            player.jCharge();
+            player.jump();
         }
 
         // ---------- FALL (DOWN) ----------
         if (keyStates[keyMap.get("DOWN")]) { //?????????????????????????????????????????????
             player.fall();
-            model.showMessage("PrayTimer =" + Player.prayTimer);
-            System.out.println(Player.prayTimer / Player.heartsPerNTimer);
         }
             // PlatformerModel.gainLife(); // move this to prayRelease or elsewhere
 
@@ -107,16 +109,24 @@ public class PlatformerGameState {
     }
 
     public void onKey(int key, int action) {
+        var keyMap = KeyboardControlManager.getInstance().getKeyMap();
+        var player = model.getPlayer();
         // Update key state
-        if (action == GLFW.GLFW_PRESS || action == GLFW.GLFW_REPEAT) {
+        if (action == GLFW.GLFW_PRESS) {
             keyStates[key] = true;
-        } else if (action == GLFW.GLFW_RELEASE) {
+            if (key == keyMap.get("UP")) {
+                player.jumpAir();
+            }
+        } else if(action == GLFW.GLFW_REPEAT){
+            keyStates[key] = true;
+        }else if (action == GLFW.GLFW_RELEASE) {
             keyStates[key] = false;
             
             // Handle key release events
-            var keyMap = KeyboardControlManager.getInstance().getKeyMap();
             if (key == keyMap.get("UP")) {
-                model.getPlayer().jump();
+                if (Player.canReleaseJump){
+                    player.jumpReleased();
+                }
             }
             if (key == keyMap.get("CHARATER SKILL") && model.getPlayer().whichcharacter == 1) {
                 model.getShopSystem().setCanGamble(true);
@@ -131,6 +141,30 @@ public class PlatformerGameState {
         // Handle shop toggle
         if (key == GLFW.GLFW_KEY_ENTER) {
             handleShopToggle(action);
+        }
+        // ---------- CHANGE CHARACTER SKILL ----------
+        if (keyStates[keyMap.get("CHANGE CHARATER SKILL")] && !PlatformerModel.freezeTime) {
+            if (player.whichcharacter == 0) {
+                if (!player.skipGambling) {
+                    player.whichcharacter = 1;
+                    model.showMessage("Your charator skil is now gambling");
+                } else {
+                    player.whichcharacter = 2;
+                    model.showMessage("Your charator skil is now stabbing");
+                }
+            } else if (player.whichcharacter == 1) {
+                player.whichcharacter = 0;
+                model.showMessage("Your charator skil is now dash");
+            } else if (player.whichcharacter == 2) {
+                player.whichcharacter = 3;
+                model.showMessage("Your charator skil is now praying");
+            }else if (player.whichcharacter == 3) {
+                player.whichcharacter = 4;
+                model.showMessage("Your charator skil is now wind burst");
+            } else if (player.whichcharacter == 4){
+                player.whichcharacter = 0;
+                model.showMessage("Your charator skil is now dash");
+            }
         }
 
 
@@ -160,24 +194,9 @@ public class PlatformerGameState {
             shop.toggleShop();
             PlatformerModel.freezeTime = shop.isShopOpened();
 
-            if (shop.isShopOpened()) {
+            if (shop.isShopOpened() || ShopSystem.reopenShop) {
                 // OPEN SHOP
-                model.getMessageSystem().clear();
-                model.showMessage("You have entered the shop");
-                model.showMessage("The things you can buy:");
-                var player = model.getPlayer();
-
-                if (player.whichcharacter == 0) {
-                    model.showMessage("Press 1 for the next dash level for " + shop.getDashLevelPrice() + " score");
-                    if (!player.skipGambling) {
-                        model.showMessage("Press 2 to change your skill to gambling");
-                    } else {
-                        model.showMessage("Press 2 to change your skill to stabbing");
-                    }
-                } else if (player.whichcharacter == 1 ) {
-                    if (!shop.isDealarPayedThisRound() )model.showMessage("Press 1 to pay the dealer this round for 20 score");
-                    model.showMessage("Press 2 to change your skill to dash");;
-                }
+                showShopmessages();
             } else {
                 // CLOSE SHOP
                 model.showMessage("You have left the shop");
@@ -188,6 +207,36 @@ public class PlatformerGameState {
 
         // Update the previous state (VERY IMPORTANT)
         shop.setSubmitKeyPreviouslyDown(submitDown);
+    }
+    private void showShopmessages(){
+        var shop = model.getShopSystem();
+        model.getMessageSystem().clear();
+        if(ShopSystem.reopenShop == false) {
+            model.showMessage("You have entered the shop");
+            model.showMessage("The things you can buy:");
+        } else {
+            model.showMessage("Here are the other thing you can buy:");
+        }
+        var player = model.getPlayer();
+        ShopSystem.reopenShop = false;
+        if (player.whichcharacter == 0) {
+            model.showMessage("Press 1 for the next dash level for " + shop.getDashLevelPrice() + " score");
+            if (!player.skipGambling) {
+                model.showMessage("Press 2 or " + KeyboardControlManager.getkey(5) + " to change your skill to gambling");
+            } else {
+                model.showMessage("Press 2 or " + KeyboardControlManager.getkey(5) + " to change your skill to stabbing");
+            }
+        } else if (player.whichcharacter == 1) {
+            if (!shop.isDealarPayedThisRound() )model.showMessage("Press 1 to pay the dealer this round for 20 score");
+            model.showMessage("Press 2 or " + KeyboardControlManager.getkey(5) + " to change your skill to dash");;
+        } else if (player.whichcharacter == 2){
+            model.showMessage("Press 2 or " + KeyboardControlManager.getkey(5) + " to change your skill to praying");
+        } else if (player.whichcharacter == 3){
+            model.showMessage("Press 2 or " + KeyboardControlManager.getkey(5) + " to change your skill to wind burst");
+        } else if (player.whichcharacter == 4){
+            model.showMessage("Press 2 or " + KeyboardControlManager.getkey(5) + " to change your skill to dash");
+        }
+        model.showMessage("Or Press enter again to leave the shop");
     }
 
 
@@ -210,6 +259,7 @@ public class PlatformerGameState {
             }
             model.showMessage("Dash level purchased!");
             PlatformerModel.dashLevelWasBrought = true;
+            showShopmessages();
             if (!Player.testing) {
                 shop.setDashLevelPrice((int) (PlatformerModel.dashLevel * 5));
             }
@@ -217,6 +267,8 @@ public class PlatformerGameState {
             model.setScore(model.getScore() - 20);
             shop.setDealarPayedThisRound(true);
             model.showMessage("Dealer paid, your score is now: " + model.getScore());
+            ShopSystem.reopenShop = true;
+            showShopmessages();
         } else {
             model.showMessage("You're too poor to buy that");
         }
@@ -230,24 +282,39 @@ public class PlatformerGameState {
         if (shop.isDelay()) {
             return;
         }
-        
+
         if (player.whichcharacter == 0) {
             if (!player.skipGambling) {
                 player.whichcharacter = 1;
                 model.showMessage("Your charator skil is now gambling");
+                ShopSystem.reopenShop = true;
+                showShopmessages();
             } else {
                 player.whichcharacter = 2;
                 model.showMessage("Your charator skil is now stabbing");
+                ShopSystem.reopenShop = true;
+                showShopmessages();
             }
         } else if (player.whichcharacter == 1) {
             player.whichcharacter = 0;
             model.showMessage("Your charator skil is now dash");
+            ShopSystem.reopenShop = true;
+            showShopmessages();
         } else if (player.whichcharacter == 2) {
             player.whichcharacter = 3;
             model.showMessage("Your charator skil is now praying");
-        }else if (player.whichcharacter == 3) {
+            ShopSystem.reopenShop = true;
+            showShopmessages();
+        } else if (player.whichcharacter == 3) {
+            player.whichcharacter = 0;
+            model.showMessage("Your charator skil is now wind burst");
+            ShopSystem.reopenShop = true;
+            showShopmessages();
+        } else if (player.whichcharacter == 4){
             player.whichcharacter = 0;
             model.showMessage("Your charator skil is now dash");
+            ShopSystem.reopenShop = true;
+            showShopmessages();
         }
     }
 
