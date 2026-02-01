@@ -683,7 +683,7 @@ if "%IS_ADMIN%"=="0" (
   echo.%CYAN%The script is running with %GREEN%administrator%RESET% privileges.%RESET%
   echo.%CYAN%=========================================================%RESET%
   echo.
-  call :Display-Virtualization-Info
+  @REM call :Display-Virtualization-Info
 )
 
 echo.%CYAN%========================================================= Utilities, Install...%RESET%
@@ -693,20 +693,20 @@ pause
 @REM ---------------------------------------------------------------------------
 call :Install-App "Mozilla.Firefox" "Firefox" "firefox" "Mozilla Firefox"
 call :Install-App "Google.Chrome" "Google Chrome" "chrome" "Google\Chrome"
-call :Install-App "Google.GoogleDrive" "Google Drive for Desktop" "GoogleDriveFS" "Google\Drive File Stream"
+@REM call :Install-App "Google.GoogleDrive" "Google Drive for Desktop" "GoogleDriveFS" "Google\Drive File Stream"
 @REM Here, 1. look up Google\Drive File Stream directory, if there is found, start (open) the directory. If not found, just skip.
 @REM 2. Also check if G drive exists. Only open the directory if folder is found AND G drive does not exist.
-call :Find-Directory "Google\Drive File Stream"
-if %FOUND_DIR% EQU 1 (
-  if not exist "G:\" (
-    echo.%CYAN%Opening Google Drive File Stream directory...%RESET%
-    echo.Found at: "%FOUND_DIR_PATH%"
-    echo.%GREEN%Google Drive File Stream directory opened successfully.%RESET%
-    start "" "%FOUND_DIR_PATH%"
-  ) else (
-    echo.%YELLOW%G drive already exists. Skipping directory open.%RESET%
-  )
-)
+@REM call :Find-Directory "Google\Drive File Stream"
+@REM if %FOUND_DIR% EQU 1 (
+@REM   if not exist "G:\" (
+@REM     echo.%CYAN%Opening Google Drive File Stream directory...%RESET%
+@REM     echo.Found at: "%FOUND_DIR_PATH%"
+@REM     echo.%GREEN%Google Drive File Stream directory opened successfully.%RESET%
+@REM     start "" "%FOUND_DIR_PATH%"
+@REM   ) else (
+@REM     echo.%YELLOW%G drive already exists. Skipping directory open.%RESET%
+@REM   )
+@REM )
 call :Install-App "Microsoft.VisualStudioCode" "Visual Studio Code" "code" "Microsoft VS Code"
 call :Install-App "Adobe.Acrobat.Reader.64-bit" "Adobe Acrobat Reader DC" "acrordc.exe" "Adobe"
 
@@ -729,7 +729,7 @@ call :Check-Bashrc
 @REM  3. GNU toolchains (GCC, make, autotools)
 @REM  4. Build Windows-native on virtual Linux environment
 @REM ---------------------------------------------------------------------------
-call :Install-App "MSYS2.MSYS2" "MSYS2" "mintty" "msys64"
+@REM call :Install-App "MSYS2.MSYS2" "MSYS2" "mintty" "msys64"
 @REM ---------------------------------------------------------------------------
 @REM Platform Independent - Container Platform (Docker Desktop)
 @REM  1. Container runtime and orchestration
@@ -737,8 +737,8 @@ call :Install-App "MSYS2.MSYS2" "MSYS2" "mintty" "msys64"
 @REM  3. GUI for managing images and containers
 @REM  4. Build Linux-native (WSL2 processor) on virtual Linux environment
 @REM ---------------------------------------------------------------------------
-call :Install-App "Microsoft.WSL" "Windows Subsystem for Linux" "wsl" "WSL"
-call :Install-App "Docker.DockerDesktop" "Docker Desktop" "docker" "Docker"
+@REM call :Install-App "Microsoft.WSL" "Windows Subsystem for Linux" "wsl" "WSL"
+@REM call :Install-App "Docker.DockerDesktop" "Docker Desktop" "docker" "Docker"
 
 echo.%CYAN%========================================================= Windows Natives Dev, Install...%RESET%
 pause

@@ -1,4 +1,4 @@
-# --- Generated from ./.gitignores on Wed Jan 14 21:23:56 2026 ---
+# --- Generated from ./.gitignores on Thu Jan 29 23:52:05 2026 ---
 
 #############################################
 # A.gitignore
@@ -1151,7 +1151,7 @@ resources/.arch-internal-preview.css
 *.bak
 *.db
 *.avi
-*.pdf
+# *.pdf
 *.ps
 *.mid
 *.midi
@@ -1458,7 +1458,7 @@ _book
 # eBook build output
 *.epub
 *.mobi
-*.pdf
+# *.pdf
 
 #############################################
 # GitHubPages.gitignore
@@ -2859,7 +2859,7 @@ install.php
 #############################################
 # Lilypond.gitignore
 #############################################
-*.pdf
+# *.pdf
 *.ps
 *.midi
 *.mid
@@ -3055,8 +3055,8 @@ junit*.properties
 *.psm
 *.bak
 *.cmp
-*.jpg
-*.html
+# *.jpg
+# *.html
 *.bsf
 
 # ignore simulation output of ModelSim
@@ -6227,7 +6227,7 @@ TestReports
 
 # Report generators and templates
 #   * if you want to provide (f.e.) your own report generators exclude the directory here and ignore only the unnecessary subdirectories
-Templates
+# Templates
 
 # optional, default for external Python libraries
 PyLibs
