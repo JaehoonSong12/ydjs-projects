@@ -91,7 +91,7 @@ tasks.register<Exec>("jpackage") {
         "--input", inputDir,
         "--main-jar", jarName,
         "--main-class", "jvlwjgl.App",
-        "--name", "Platformer"
+        "--name", "platformer"
         // "--win-console"              // Windows only: Keep console open
     )
 
