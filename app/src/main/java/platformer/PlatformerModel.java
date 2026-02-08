@@ -479,7 +479,7 @@ public class PlatformerModel {
         }
         if (Player.windBurst) {
             if (!polygons.stream().anyMatch(p -> "WindBurst".equals(p.getName()))) {
-                addPolygon("WindBurst", "yellow", 100, Player.x, Player.y, Player.windBurstSize, 0, false, false, 0.5f);
+                addPolygon("WindBurst", "yellow", 100, Player.x, Player.y, Player.windBurstSize, 0, false, true, 0.5f);
             } else {
                 // Update existing polygon positions to follow player
                 float screenX = camera.worldToScreenX(player.x + 10);
