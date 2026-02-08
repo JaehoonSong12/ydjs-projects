@@ -157,7 +157,7 @@ public class Player {
                 } else {
                     gainLife((int) (prayTimer / heartsPerNTimer));
                     strikeChance += Math.random() * PlatformerModel.difficulty.mobPerStar;
-                    System.out.println("You have been healed by the gods but this will not happen always");
+                    System.out.println("The gods heal you now. Do not rely on them too heavily");
                 }
             } else {
                 gainLife((int) (prayTimer / 1));
